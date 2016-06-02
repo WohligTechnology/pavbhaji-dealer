@@ -1840,7 +1840,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             $ionicLoading.hide();
             $scope.$broadcast('scroll.infiniteScrollComplete');
             // $scope.$broadcast('scroll.refreshComplete');
-        });
+        }, function(data){console.log(data);});
     }
     $scope.addMoreItems();
 

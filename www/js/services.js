@@ -6,9 +6,9 @@ var adminimage = "http://admin.accessworld.in/uploads/";
 // var adminimage = adminbase + "uploads/";
 // var adminimage = "http://accessworld.in/admin/uploads/";
 
-angular.module('starter.services', [])
+angular.module('starter.services', ['httpService'])
 
-.factory('MyServices', function($http) {
+.factory('MyServices', function($http, httpService) {
 
     var coupondetails = $.jStorage.get("coupon");
 
@@ -101,10 +101,13 @@ angular.module('starter.services', [])
 
         },
         //dhaval start
-        getbrand: function(pageno, callback) {
-            return $http.get(adminurl + 'getbrand?maxrow=12&pageno=' + pageno, {}, {
-                withCredentials: true
-            }).success(callback);
+        getbrand: function(pageno, callback,errCallback) {
+            // return $http.get(adminurl + 'getbrand?maxrow=12&pageno=' + pageno, {}, {
+            //     withCredentials: true
+            // }).success(callback);
+
+            httpService.get(adminurl + 'getbrand?maxrow=12&pageno=' + pageno, {}, callback, errCallback);
+
         },
         getproductbybrand: function(pageno, brand, filters, callback) {
             return $http.get(adminurl + 'getproductbycategory?category=' + filters.category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity, {}, {

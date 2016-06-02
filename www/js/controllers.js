@@ -1068,41 +1068,41 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                 console.log(data);
                 $ionicLoading.hide();
                 if (data != 'false') {
-                    $scope.checkout.orderid = data;
-                    // allfunction.msg("Your Order has been placed", 'Thankyou!');
-                    $scope.paymentinfo = true;
-                    // $location.url("/app/home/");
+                    // $scope.checkout.orderid = data;
+                    allfunction.msg("Your Order has been placed", 'Thankyou!');
+                    // $scope.paymentinfo = true;
+                    $location.url("/app/home/");
 
-                    var options = {
-                        location: 'no',
-                        clearcache: 'yes',
-                        toolbar: 'no'
-                    };
+                    // var options = {
+                    //     location: 'no',
+                    //     clearcache: 'yes',
+                    //     toolbar: 'no'
+                    // };
 
-                    var ref = $cordovaInAppBrowser.open("http://accessinfoworld.com/admin/paymentgateway/ccavRequestHandlerGet.php?tid=&order_id=" + $scope.checkout.orderid + "&merchant_id=76752&amount=" + $scope.allamount + "&billing_name=" + $scope.checkout.firstname + "&currency=INR&merchant_param1=" + $scope.couponhave + "&redirect_url=http://accessinfoworld.com/admin/index.php/json/payumoneysuccess&cancel_url=http://accessinfoworld.com/admin/index.php/json/payumoneysuccess&language=EN&billing_address=" + $scope.checkout.billingaddress + "&billing_country=" + $scope.checkout.billingcountry + "&billing_state=" + $scope.checkout.billingstate + "&billing_city=" + $scope.checkout.billingcity + "&billing_zip=" + $scope.checkout.billingpincode + "&billing_tel=" + $scope.checkout.billingcontact + "&billing_email=" + $scope.checkout.email + "&delivery_name=" + $scope.checkout.shippingname + "&delivery_address=" + $scope.checkout.shippingaddress + "&delivery_country=" + $scope.checkout.shippingcountry + "&delivery_city=" + $scope.checkout.shippingcity + "&delivery_state=" + $scope.checkout.shippingstate + "&delivery_zip=" + $scope.checkout.shippingpincode + "&delivery_tel=" + $scope.checkout.shippingcontact + "&integration_type=iframe_normal", '_blank', options)
-                        .then(function(event) {
-                            // success
-                        })
-                        .catch(function(event) {
-                            // error
-                        });
+                    // var ref = $cordovaInAppBrowser.open("http://accessinfoworld.com/admin/paymentgateway/ccavRequestHandlerGet.php?tid=&order_id=" + $scope.checkout.orderid + "&merchant_id=76752&amount=" + $scope.allamount + "&billing_name=" + $scope.checkout.firstname + "&currency=INR&merchant_param1=" + $scope.couponhave + "&redirect_url=http://accessinfoworld.com/admin/index.php/json/payumoneysuccess&cancel_url=http://accessinfoworld.com/admin/index.php/json/payumoneysuccess&language=EN&billing_address=" + $scope.checkout.billingaddress + "&billing_country=" + $scope.checkout.billingcountry + "&billing_state=" + $scope.checkout.billingstate + "&billing_city=" + $scope.checkout.billingcity + "&billing_zip=" + $scope.checkout.billingpincode + "&billing_tel=" + $scope.checkout.billingcontact + "&billing_email=" + $scope.checkout.email + "&delivery_name=" + $scope.checkout.shippingname + "&delivery_address=" + $scope.checkout.shippingaddress + "&delivery_country=" + $scope.checkout.shippingcountry + "&delivery_city=" + $scope.checkout.shippingcity + "&delivery_state=" + $scope.checkout.shippingstate + "&delivery_zip=" + $scope.checkout.shippingpincode + "&delivery_tel=" + $scope.checkout.shippingcontact + "&integration_type=iframe_normal", '_blank', options)
+                    //     .then(function(event) {
+                    //         // success
+                    //     })
+                    //     .catch(function(event) {
+                    //         // error
+                    //     });
 
                     // var ref = window.open("http://accessinfoworld.com/admin/paymentgateway/ccavRequestHandlerGet.php?tid=&order_id=" + $scope.checkout.orderid + "&merchant_id=76752&amount=" + $scope.allamount + "&billing_name=" + $scope.checkout.firstname + "&currency=INR&merchant_param1=" + $scope.couponhave + "&redirect_url=http://accessinfoworld.com/admin/index.php/json/payumoneysuccess&cancel_url=http://accessinfoworld.com/admin/index.php/json/payumoneysuccess&language=EN&billing_address=" + $scope.checkout.billingaddress + "&billing_country=" + $scope.checkout.billingcountry + "&billing_state=" + $scope.checkout.billingstate + "&billing_city=" + $scope.checkout.billingcity + "&billing_zip=" + $scope.checkout.billingpincode + "&billing_tel=" + $scope.checkout.billingcontact + "&billing_email=" + $scope.checkout.email + "&delivery_name=" + $scope.checkout.shippingname + "&delivery_address=" + $scope.checkout.shippingaddress + "&delivery_country=" + $scope.checkout.shippingcountry + "&delivery_city=" + $scope.checkout.shippingcity + "&delivery_state=" + $scope.checkout.shippingstate + "&delivery_zip=" + $scope.checkout.shippingpincode + "&delivery_tel=" + $scope.checkout.shippingcontact + "&integration_type=iframe_normal");
 
-                    var interval = $interval(function() {
-                        MyServices.getorderbyorderid(data, function(orderData) {
-                            console.log(orderData);
-                            if (orderData.orderstatus == 5 || orderData.orderstatus == "5") {
-                                $cordovaInAppBrowser.close();
-                                $interval.cancel(interval);
-                                allfunction.msgHome("Payment Failed", 'Sorry!');
-                            } else if (orderData.orderstatus == 2 || orderData.orderstatus == "2") {
-                                $cordovaInAppBrowser.close();
-                                $interval.cancel(interval);
-                                allfunction.msgHome("Thank you for shopping", 'Payment Successfull');
-                            }
-                        })
-                    }, 2000);
+                    // var interval = $interval(function() {
+                    //     MyServices.getorderbyorderid(data, function(orderData) {
+                    //         console.log(orderData);
+                    //         if (orderData.orderstatus == 5 || orderData.orderstatus == "5") {
+                    //             $cordovaInAppBrowser.close();
+                    //             $interval.cancel(interval);
+                    //             allfunction.msgHome("Payment Failed", 'Sorry!');
+                    //         } else if (orderData.orderstatus == 2 || orderData.orderstatus == "2") {
+                    //             $cordovaInAppBrowser.close();
+                    //             $interval.cancel(interval);
+                    //             allfunction.msgHome("Thank you for shopping", 'Payment Successfull');
+                    //         }
+                    //     })
+                    // }, 2000);
                 } else {
                     allfunction.msg("Sorry Try Again", 'Sorry!');
                 }

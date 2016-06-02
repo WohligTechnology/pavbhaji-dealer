@@ -1,10 +1,10 @@
-var adminbase = "http://accessworld.in/admin/";
-// var adminbase = "http://localhost/accessback/";
+// var adminbase = "http://accessworld.in/admin/";
+var adminbase = "http://localhost/accessback/";
 var adminurl = adminbase + "index.php/json/";
 var adminhauth = adminbase + "index.php/hauth/";
-var adminimage = adminbase + "uploads/";
-var adminimage = "http://accessworld.in/admin/uploads/";
-//var adminimage = "http://localhost/accessback/uploads/";
+var adminimage = "http://admin.accessworld.in/uploads/";
+// var adminimage = adminbase + "uploads/";
+// var adminimage = "http://accessworld.in/admin/uploads/";
 
 angular.module('starter.services', [])
 
@@ -32,13 +32,13 @@ angular.module('starter.services', [])
         },
         login: function(login, callback) {
             return $http({
-                url: adminurl + 'loginuser',
+                url: adminurl + 'dealerLogin',
                 method: "POST",
                 data: login
             }).success(callback);
         },
         authenticate: function(callback) {
-            return $http.get(adminurl + 'authenticate').success(callback);
+            return $http.get(adminurl + 'authenticateDealer').success(callback);
         },
         orderhistory: function(callback) {
             return $http.get(adminurl + 'orderhistory').success(callback);
@@ -68,7 +68,7 @@ angular.module('starter.services', [])
         },
         placeorder: function(checkout, callback) {
             return $http({
-                url: adminurl + 'placeorder',
+                url: adminurl + 'placeOrderForDealer',
                 method: "POST",
                 data: {
                     'firstname': checkout.firstname,
@@ -143,7 +143,7 @@ angular.module('starter.services', [])
             }).success(callback);
         },
         addtocart: function(product, callback) {
-            return $http.get(adminurl + 'addtocart?product=' + product.product + '&productname=' + product.productname + '&price=' + product.price + '&quantity=' + product.quantity, {}, {
+            return $http.get(adminurl + 'addtocartDealer?product=' + product.product + '&productname=' + product.productname + '&price=' + product.price + '&quantity=' + product.quantity, {}, {
                 withCredentials: true
             }).success(callback);
         },
@@ -246,7 +246,7 @@ angular.module('starter.services', [])
             }).success(callback);
         },
         getuserdetails: function(callback) {
-            return $http.get(adminurl + 'getuserdetails', {}, {
+            return $http.get(adminurl + 'getDealerDetails', {}, {
                 withCredentials: true
             }).success(callback);
         },

@@ -1,0 +1,51 @@
+<ion-view view-title="My Wishlist">
+    <ion-content>
+        <div class="mywishlist" ng-hide="showLoginToContinue">
+            <div class="row-container" ng-repeat="product in products">
+                <div class="col">
+                    <div class="wishlist" ng-click="getproductdetails(product.id)">
+                        <a style="text-decoration:none">
+                            <div class="row no-padding">
+                                <div class="col-40">
+                                    <div class="image-holder-wishlist">
+                                        <img class="wishlist-image" ng-src="{{product.image1 | serverimage}}" alt="" ng-if="product.image1">
+                                        <img class="wishlist-image" ng-src="{{product.image2 | serverimage}}" alt="" ng-if="product.image2">
+                                        <img class="wishlist-image" ng-src="img/icon.png" alt="" ng-if="!product.image1 && !product.image2">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h4>{{product.name}}</h4>
+                                    <h5>Rs. {{product.price | numberWithCommas}}</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <button class="button button-clear button-assertive" ng-click="removefromwishlist(product.id);">Remove</button>
+                </div>
+            </div>
+            <!-- <div class="row-container">
+                <div class="col">
+                    <div class="wishlist">
+                        <div class="row no-padding">
+                            <div class="col-40">
+                                <div class="image-holder-wishlist">
+                                    <img class="wishlist-image" src="img/products/5.png" alt="">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h4>iPhone 6[S] 64GB 5Inch screen</h4>
+                                <h5>Rs. 60000</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="center" ng-show="showLoginToContinue">
+            <p>Please login to view your wishlist</p>
+        </div>
+        <div class="center" ng-show="shownodata">
+            <p>No products in your wishlist</p>
+        </div>
+    </ion-content>
+</ion-view>

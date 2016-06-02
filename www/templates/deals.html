@@ -1,0 +1,45 @@
+<ion-view view-title="Deals">
+    <ion-content>
+        <div class="deals">
+            <ion-slide-box on-slide-changed="slideHasChanged($index)" auto-play="true" does-continue="true">
+                <ion-slide ng-repeat="offerimage in slider">
+                    <div class="deal-sliderimg"><img ng-src="{{offerimage | serverimage}}" alt="" class="deal-img">
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+            <div class="row" ng-repeat="offer in offers">
+                <div class="col">
+                    <div class="deal">
+                        <div class="row">
+                            <div class="col" ng-repeat="products in offer.offerproducts">
+                                <div class="image-holder-product">
+                                    <img class="brand-image" ng-if="products.image1" ng-src="{{products.image1 | serverimage}}" alt="">
+                                    <img class="brand-image" ng-if="!products.image1 && products.image2" ng-src="{{products.image2 | serverimage}}" alt="">
+                                    <img class="brand-image" ng-if="!products.image1 && !products.image2" src="img/icon.png" alt="">
+                                </div>
+                                <div class="deal-details">
+                                    <h2>{{products.name}}</h2>
+                                </div>
+                            </div>
+                            <i class="icon ion-android-add"></i>
+                        </div>
+                        <div class="price-separator"></div>
+                        <div class="row deal-buy">
+                            <div class="col">
+                                <h3>{{offer.price}}</h3>
+                            </div>
+                            <div class="col">
+                                <button class="button button-calm btn-subscribe">
+                                    Buy now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="center" ng-show="offers.lenght==0">
+            <p>Nothing to Show, Folks!</p>
+        </div>
+    </ion-content>
+</ion-view>

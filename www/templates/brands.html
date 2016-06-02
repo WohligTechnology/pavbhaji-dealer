@@ -1,0 +1,18 @@
+<ion-view view-title="Brands">
+    <ion-content>
+        <div class="margin-brands">
+            <div class="row" ng-repeat="brand in brands">
+                <div class="col-33" ng-repeat="brnd in brand">
+                    <div class="image-holder" ng-click="getproductbybrand(brnd.id);">
+                        <img class="brand-image" ng-src="{{brnd.logo | serverimage}}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ion-infinite-scroll on-infinite="addMoreItems()" distance="25%" style="height:0px" ng-if="keepscrolling">
+        </ion-infinite-scroll>
+        <div class="center" ng-show="shownodata">
+            <p>Nothing to Show, Folks!</p>
+        </div>
+    </ion-content>
+</ion-view>

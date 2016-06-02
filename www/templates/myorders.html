@@ -1,0 +1,85 @@
+<ion-view view-title="My Orders">
+    <ion-content>
+        <div class="myorders">
+            <div class="order" ng-repeat="orderhistory in orderhistory">
+                <div class="item item-divider">
+<span class="item-note">{{orderhistory.timestamp | date:'MMM d, y'}}</span>
+                                <p>Order Id: {{orderhistory.orderid}}</p>
+            </div>
+              <div class="row-container" ng-repeat="products in orderhistory.orderitems">
+                <div class="col">
+                    <div class="product-cart">
+                        <div class="row ">
+                            <div class="col-40">
+                                <div class="image-holder-cart">
+                                    <img class="cart-image" src="img/products/5.png" alt="">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h4>{{products.orderitems[0]}}</h4>
+                                <h4>iPhone 6[S] 128GB 5inch</h4>
+                                <h5>Ref. 2514/302</h5>
+                       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--
+            <div class="row-container">
+                <div class="col">
+                    <div class="product-cart">
+                        <div class="row ">
+                            <div class="col-40">
+                                <div class="image-holder-cart">
+                                    <img class="cart-image" src="img/products/5.png" alt="">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h4>iPhone 6[S] 128GB 5inch</h4>gsetdhesh
+                                <h5>Ref. 2514/302</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+-->
+            <div class="item item-divider">
+                <span class="item-note positive">Shipped</span>
+                <p>Rs.{{orderhistory.finalamount}}</p>
+            </div>
+            </div>
+<!--
+               <div class="order">
+                <div class="item item-divider">
+<span class="item-note">22/08/2015</span>
+                                <p>Order Id: #987654</p>
+            </div>
+              <div class="row-container">
+                <div class="col">
+                    <div class="product-cart">
+                        <div class="row ">
+                            <div class="col-40">
+                                <div class="image-holder-cart">
+                                    <img class="cart-image" src="img/products/5.png" alt="">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h4>iPhone 6[S] 128GB 5inch</h4>
+                                <h5>Ref. 2514/302</h5>
+                       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item item-divider">
+                <span class="item-note positive">Shipped</span>
+                <p>Rs.10000</p>
+            </div>
+            </div>
+-->
+            </div>            
+        </div>
+    </ion-content>
+</ion-view>

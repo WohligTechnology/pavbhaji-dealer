@@ -1,0 +1,39 @@
+<ion-modal-view>
+    <ion-header-bar align-title="center">
+        <h1 class="title">Signup</h1>
+        <div class="buttons">
+            <button class="button modal-close button-clear button-icon " ng-click="closeSignup()"><i class="icon ion-ios-close-empty"></i></button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <div class="signup">
+            <form ng-submit="doSignup()">
+                <div class="list signup-form">
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">First name</span>
+                        <input type="text" placeholder="First name" ng-model="userSignup.firstname" ng-class="allvalidation[0].validation">
+                    </label>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Last name</span>
+                        <input type="text" placeholder="Last name" ng-model="userSignup.lastname" ng-class="allvalidation[1].validation">
+                    </label>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Email</span>
+                        <input type="email" placeholder="Email" ng-model="userSignup.email" ng-class="allvalidation[2].validation">
+                    </label>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Password</span>
+                        <input type="password" placeholder="Password" ng-model="userSignup.password" ng-class="allvalidation[3].validation">
+                    </label>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Confirm password</span>
+                        <input type="password" placeholder="Confirm password" ng-model="userSignup.confirmpassword" ng-class="allvalidation[4].validation">
+                    </label>
+                    <button class="button button-positive signup-button" type="submit">
+                        Done
+                    </button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-modal-view>

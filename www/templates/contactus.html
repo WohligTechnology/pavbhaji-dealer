@@ -1,0 +1,102 @@
+<ion-view view-title="Contact Us">
+    <ion-content>
+        <div class="contactus">
+            <div class="row">
+
+                <div class="col-66">
+                    <div class="contactus-addr">
+                        <h2>Corporate Address</h2>
+                        <p>601, Aditya Arcade, Sixth Floor,
+                            <br> Near Dreamland Cinema,
+                            <br> Grant Road (East),
+                            <br> Mumbai 400007.
+                            <br>Email : retail@accessinfoworld.com</p>
+                        <p>Tel : +91-22-23840789/809/810</p>
+                    </div>
+                </div>
+                <div class="col-33">
+                    <div class="marc">
+                         <a href="#" onclick="window.open('https://www.google.co.in/maps/place/Aditya+Arcade/@18.9603544,72.8160641,17z/data=!3m1!4b1!4m2!3m1!1s0x3be7ce124810187f:0x787d8a7adb03fc87', '_system', 'location=yes'); return false;">
+               <img src="img/map.jpg" class="full-image">
+            </a>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-66">
+                    <div class="contactus-addr">
+                        <h2>Retail Stores</h2>
+                        <h3 class="cont">Kurla</h3>
+                        <p>F-29, Atrium 6, Phoenix Market City,
+                            <br> 15 L.B.S Marg,
+                            <br> Kurla (West),
+                            <br> Mumbai 400070.
+                            <br>Email : retail@accessinfoworld.com</p>
+                        <p>Tel :+91-22-32233352</p>
+                    </div>
+                </div>
+                <div class="col-33">
+                    <div class="marc">
+                                  <a  href="#" onclick="window.open('https://www.google.co.in/maps/place/Access/@19.0871303,72.886557,17z/data=!3m2!4b1!5s0x3be7c8878a6ce00d:0x5d860d2b7653c310!4m2!3m1!1s0x3be7c87d6915238d:0x49a6edfe678e887', '_system', 'location=yes'); return false;">
+               <img src="img/map.jpg" class="full-image">
+            </a>
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-66">
+                    <div class="contactus-addr">
+                        <h2>Retail Stores</h2>
+                        <h3 class="cont">Lower Parel</h3>
+                        <p>G-15, Ground Floor, Grand Galleria,
+                            <br> High Street Phoenix,S. B. Marg
+                            <br> Lower Parel,
+                            <br> Mumbai 400013.
+                            <br>Email : retail@accessinfoworld.com</p>
+                        <p>Tel : +91-22-32233353</p>
+                    </div>
+                </div>
+                <div class="col-33">
+                    <div class="marc">
+                         <a href="#" onclick="window.open('https://www.google.co.in/maps/search/High+Street+Phoenix,S.+B.+Marg/@19.0874011,72.8210159,12z/data=!3m1!4b1', '_system', 'location=yes'); return false;">
+               <img src="img/map.jpg" class="full-image">
+            </a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="get-in-touch">
+                        <h2>Get in touch</h2>
+                        <div class="list contact-form">
+                            <form ng-submit="usercontact()">
+                                <label class="item item-input item-floating-label">
+                                    <span class="input-label">Name</span>
+                                    <input type="text" placeholder="Name*" ng-model="contactus.name" ng-class="allvalidation[0].validation" required>
+                                </label>
+                                <label class="item item-input item-floating-label">
+                                    <span class="input-label">Email</span>
+                                    <input type="email" placeholder="Email*" ng-model="contactus.email" ng-class="allvalidation[1].validation" required>
+                                </label>
+                                <label class="item item-input item-floating-label">
+                                    <span class="input-label">Telephone</span>
+                                    <input type="tel" placeholder="Telephone" ng-model="contactus.phone">
+                                </label>
+                                <label class="item item-input item-floating-label">
+                                    <span class="input-label">Query</span>
+                                    <textarea name="" id="" rows="4" placeholder="Query*" ng-model="contactus.comment" ng-class="allvalidation[2].validation"></textarea>
+                                </label>
+                                <button class="button button-positive contact-button" type="submit">
+                                    Done
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

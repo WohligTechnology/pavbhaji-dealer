@@ -1,0 +1,154 @@
+<ion-modal-view>
+    <ion-header-bar align-title="center">
+        <h1 class="title">Filters</h1>
+        <div class="buttons">
+            <button class="button modal-close button-clear button-icon " ng-click="closeFilter()"><i class="icon ion-ios-close-empty"></i></button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <div class="filters">
+            <accordion close-others="oneAtATime">
+                <!-- Category Filter -->
+                <!-- <accordion-group heading="Categories" class="accordion-header" ng-if="showfilter.category && showfilter.category.length>1">
+                    <ul class="list">
+                        <li class="item item-checkbox" ng-repeat="val in showfilter.category" ng-if="val.name">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="showfilter.category[$index].status" ng-change="alignFilterId('category')">
+                            </label>
+                            {{val.name}}
+                        </li>
+                    </ul>
+                </accordion-group> -->
+                <!-- Brand Filter -->
+                <accordion-group heading="Brands" class="accordion-header" ng-if="showfilter.brand && showfilter.brand.length>1">
+                    <ul class="list">
+                        <li class="item item-checkbox" ng-repeat="val in showfilter.brand" ng-if="val.name">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="showfilter.brand[$index].status" ng-change="alignFilterId('brand')">
+                            </label>
+                            {{val.name}}
+                        </li>
+                    </ul>
+                </accordion-group>
+                <!-- Compatible With Filter -->
+                <accordion-group heading="Compatible With" class="accordion-header" ng-if="showfilter.compatiblewith && showfilter.compatiblewith.length>1">
+                    <ul class="list">
+                        <li class="item item-checkbox" ng-repeat="val in showfilter.compatiblewith" ng-if="val.compatiblewith">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="showfilter.compatiblewith[$index].status" ng-change="alignFilter('compatiblewith')">
+                            </label>
+                            {{val.compatiblewith}}
+                        </li>
+                    </ul>
+                </accordion-group>
+                <!-- Type Filter -->
+                <accordion-group heading="Type" class="accordion-header" ng-if="showfilter.type && showfilter.type.length>1">
+                    <ul class="list">
+                        <li class="item item-checkbox" ng-repeat="val in showfilter.type" ng-if="val.name">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="showfilter.type[$index].status" ng-change="alignFilterId('type')">
+                            </label>
+                            {{val.name}}-{{showfilter.type[$index].status}}
+                        </li>
+                    </ul>
+                </accordion-group>
+                <!-- Finish Filter -->
+                <accordion-group heading="Finish" class="accordion-header" ng-if="showfilter.finish && showfilter.finish.length>1">
+                    <ul class="list">
+                        <li class="item item-checkbox" ng-repeat="val in showfilter.finish" ng-if="val.finish">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="showfilter.finish[$index].status" ng-change="alignFilter('finish')">
+                            </label>
+                            {{val.finish}}
+                        </li>
+                    </ul>
+                </accordion-group>
+                <!-- Size Filter -->
+                <accordion-group heading="Size" class="accordion-header" ng-if="showfilter.size && showfilter.size.length>1">
+                    <ul class="list">
+                        <li class="item item-checkbox" ng-repeat="val in showfilter.size" ng-if="val.size">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="showfilter.size[$index].status" ng-change="alignFilter('size')">
+                            </label>
+                            {{val.size}}
+                        </li>
+                    </ul>
+                </accordion-group>
+                <!-- Microphone Filter -->
+                <accordion-group heading="Microphone" class="accordion-header" ng-if="showfilter.microphone && showfilter.microphone.length>1">
+                    <ul class="list">
+                        <li class="item item-checkbox" ng-repeat="val in showfilter.microphone" ng-if="val.microphone">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="showfilter.microphone[$index].status" ng-change="alignFilter('microphone')">
+                            </label>
+                            {{val.microphone}}
+                        </li>
+                    </ul>
+                </accordion-group>
+                <!-- Cable Length Filter -->
+                <accordion-group heading="Cable Length" class="accordion-header" ng-if="showfilter.clength && showfilter.clength.length>1">
+                    <ul class="list">
+                        <li class="item item-checkbox" ng-repeat="val in showfilter.clength" ng-if="val.clength">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="showfilter.clength[$index].status" ng-change="alignFilter('clength')">
+                            </label>
+                            {{val.clength}}
+                        </li>
+                    </ul>
+                </accordion-group>
+                <!-- Voltage Filter -->
+                <accordion-group heading="Voltage" class="accordion-header" ng-if="showfilter.voltage && showfilter.voltage.length>1">
+                    <ul class="list">
+                        <li class="item item-checkbox" ng-repeat="val in showfilter.voltage" ng-if="val.voltage">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="showfilter.voltage[$index].status" ng-change="alignFilter('voltage')">
+                            </label>
+                            {{val.voltage}}
+                        </li>
+                    </ul>
+                </accordion-group>
+                <!-- Capacity Filter -->
+                <accordion-group heading="Capacity" class="accordion-header" ng-if="showfilter.capacity && showfilter.capacity.length>1">
+                    <ul class="list">
+                        <li class="item item-checkbox" ng-repeat="val in showfilter.capacity" ng-if="val.capacity">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="showfilter.capacity[$index].status" ng-change="alignFilter('capacity')">
+                            </label>
+                            {{val.capacity}}
+                        </li>
+                    </ul>
+                </accordion-group>
+                <!-- Color Filter -->
+                <accordion-group heading="Colors" class="accordion-header" ng-if="showfilter.color && showfilter.color.length>1">
+                    <ul class="list">
+                        <li class="item item-checkbox" ng-repeat="val in showfilter.color" ng-if="val.color">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="showfilter.color[$index].status" ng-change="alignFilter('color')">
+                            </label>
+                            {{val.color}}
+                        </li>
+                    </ul>
+                </accordion-group>
+                <accordion-group heading="Price" class="accordion-header">
+                    <!-- <div class="row">
+                        <div class="col">
+                            <input type="text" placeholder="Rs. 0" ng-model="filters.pricemin">
+                        </div>
+                        <div class="separator">
+                            <h2>-</h2></div>
+                        <div class="col">
+                            <input type="text" placeholder="Rs. 60000" ng-model="filters.pricemax">
+                        </div>
+                    </div> -->
+                    <!-- Filters Model : {{filters.pricemin}}-{{filters.pricemax}}   <br>
+                    Showfilter : {{showfilter.price.min}}-{{showfilter.price.max}} -->
+                    <span class="ib">{{showfilter.price.min}}</span>
+                    <slider floor="{{showfilter.price.min}}" ceiling="{{showfilter.price.max}}" ng-model-low="filters.pricemin" ng-model-high="filters.pricemax" ng-if="filters">
+                    </slider>
+                    <span class="ib">{{showfilter.price.max}}</span>
+                </accordion-group>
+            </accordion>
+            <button class="button button-positive btn-filter" ng-click="closeFilter();">Submit</button>
+        </div>
+    </ion-content>
+</ion-modal-view>

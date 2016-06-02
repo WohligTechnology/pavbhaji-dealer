@@ -1,0 +1,110 @@
+<ion-view view-title="Product Detail">
+    <div class="bar bar-subheader bar-positive" ng-hide="transparent_header">
+        <h1 class="title">{{product.product.name}}</h1>
+    </div>
+       <ion-content ng-class="{'no-header':transparent_header}" on-scroll="pageScrolled()">
+    <!-- <ion-content ng-class="has-header" on-scroll="pageScrolled()"> -->
+        <div class="product-detail">
+            <ion-slide-box on-slide-changed="slideHasChanged($index)">
+                <ion-slide ng-repeat="images in productdetail">
+                    <div class="image-holder-productimg" ng-click="openModal(images.image);">
+                        <img ng-src="{{images.image}}" class="product-img" alt="" ng-if="images.image">
+                        <img src="img/icon.png" class="product-img" alt="" ng-if="!images.image">
+                        <div class="play-btn" ng-if="images.check==0">
+                          <i class="ln-circle-play"></i>
+                        </div>
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+            <div class="row price" ng-repeat="same in product.samecolor">
+                <div class="col-25" ng-repeat="products in same">
+                    <div class="image-hold" ng-style="{'background-image':'url({{products.samecolorimages[0][0].image | serverimage}})'}" ng-click="goToSameColorProduct(products);">
+                    </div>
+                </div>
+                <!-- <div class="col-25">
+                    <div class="image-hold" ng-style="{'background-image':'url(img/products/iphone.jpg)'}">
+                    </div>
+                </div>
+                <div class="col-25">
+                    <div class="image-hold" ng-style="{'background-image':'url(img/products/iphone.jpg)'}">
+                    </div>
+                </div>
+                <div class="col-25">
+                    <div class="image-hold" ng-style="{'background-image':'url(img/products/iphone.jpg)'}">
+                    </div>
+                </div> -->
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="no-margin detail">
+                        <div class="name-other">
+                            <h2>{{product.product.name}}</h2>
+                            <div class="row">
+                                <div class="col user-rating" ng-show="showSalePrice">
+                                    <h3 style="text-align: left">Discount : <span>{{product.product.discountinper}}%</span></h3>
+                                </div>
+                                <div class="col">
+                                    <h3>Availability : <span>{{availability}}</span></h3>
+                                </div>
+                            </div>
+                            <div class="price">
+                                <span>Price :
+                                <span ng-show="showSalePrice">Rs. {{product.product.firstsaleprice | numberWithCommas}}</span>
+                                <span class="cross" ng-show="showSalePrice">Rs. {{product.product.price | numberWithCommas}}</span>
+                                <span ng-hide="showSalePrice">Rs. {{product.product.price | numberWithCommas}}</span>
+                                </span>
+                            </div>
+                            <div class="product-buttons padding-vertical">
+                                <button class="button btn-productdetail icon-left button-positive" ng-click="addtocart(product.product)" ng-if="availability!='Out of Stock'">
+                                    <i class="icon ln-cart"></i>Add to cart
+                                </button>
+                                <button class="button btn-productdetail icon-left ion-ios-heart button-positive" ng-click="addtowishlist(product.product.id);">Add to wishlist</button>
+                            </div>
+                            <div class="tabs-detail">
+                                <div class="row">
+                                    <div class="col" ng-class="{'active-tab':tab.left}">
+                                        <button class="button button-clear" ng-click="clickTab('left')">
+                                            <h5>DESCRIPTION</h5></button>
+                                    </div>
+                                    <div class="col" ng-class="{'active-tab':tab.right}">
+                                        <button class="button button-clear" ng-click="clickTab('right')">
+                                            <h5>SPECIFICATION</h5></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="description" ng-show="tab.left">
+                                <p ng-bind-html="product.product.description"></p>
+                            </div>
+                            <div class="specification" ng-show="tab.right">
+                                <p ng-if="product.product.modelnumber">Model Number <span class="item-note">{{product.product.modelnumber}}</span></p>
+                                <p ng-if="product.product.brandcolor">Color<span class="item-note">{{product.product.brandcolor}}</span></p>
+                                <p ng-if="product.product.compatiblewith">Compatible With<span class="item-note">{{product.product.compatiblewith}}</span></p>
+                                <p ng-if="product.product.type">Type<span class="item-note">{{product.product.type}}</span></p>
+                                <p ng-if="product.product.microphone">Microphone<span class="item-note">{{product.product.microphone}}</span></p>
+                                <p ng-if="product.product.dimension">Dimensions<span class="item-note">{{product.product.dimension}}</span></p>
+                                <p ng-if="product.product.weight">Weight<span class="item-note">{{product.product.weight}}</span></p>
+                                <p ng-if="product.product.material">Material<span class="item-note">{{product.product.material}}</span></p>
+                                <p ng-if="product.product.finish">Finish<span class="item-note">{{product.product.finish}}</span></p>
+                                <p ng-if="product.product.clength">Cable Length<span class="item-note">{{product.product.clength}}</span></p>
+                                <p ng-if="product.product.capacity">Capacity<span class="item-note">{{product.product.capacity}}</span></p>
+                                <p ng-if="product.product.voltage && product.product.voltage!='0'">Voltage<span class="item-note">{{product.product.voltage}} Amp</span></p>
+                                <p ng-if="product.product.compatibledevice">Compatible Device<span class="item-note">{{product.product.compatibledevice}}</span></p>
+                                <p ng-if="product.product.domesticwarranty">Warranty<span class="item-note">{{product.product.domesticwarranty}}</span></p>
+                                <p ng-if="product.product.warrantysummary">Warranty Summary<span class="item-note">{{product.product.warrantysummary}}</span></p>
+                                <p ng-if="product.product.salespackage">What's Included<span class="item-note">{{product.product.salespackage}}</span></p>
+                                <!-- <p ng-if="product.product.eanorupc">EAN/UPC<span class="item-note">{{product.product.eanorupc}}</span></p> -->
+                                <!-- <p ng-if="product.product.modelname">Model Name <span class="item-note">{{product.product.modelname}}</span></p>
+                                <p ng-if="product.product.width">Width<span class="item-note">{{product.product.width}}</span></p>
+                                <p ng-if="product.product.height">Height<span class="item-note">{{product.product.height}}</span></p>
+                                <p ng-if="product.product.depth">Depth<span class="item-note">{{product.product.depth}}</span></p>
+                                <p ng-if="product.product.keyfeatures">Key Features<span class="item-note">{{product.product.keyfeatures}}</span></p>
+                                <p ng-if="product.product.size">Size<span class="item-note">{{product.product.size}}</span></p>
+                                <p ng-if="product.product.modelname">Type Name<span class="item-note">{{product.product.modelname}}</span></p> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

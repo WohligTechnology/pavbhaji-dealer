@@ -1,0 +1,48 @@
+<ion-view view-title="About Us">
+    <!--
+    <div class="bar bar-subheader bar-light tabs-about bar-stable">
+        <div class="row">
+            <div class="col" ng-class="{'active-tab':tab.left}">
+                <button class="button button-clear" ng-click="clickTab('left')">
+                    <h5>ABOUT COMPANY</h5></button>
+            </div>
+            <div class="col" ng-class="{'active-tab':tab.right}">
+                <button class="button button-clear" ng-click="clickTab('right')">
+                    <h5>OUR CLIENTELE</h5></button>
+            </div>
+        </div>
+    </div>
+-->
+    <div class="ab-tab tabs-striped tabs-top has-tabs-top tabs-background-positive tabs-color-light">
+       <div class="tabs">
+            <a class="tab-item {{classa}}" ng-click="tabchange('new',1)">
+                <span>About Company</span>
+            </a>
+            <a class="tab-item {{classb}}" ng-click="tabchange('already',2)">
+                <span>Our Clientele</span>
+            </a>
+
+        </div>
+    </div>
+    <ion-content class=" has-tabs-top">
+        <div class="about" ng-show="tab=='new'">
+            <h4>WHO WE ARE?</h4>
+            <p>Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim.</p>
+            <p>
+
+                Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim.</p>
+            <h4>WHAT WE ARE DOING?</h4>
+            <p>Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim</p>
+        </div>
+        <div class="clientele" ng-show="tab=='already'">
+            <div class="row" ng-repeat="celebs in celebimages">
+                <div class="col">
+                    <div class="clnt pad15">
+                        <div class="image-holder-clientele"><img src="{{celebs.image | serverimage}}" class="brand-image  b4"></div>
+                        <h4>{{celebs.title}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

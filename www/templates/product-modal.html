@@ -1,0 +1,24 @@
+<ion-modal-view>
+    <ion-header-bar align-title="center">
+        <h1 class="title">{{zoomImage.name}}</h1>
+        <div class="buttons">
+            <button class="button modal-close button-clear button-icon" ng-click="closeModal()"><i class="icon ion-ios-close-empty"></i></button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <div class="product-detail" ng-if="showImage==false">
+            <div youtube code="zoomImage.image"></div>
+            <!-- <ion-slide-box on-slide-changed="slideHasChanged($index)">
+                <ion-slide ng-repeat="images in productdetail">
+                    <ion-scroll zooming="true">
+                        <img ng-src="{{images.image}}" class=" full-image" alt="" ng-if="images.image">
+                        <img src="img/icon.png" class="" alt="" ng-if="!images.image">
+                    </ion-scroll>
+                </ion-slide>
+            </ion-slide-box> -->
+        </div>
+        <ion-scroll zooming="true" direction="xy" style="width: 1000px; height: 1000px" ng-if="showImage==true">
+            <div style="width: 5000px; height: 5000px; background: url({{zoomImage.image}});background-repeat: no-repeat;"></div>
+        </ion-scroll>
+    </ion-content>
+</ion-modal-view>

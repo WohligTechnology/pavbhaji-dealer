@@ -1,0 +1,16 @@
+<a href="#/app/productdetail/{{item.id}}" style="text-decoration: none">
+    <span class="discper" ng-show="item.showSalePrice">{{item.discountinper}}%</span>
+    <div class="image-holder-product">
+        <img class="brand-image" ng-src="{{item.image1 | serverimage}}" alt="" ng-if="item.image1">
+        <img class="brand-image" ng-src="img/icon.png" alt="" ng-if="!item.image1">
+        <div class="stock" ng-if="item.quantity<=0">
+            <p class="text-capitalize">Sorry Mate, Sold Out</p>
+        </div>
+    </div>
+    <div class="product-details">
+        <h2>{{item.name}}</h2>
+        <h3 ng-show="item.showSalePrice">Rs. {{item.firstsaleprice | numberWithCommas}}</h3>
+        <h3 class="cross" ng-show="item.showSalePrice">Rs. {{item.price | numberWithCommas}}</h3>
+        <h3 ng-hide="item.showSalePrice">Rs. {{item.price | numberWithCommas}}</h3>
+    </div>
+</a>

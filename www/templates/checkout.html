@@ -1,0 +1,264 @@
+<ion-view view-title="Checkout">
+    <ion-content>
+        <div class="checkout">
+            <div class="row" ng-show="showlogreg">
+                <div class="col">
+                    <div class="easycheckout">
+                        <ul class="list">
+                            <li class="chkbx-head">
+                                <h2>Checkout</h2>
+                            </li>
+                            <li class="chkbx-head">
+                                <p>Register with us for future convenience</p>
+                            </li>
+                            <ion-radio class="chkbx" ng-show="showlogreg" ng-model="choice" ng-value="'guest'">Checkout as guest</ion-radio>
+                            <ion-radio class="chkbx" ng-show="showlogreg" ng-model="choice" ng-value="'login'">Login/Register</ion-radio>
+                            <button class="button button-positive chkbx-button" type="submit" ng-click="continue(choice)">
+                                Continue
+                            </button>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col no-padding">
+                    <div class="billing" ng-show="openbilling">
+                        <h2>Billing information</h2>
+                        <div class="list checkout-form">
+                            <form ng-submit="doLogin()">
+                                <label class="item item-input item-floating-label">
+                                    <span class="input-label">First Name*</span>
+                                    <input type="text" placeholder="First Name*" ng-model="checkout.firstname" ng-class="allvalidation[0].validation" required>
+                                </label>
+                                <label class="item item-input item-floating-label">
+                                    <span class="input-label">Last Name*</span>
+                                    <input type="text" placeholder="Last Name*" ng-model="checkout.lastname" ng-class="allvalidation[1].validation" required>
+                                </label>
+                                <label class="item item-input item-floating-label">
+                                    <span class="input-label">Company</span>
+                                    <input type="text" placeholder="Company" ng-model="checkout.company">
+                                </label>
+                                <label class="item item-input item-floating-label">
+                                    <span class="input-label">Email*</span>
+                                    <input type="email" placeholder="Email*" ng-model="checkout.email" ng-class="allvalidation[2].validation" required>
+                                </label>
+                                <label class="item item-input item-floating-label">
+                                    <span class="input-label">Address*</span>
+                                    <textarea name="" id="" rows="2" placeholder="Address*" ng-model="checkout.billingaddress" ng-class="allvalidation[3].validation" required></textarea>
+                                </label>
+                                <label class="item item-input item-floating-label">
+                                    <span class="input-label">City*</span>
+                                    <input type="text" placeholder="City*" ng-model="checkout.billingcity" ng-class="allvalidation[4].validation" required>
+                                </label>
+                                <label class="item item-input item-select">
+                                    <div class="input-label">
+                                        Select State*
+                                    </div>
+                                    <select ng-model="checkout.billingstate" ng-class="allvalidation[5].validation" required>
+                                        <option value="">Select State</option>
+                                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                        <option value="Assam">Assam</option>
+                                        <option value="Bihar">Bihar</option>
+                                        <option value="Chandigarh">Chandigarh</option>
+                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                        <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                                        <option value="Daman and Diu">Daman and Diu</option>
+                                        <option value="Delhi">Delhi</option>
+                                        <option value="Goa">Goa</option>
+                                        <option value="Gujarat">Gujarat</option>
+                                        <option value="Haryana">Haryana</option>
+                                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                        <option value="Jharkhand">Jharkhand</option>
+                                        <option value="Karnataka">Karnataka</option>
+                                        <option value="Kerala">Kerala</option>
+                                        <option value="Lakshadweep">Lakshadweep</option>
+                                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                        <option value="Maharashtra">Maharashtra</option>
+                                        <option value="Manipur">Manipur</option>
+                                        <option value="Meghalaya">Meghalaya</option>
+                                        <option value="Mizoram">Mizoram</option>
+                                        <option value="Nagaland">Nagaland</option>
+                                        <option value="Orissa">Orissa</option>
+                                        <option value="Pondicherry">Pondicherry</option>
+                                        <option value="Punjab">Punjab</option>
+                                        <option value="Rajasthan">Rajasthan</option>
+                                        <option value="Sikkim">Sikkim</option>
+                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                        <option value="Tripura">Tripura</option>
+                                        <option value="Uttaranchal">Uttaranchal</option>
+                                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                        <option value="West Bengal">West Bengal</option>
+                                    </select>
+                                </label>
+                                <label class="item item-input item-floating-label">
+                                    <span class="input-label">Zip/Postal Code*</span>
+                                    <input type="text" placeholder="Zip/Postal Code*" ng-model="checkout.billingpincode" ng-class="allvalidation[6].validation" required only-digits maxlength="6" ng-trim="false">
+                                </label>
+                                <label class="item item-input item-select">
+                                    <div class="input-label">
+                                        Select Country*
+                                    </div>
+                                    <select ng-model="checkout.billingcountry" ng-class="allvalidation[7].validation" required>
+                                        <option value="">Select Country</option>
+                                        <option value="India">India</option>
+                                    </select>
+                                </label>
+                                <label class="item item-input item-floating-label">
+                                    <span class="input-label">Contact Number*</span>
+                                    <input type="tel" placeholder="Contact Number*" ng-model="checkout.billingcontact" ng-class="allvalidation[8].validation" only-digits ng-trim="false">
+                                </label>
+                                <button class="button button-positive checkout-button" type="submit" ng-click="toggleAddress()" ng-bind="address_select">
+                                </button>
+                                <div class="checkout-form2" ng-show="different_address">
+                                    <h2>Shipping information</h2>
+                                    <label class="item item-input item-floating-label">
+                                        <span class="input-label">Shipping Name*</span>
+                                        <input type="text" placeholder="Shipping Name*" ng-model="checkout.shippingname" ng-class="allvalidation[9].validation">
+                                    </label>
+                                    <label class="item item-input item-floating-label">
+                                        <span class="input-label">Address*</span>
+                                        <textarea name="" id="" rows="2" ng-model="checkout.shippingaddress" placeholder="Address* " ng-class="allvalidation[10].validation"></textarea>
+                                    </label>
+                                    <label class="item item-input item-floating-label">
+                                        <span class="input-label">City*</span>
+                                        <input type="text" placeholder="City*" ng-model="checkout.shippingcity" ng-class="allvalidation[11].validation">
+                                    </label>
+                                    <label class="item item-input item-select">
+                                        <div class="input-label">
+                                            Select State*
+                                        </div>
+                                        <select ng-model="checkout.shippingstate" ng-class="allvalidation[12].validation" required>
+                                            <option value="">Select State</option>
+                                            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                            <option value="Assam">Assam</option>
+                                            <option value="Bihar">Bihar</option>
+                                            <option value="Chandigarh">Chandigarh</option>
+                                            <option value="Chhattisgarh">Chhattisgarh</option>
+                                            <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                                            <option value="Daman and Diu">Daman and Diu</option>
+                                            <option value="Delhi">Delhi</option>
+                                            <option value="Goa">Goa</option>
+                                            <option value="Gujarat">Gujarat</option>
+                                            <option value="Haryana">Haryana</option>
+                                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                            <option value="Jharkhand">Jharkhand</option>
+                                            <option value="Karnataka">Karnataka</option>
+                                            <option value="Kerala">Kerala</option>
+                                            <option value="Lakshadweep">Lakshadweep</option>
+                                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                            <option value="Maharashtra">Maharashtra</option>
+                                            <option value="Manipur">Manipur</option>
+                                            <option value="Meghalaya">Meghalaya</option>
+                                            <option value="Mizoram">Mizoram</option>
+                                            <option value="Nagaland">Nagaland</option>
+                                            <option value="Orissa">Orissa</option>
+                                            <option value="Pondicherry">Pondicherry</option>
+                                            <option value="Punjab">Punjab</option>
+                                            <option value="Rajasthan">Rajasthan</option>
+                                            <option value="Sikkim">Sikkim</option>
+                                            <option value="Tamil Nadu">Tamil Nadu</option>
+                                            <option value="Tripura">Tripura</option>
+                                            <option value="Uttaranchal">Uttaranchal</option>
+                                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                            <option value="West Bengal">West Bengal</option>
+                                        </select>
+                                    </label>
+                                    <label class="item item-input item-floating-label">
+                                        <span class="input-label">Zip/Postal COde*</span>
+                                        <input type="text" placeholder="Zip/Postal Code*" ng-model="checkout.shippingpincode" ng-class="allvalidation[13].validation">
+                                    </label>
+                                    <label class="item item-input item-select">
+                                        <div class="input-label">
+                                            Select Country*
+                                        </div>
+                                        <select ng-model="checkout.shippingcountry" ng-class="allvalidation[14].validation">
+                                            <option value="">Select Country</option>
+                                            <option value="Afganistan">India</option>
+                                        </select>
+                                    </label>
+                                    <label class="item item-input item-floating-label">
+                                        <span class="input-label">Contact Number*</span>
+                                        <input type="tel" placeholder="Contact Number*" ng-model="checkout.shippingcontact" ng-class="allvalidation[15].validation">
+                                    </label>
+                                </div>
+                                <!--
+                                <button class="button button-positive checkout-button" type="submit" ng-click="paymentOption()">
+                                    Continue123
+                                </button>
+-->
+                            </form>
+                            <!--
+                            <div class="payment">
+                                <h2>Payment information</h2>
+
+                            </div>
+-->
+                        </div>
+                    </div>
+                    <div class="order-review no-border" ng-show="showOrderReview">
+                        <h2>Order review</h2>
+                        <div class="item item-icon-left"><i class="icon ln-cash"></i>
+                            <h3>Sub total <span class="item-note">Rs. {{totalcart | numberWithCommas}}</span>
+                            </h3>
+                        </div>
+                        <div class="item item-icon-left">
+                            <h3>
+                              <i class="icon ln-ticket"></i>Discount amount
+                              <span class="item-note">Rs. 0</span>
+                            </h3>
+                        </div>
+                        <div class="item item-icon-left">
+                            <h3><i class="icon ln-cash"></i>Total amount
+                            <span class="item-note">Rs. {{totalcart | numberWithCommas}}</span>
+                          </h3>
+                        </div>
+                    </div>
+                    <button class="button button-positive order-button" type="submit" ng-click="paymentOption()" ng-show="showOrderReview">
+                        Order
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="placeorder" ng-show="paymentinfo" style="display:none;">
+            <form action="http://accessworld.in/admin/paymentgateway/ccavRequestHandler.php" method="post" style="padding-top:20px;">
+                <!--                                    <span style="font-weight:600; padding-top:20px">Order Id:</span> {{payment.orderid}}-->
+                <!--               CHECKOUT POST FORM START                    -->
+                <input type="text" hidden name="tid" id="tid" />
+                <input type="text" hidden name="order_id" ng-model="checkout.orderid">
+                <input type="text" hidden name="merchant_id" value="76752">
+                <input type="text" hidden name="amount" ng-model="allamount">
+                <input type="text" hidden name="billing_name" ng-model="checkout.firstname">
+                <input type="text" hidden name="currency" value="INR">
+                <input type="text" hidden name="merchant_param1" ng-model="couponhave">
+                <input type="text" hidden name="redirect_url" value="http://accessinfoworld.com/admin/index.php/json/payumoneysuccess">
+                <input type="text" hidden name="cancel_url" value="http://accessinfoworld.com/#/checkout" />
+                <input type="text" hidden name="language" value="EN" />
+                <!-- <input type="text" name="lastname" ng-model="checkout.lastname"> -->
+                <input type="text" hidden name="billing_address" ng-model="checkout.billingaddress">
+                <input type="text" hidden name="billing_country" ng-model="checkout.billingcountry">
+                <input type="text" hidden name="billing_state" ng-model="checkout.billingstate">
+                <input type="text" hidden name="billing_city" ng-model="checkout.billingcity">
+                <input type="text" hidden name="billing_zip" ng-model="checkout.billingpincode">
+                <input type="text" hidden name="billing_tel" ng-model="checkout.billingcontact">
+                <input type="text" hidden name="billing_email" ng-model="checkout.email">
+                <input type="text" hidden name="delivery_name" ng-model="checkout.shippingname">
+                <input type="text" hidden name="delivery_address" ng-model="checkout.shippingaddress">
+                <input type="text" hidden name="delivery_country" ng-model="checkout.shippingcountry">
+                <input type="text" hidden name="delivery_city" ng-model="checkout.shippingcity">
+                <input type="text" hidden name="delivery_state" ng-model="checkout.shippingstate">
+                <input type="text" hidden name="delivery_zip" ng-model="checkout.shippingpincode">
+                <input type="text" hidden name="delivery_tel" ng-model="checkout.shippingcontact">
+                <input type="text" hidden name="integration_type" value="iframe_normal" />
+                <input type="submit" class="btn-all pull-right" style="text-align:center;" value="Place Order">
+                <!--               CHECKOUT POST FORM START                    -->
+            </form>
+            <!--            <a class="btn-all pull-right" ng-click="placeorder()">Place Order</a>-->
+        </div>
+    </ion-content>
+</ion-view>

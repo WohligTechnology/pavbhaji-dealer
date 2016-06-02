@@ -1,0 +1,32 @@
+<ion-view view-title="Product Categories">
+    <ion-content>
+        <!-- <div class="product-ctgry">
+            <div class="category" ng-repeat="menu in category">
+                <ion-item class="item item-divider" ng-click="getproductbycategory(menu.parent,menu.category);">{{menu.title}}</ion-item>
+                <ion-item class="product-item no-border" ng-repeat="submenu in menu.submenu" ng-click="getproductbycategory(submenu.parent,submenu.category);">
+                    <span>{{submenu.name}}</span>
+                </ion-item>
+            </div>
+        </div> -->
+        <div class="cat-d">
+            <img src="img/bkp.jpg" class="full-image">
+        </div>
+        <div class="text-center">
+            <p class="m-p">BROWSE BY CATEGORY</p>
+            <hr class="hr">
+        </div>
+        <div class="cat-c">
+            <div class="row pad0" ng-repeat="cato in cats">
+                <div class="col-50" ng-repeat="cat in cato" ui-sref="app.category({name:cat.name,id:cat.id})">
+                    <div class="cat-i">
+                        <figure class="text-center">
+                            <img ng-src="{{cat.image1 | serverimage}}" class="w40">
+                            <figcaption class="f-z">{{cat.name}}</figcaption>
+                        </figure>
+                    </div>
+                </div>
+
+            </div>
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,35 @@
+<ion-view view-title="Deals">
+    <ion-content>
+        <div class="newarrivals">
+            <div class="row" ng-repeat="product in products">
+                <div class="col">
+                    <a href="#/app/productdetail/{{product.id}}" style="text-decoration: none">
+                        <div class="row">
+                            <div class="col-33 image-holder-product" ng-if="product.image1">
+                                <img class="brand-image" ng-src="{{product.image1 | serverimage}}" alt="">
+                            </div>
+                            <div class="col-33 image-holder-product" ng-if="product.image2">
+                                <img class="brand-image" ng-src="{{product.image2 | serverimage}}" alt="">
+                            </div>
+                            <div class="col-33 image-holder-product" ng-if="!product.image1 && !product.image2">
+                                <img class="brand-image" src="img/icon.png" alt="">
+                            </div>
+                            <div class="col newarrivals-details">
+                                <h2>{{product.name}}</h2>
+                                <h3 ng-show="product.showSalePrice">Rs. {{product.firstsaleprice | numberWithCommas}}</h3>
+                                <h3 class="cross" ng-show="product.showSalePrice">Rs. {{product.price | numberWithCommas}}</h3>
+                                <h3 ng-hide="product.showSalePrice">Rs. {{product.price | numberWithCommas}}</h3>
+                                <h3 class="discperdeal" ng-show="product.showSalePrice">{{product.discountinper}}%</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <ion-infinite-scroll on-infinite="addMoreItems()" distance="25%" style="height:0px" ng-if="keepscrolling">
+        </ion-infinite-scroll>
+        <div class="center" ng-show="shownodata">
+            <p>Nothing to Show, Folks!</p>
+        </div>
+    </ion-content>
+</ion-view>

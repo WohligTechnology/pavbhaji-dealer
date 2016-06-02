@@ -1,0 +1,12 @@
+<ion-view view-title="Category">
+    <ion-content>
+        <div class="cat-l">
+            <div class="list">
+                <div class="item item-divider">
+                    {{categoryName}}
+                </div>
+                <a class="item" href="#/app/product/{{subcategory.id}}/0/0" ng-repeat="subcategory in subcategories | orderBy:'order'">{{subcategory.name}}</a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -25,7 +25,7 @@
                     <div class="billing" ng-show="openbilling">
                         <h2>Billing information</h2>
                         <div class="list checkout-form">
-                            <form ng-submit="doLogin()">
+                            <form >
                                 <label class="item item-input item-floating-label">
                                     <span class="input-label">First Name*</span>
                                     <input type="text" placeholder="First Name*" ng-model="checkout.firstname" ng-class="allvalidation[0].validation" required>
@@ -106,6 +106,16 @@
                                         <option value="India">India</option>
                                     </select>
                                 </label>
+                                <label class="item item-input item-select">
+                                    <div class="input-label">
+                                         Payment Mode*
+                                    </div>
+                                    <select ng-model="checkout.paymentstatus" ng-class="allvalidation[13].validation" required>
+                                        <option value="">Select Payment Mode</option>
+                                        <option value="1">Full Payment</option>
+                                        <option value="2">Advance Payment</option>
+                                    </select>
+                                </label>
                                 <label class="item item-input item-floating-label">
                                     <span class="input-label">Contact Number*</span>
                                     <input type="tel" placeholder="Contact Number*" ng-model="checkout.billingcontact" ng-class="allvalidation[8].validation" only-digits ng-trim="false">
@@ -169,22 +179,24 @@
                                             <option value="West Bengal">West Bengal</option>
                                         </select>
                                     </label>
+
+
                                     <label class="item item-input item-floating-label">
                                         <span class="input-label">Zip/Postal COde*</span>
-                                        <input type="text" placeholder="Zip/Postal Code*" ng-model="checkout.shippingpincode" ng-class="allvalidation[13].validation">
+                                        <input type="text" placeholder="Zip/Postal Code*" ng-model="checkout.shippingpincode" ng-class="allvalidation[14].validation">
                                     </label>
                                     <label class="item item-input item-select">
                                         <div class="input-label">
                                             Select Country*
                                         </div>
-                                        <select ng-model="checkout.shippingcountry" ng-class="allvalidation[14].validation">
+                                        <select ng-model="checkout.shippingcountry" ng-class="allvalidation[15].validation">
                                             <option value="">Select Country</option>
                                             <option value="Afganistan">India</option>
                                         </select>
                                     </label>
                                     <label class="item item-input item-floating-label">
                                         <span class="input-label">Contact Number*</span>
-                                        <input type="tel" placeholder="Contact Number*" ng-model="checkout.shippingcontact" ng-class="allvalidation[15].validation">
+                                        <input type="tel" placeholder="Contact Number*" ng-model="checkout.shippingcontact" ng-class="allvalidation[16].validation">
                                     </label>
                                 </div>
                                 <!--

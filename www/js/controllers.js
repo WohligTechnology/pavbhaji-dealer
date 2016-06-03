@@ -75,10 +75,12 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
     };
     $scope.cartCheck = function() {
         console.log($scope.user.cart);
-        if ($scope.user.cart == 0)
+        if ($scope.user.cart === 0) {
             $scope.showAlert();
-        else
+        } else {
             $location.path('/app/cart');
+        }
+
     };
     $scope.showAlert = function() {
         var alertPopup = $ionicPopup.alert({
@@ -484,7 +486,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
     // console.log($scope.userdetails);
     MyServices.getuserdetails(function(data) {
         console.log(data);
-        $scope.userdetails=data;
+        $scope.userdetails = data;
         if (data != "false") {
             $ionicLoading.hide();
             // MyServices.setuser(data);
@@ -848,12 +850,17 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
     //add and subtract from cart
 
     $scope.getcartfunction = function() {
-        allfunction.loading();
         MyServices.getcart(function(data) {
             console.log(data);
-            $ionicLoading.hide();
             $scope.cart = data;
-            if (data == '' || data.length == 0) {
+            _.each($scope.cart, function(n) {
+                if (n.qty > n.maxQuantity) {
+                    n.msg = "Quantity more than available quantity";
+                } else {
+                    n.msg = "";
+                }
+            })
+            if (data === '') {
                 $scope.nodatafound = true;
                 $scope.nodata = "Nothing to Show, Folks!.";
             } else {
@@ -996,7 +1003,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                 field: $scope.checkout.billingcountry,
                 validation: ""
             }, {
-                field: $scope.checkout.billingcontact,
+                field: $scope.checkout.paymentstatus,
                 validation: ""
             }];
             $scope.checkout.shippingname = $scope.checkout.firstname + " " + $scope.checkout.lastname;
@@ -1055,60 +1062,41 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             }, {
                 field: $scope.checkout.shippingcontact,
                 validation: ""
+            }, {
+                field: $scope.checkout.paymentstatus,
+                validation: ""
             }];
         }
         var check = formvalidation($scope.allvalidation);
         console.log(check);
         if (check) {
             console.log($scope.checkout);
-            allfunction.loading();
-            MyServices.placeorder($scope.checkout, function(data) {
-                console.log(data);
-                $ionicLoading.hide();
-                if (data != 'false') {
-                    // $scope.checkout.orderid = data;
-                    allfunction.msg("Your Order has been placed", 'Thankyou!');
-                    // $scope.paymentinfo = true;
-                    $location.url("/app/home/");
-
-                    // var options = {
-                    //     location: 'no',
-                    //     clearcache: 'yes',
-                    //     toolbar: 'no'
-                    // };
-
-                    // var ref = $cordovaInAppBrowser.open("http://accessinfoworld.com/admin/paymentgateway/ccavRequestHandlerGet.php?tid=&order_id=" + $scope.checkout.orderid + "&merchant_id=76752&amount=" + $scope.allamount + "&billing_name=" + $scope.checkout.firstname + "&currency=INR&merchant_param1=" + $scope.couponhave + "&redirect_url=http://accessinfoworld.com/admin/index.php/json/payumoneysuccess&cancel_url=http://accessinfoworld.com/admin/index.php/json/payumoneysuccess&language=EN&billing_address=" + $scope.checkout.billingaddress + "&billing_country=" + $scope.checkout.billingcountry + "&billing_state=" + $scope.checkout.billingstate + "&billing_city=" + $scope.checkout.billingcity + "&billing_zip=" + $scope.checkout.billingpincode + "&billing_tel=" + $scope.checkout.billingcontact + "&billing_email=" + $scope.checkout.email + "&delivery_name=" + $scope.checkout.shippingname + "&delivery_address=" + $scope.checkout.shippingaddress + "&delivery_country=" + $scope.checkout.shippingcountry + "&delivery_city=" + $scope.checkout.shippingcity + "&delivery_state=" + $scope.checkout.shippingstate + "&delivery_zip=" + $scope.checkout.shippingpincode + "&delivery_tel=" + $scope.checkout.shippingcontact + "&integration_type=iframe_normal", '_blank', options)
-                    //     .then(function(event) {
-                    //         // success
-                    //     })
-                    //     .catch(function(event) {
-                    //         // error
-                    //     });
-
-                    // var ref = window.open("http://accessinfoworld.com/admin/paymentgateway/ccavRequestHandlerGet.php?tid=&order_id=" + $scope.checkout.orderid + "&merchant_id=76752&amount=" + $scope.allamount + "&billing_name=" + $scope.checkout.firstname + "&currency=INR&merchant_param1=" + $scope.couponhave + "&redirect_url=http://accessinfoworld.com/admin/index.php/json/payumoneysuccess&cancel_url=http://accessinfoworld.com/admin/index.php/json/payumoneysuccess&language=EN&billing_address=" + $scope.checkout.billingaddress + "&billing_country=" + $scope.checkout.billingcountry + "&billing_state=" + $scope.checkout.billingstate + "&billing_city=" + $scope.checkout.billingcity + "&billing_zip=" + $scope.checkout.billingpincode + "&billing_tel=" + $scope.checkout.billingcontact + "&billing_email=" + $scope.checkout.email + "&delivery_name=" + $scope.checkout.shippingname + "&delivery_address=" + $scope.checkout.shippingaddress + "&delivery_country=" + $scope.checkout.shippingcountry + "&delivery_city=" + $scope.checkout.shippingcity + "&delivery_state=" + $scope.checkout.shippingstate + "&delivery_zip=" + $scope.checkout.shippingpincode + "&delivery_tel=" + $scope.checkout.shippingcontact + "&integration_type=iframe_normal");
-
-                    // var interval = $interval(function() {
-                    //     MyServices.getorderbyorderid(data, function(orderData) {
-                    //         console.log(orderData);
-                    //         if (orderData.orderstatus == 5 || orderData.orderstatus == "5") {
-                    //             $cordovaInAppBrowser.close();
-                    //             $interval.cancel(interval);
-                    //             allfunction.msgHome("Payment Failed", 'Sorry!');
-                    //         } else if (orderData.orderstatus == 2 || orderData.orderstatus == "2") {
-                    //             $cordovaInAppBrowser.close();
-                    //             $interval.cancel(interval);
-                    //             allfunction.msgHome("Thank you for shopping", 'Payment Successfull');
-                    //         }
-                    //     })
-                    // }, 2000);
-                } else {
-                    allfunction.msg("Sorry Try Again", 'Sorry!');
-                }
+            MyServices.getcart(function(data) {
+                $scope.checkout.cart = data;
+                MyServices.gettotalcart(function(data) {
+                    console.log("totalcart = " + data);
+                    $scope.checkout.finalamount = $scope.totalcart;
+                    console.log($scope.checkout);
+                    // allfunction.loading();
+                    MyServices.placeorder($scope.checkout, function(data) {
+                        console.log(data);
+                        $ionicLoading.hide();
+                        if (data != 'false') {
+                            // $scope.checkout.orderid = data;
+                            allfunction.msg("Your Order has been placed", 'Thankyou!');
+                            // $scope.paymentinfo = true;
+                            $location.url("/app/brands/");
+                        } else {
+                            allfunction.msg("Sorry Try Again", 'Sorry!');
+                        }
+                    });
+                });
             });
-        } else {
-            allfunction.msg("Fill all mandatory fields", "Error !");
         }
-    }
+        //  else {
+        //     allfunction.msg("Fill all mandatory fields", "Error !");
+        // }
+    };
 })
 
 .controller('MyOrdersCtrl', function($scope, $stateParams, $location, $ionicHistory, MyServices, $ionicLoading) {
@@ -1838,7 +1826,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             $ionicLoading.hide();
             $scope.$broadcast('scroll.infiniteScrollComplete');
             // $scope.$broadcast('scroll.refreshComplete');
-        }, function(data){console.log(data);});
+        }, function(data) {
+            console.log(data);
+        });
     }
     $scope.addMoreItems();
 

@@ -4,22 +4,21 @@
             <div class="order" ng-repeat="orderhistory in orderhistory">
                 <div class="item item-divider">
 <span class="item-note">{{orderhistory.timestamp | date:'MMM d, y'}}</span>
-                                <p>Order Id: {{orderhistory.orderid}}</p>
+                                <p>Order Id: {{orderhistory.id}}</p>
             </div>
-              <div class="row-container" ng-repeat="products in orderhistory.orderitems">
+              <div class="row-container" ng-repeat="products in orderhistory.orderproduct">
                 <div class="col">
                     <div class="product-cart">
                         <div class="row ">
                             <div class="col-40">
                                 <div class="image-holder-cart">
-                                    <img class="cart-image" src="img/products/5.png" alt="">
+                                    <img class="cart-image" src="{{products.image|serverimage}}" alt="">
                                 </div>
                             </div>
                             <div class="col">
-                                <h4>{{products.orderitems[0]}}</h4>
-                                <h4>iPhone 6[S] 128GB 5inch</h4>
-                                <h5>Ref. 2514/302</h5>
-                       
+                                <h4>{{products.productname}}</h4>
+                                <h4>Rs. {{products.wholesaleprice}}</h4>
+
                             </div>
                         </div>
                     </div>
@@ -45,7 +44,8 @@
             </div>
 -->
             <div class="item item-divider">
-                <span class="item-note positive">Shipped</span>
+                <span class="item-note positive" ng-if="orderhistory.paymentstatus==1">Full Payment</span>
+                <span class="item-note positive" ng-if="orderhistory.paymentstatus==2">Advance Payment</span>
                 <p>Rs.{{orderhistory.finalamount}}</p>
             </div>
             </div>
@@ -67,7 +67,7 @@
                             <div class="col">
                                 <h4>iPhone 6[S] 128GB 5inch</h4>
                                 <h5>Ref. 2514/302</h5>
-                       
+
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
             </div>
             </div>
 -->
-            </div>            
+            </div>
         </div>
     </ion-content>
 </ion-view>

@@ -50,19 +50,18 @@ angular.module('starter.services', ['httpService'])
         },
         updateuser: function(userdetails, callback) {
             return $http({
-                url: adminurl + 'updateuser',
+                url: adminurl + 'updateDealer',
                 method: "POST",
                 data: {
                     'id': $.jStorage.get("user").id,
-                    'firstname': userdetails.firstname,
-                    'lastname': userdetails.lastname,
+                    'storename': userdetails.storename,
+                    'ownername': userdetails.ownername,
                     'email': userdetails.email,
+                    'address': userdetails.address,
+                    'city': userdetails.city,
+                    'state': userdetails.state,
                     'phone': userdetails.phone,
-                    'billingaddress': userdetails.billingaddress,
-                    'billingcity': userdetails.billingcity,
-                    'billingpincode': userdetails.billingpincode,
-                    'billingcountry': userdetails.billingcountry,
-                    'billingstate': userdetails.billingstate
+                    'pincode': userdetails.pincode
                 }
             }).success(callback);
         },

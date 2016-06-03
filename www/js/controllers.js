@@ -480,36 +480,45 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
 .controller('EditInfoCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading) {
     $.jStorage.set("filters", null);
     $scope.userdetails = {};
-    $scope.userdetails = $.jStorage.get("user");
-    console.log($scope.userdetails);
+    // $scope.userdetails = $.jStorage.get("user");
+    // console.log($scope.userdetails);
+    MyServices.getuserdetails(function(data) {
+        console.log(data);
+        $scope.userdetails=data;
+        if (data != "false") {
+            $ionicLoading.hide();
+            // MyServices.setuser(data);
+
+        } else {
+            $ionicLoading.hide();
+            allfunction.msg("Sorry Try Again", 'Sorry!');
+        }
+    });
     $scope.edit_save = "Edit information";
     $scope.disabled = true;
     $scope.saved = false;
     $scope.editSave = function(userdetails) {
 
         $scope.allvalidation = [{
-            field: $scope.userdetails.firstname,
+            field: $scope.userdetails.storename,
             validation: ""
         }, {
-            field: $scope.userdetails.lastname,
-            validation: ""
-        }, {
-            field: $scope.userdetails.billingaddress,
-            validation: ""
-        }, {
-            field: $scope.userdetails.billingcity,
-            validation: ""
-        }, {
-            field: $scope.userdetails.billingstate,
-            validation: ""
-        }, {
-            field: $scope.userdetails.billingcountry,
-            validation: ""
-        }, {
-            field: $scope.userdetails.billingpincode,
+            field: $scope.userdetails.ownername,
             validation: ""
         }, {
             field: $scope.userdetails.email,
+            validation: ""
+        }, {
+            field: $scope.userdetails.address,
+            validation: ""
+        }, {
+            field: $scope.userdetails.city,
+            validation: ""
+        }, {
+            field: $scope.userdetails.state,
+            validation: ""
+        }, {
+            field: $scope.userdetails.pincode,
             validation: ""
         }, {
             field: $scope.userdetails.phone,
@@ -534,17 +543,6 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
         } else {
             allfunction.msg("Fill all mandatory fields", "Error !");
         }
-        //            if ($scope.edit_save === "Edit information") {
-        //                $scope.edit_save = "Save";
-        //                $scope.disabled = false;
-        //
-        //            } else {
-        //                $scope.edit_save = "Edit information";
-        //                //                SAVE OPERATIONS
-        //                $scope.disabled = true;
-        //                $scope.saved = true;
-        //                $ionicScrollDelegate.scrollTop();
-        //            }
     }
 })
 

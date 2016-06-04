@@ -52,8 +52,8 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                 $.jStorage.flush();
                 $scope.showlogin = true;
             }
-        })
-    }
+        });
+    };
 
     $scope.user = {
         cart: 1
@@ -67,7 +67,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             console.log("totalamount = " + data);
             $scope.amount = data;
         });
-    }
+    };
     myfunction();
 
     $scope.search = function() {
@@ -117,7 +117,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                 //                 $templateCache.removeAll();
                 // $location.url("/home");
             }
-        })
+        });
     }
 
     $scope.doLogin = function() {
@@ -168,7 +168,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             authenticateUser();
             $interval.cancel(stopinterval);
         });
-    }
+    };
     $scope.googlelogin = function() {
         ref = window.open(adminhauth + 'login/Google?returnurl=http://www.wohlig.com', '_blank', 'location=no');
         stopinterval = $interval(callAtIntervaltwitter, 2000);
@@ -176,7 +176,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             authenticateUser();
             $interval.cancel(stopinterval);
         });
-    }
+    };
 
     $scope.openSignup = function() {
         //        $scope.closeLogin();
@@ -363,7 +363,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
     $scope.goToProduct = function(id) {
         console.log(id);
         $location.url("/app/productdetail/" + id);
-    }
+    };
 
     $scope.usersubscribtion = function(email) {
         if (email) {
@@ -380,7 +380,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
         } else {
             allfunction.msg("Please provide your email id ", "Error !");
         }
-    }
+    };
 
 })
 
@@ -399,8 +399,8 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             $scope.deals[0].offerproducts = data.offerproducts;
             console.log($scope.deals);
 
-        })
-    }
+        });
+    };
 
     MyServices.getofferdetails(function(data, status) {
         console.log(data);
@@ -408,7 +408,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             $scope.offers = data.offer[0];
             _.each(data.offer[0], function(n) {
                 $scope.slider.push(n.image);
-            })
+            });
         }
         $ionicLoading.hide();
         $ionicSlideBoxDelegate.update();
@@ -427,7 +427,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
     $scope.addMoreItems = function() {
         ++$scope.pageno;
         MyServices.getexclusiveandnewarrival($scope.pageno, 2, function(data, status) {
-            if (data.queryresult.length == 0) {
+            if (data.queryresult.length === 0) {
                 $scope.keepscrolling = false;
             }
             _.each(data.queryresult, function(n) {
@@ -459,21 +459,21 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                     } else if (n.specialpricefrom == "0000-00-00") {
                         n.showSalePrice = true;
                     }
-                    if (n.showSalePrice == true) {
+                    if (n.showSalePrice === true) {
                         n.discountinper = Math.floor((1 - (parseFloat(n.firstsaleprice) / parseFloat(n.price))) * 100);
                     }
                 }
                 $scope.products.push(n);
             });
             console.log($scope.products);
-            if ($scope.products.length == 0) {
+            if ($scope.products.length === 0) {
                 $scope.shownodata = true;
             } else {
                 $scope.shownodata = false;
             }
             $ionicLoading.hide();
         });
-    }
+    };
     $scope.addMoreItems();
 })
 
@@ -545,7 +545,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
         } else {
             allfunction.msg("Fill all mandatory fields", "Error !");
         }
-    }
+    };
 })
 
 .controller('ContactUsCtrl', function($scope, $stateParams, MyServices, $ionicLoading) {
@@ -570,7 +570,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             allfunction.loading();
             MyServices.usercontact($scope.contactus, function(data) {
                 console.log(data);
-                if (data != "") {
+                if (data !== "") {
                     $ionicLoading.hide();
                     $scope.contactus = {};
                     allfunction.msg("Query Sumbitted Successfully ", 'Thankyou!');
@@ -584,7 +584,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             allfunction.msg("Fill all mandatory fields", "Error !");
         }
 
-    }
+    };
 
 })
 
@@ -663,7 +663,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
 
     $scope.getproductbycategory = function(parent, category) {
         $location.url("/app/product/" + parent + "/" + category + "/0");
-    }
+    };
 
 })
 
@@ -676,20 +676,20 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
 
     $scope.gotocheckout = function(totalcart) {
         $location.url('app/checkout/' + totalcart);
-    }
+    };
 
     $scope.gettotalcartfunction = function() {
         MyServices.totalcart(function(data) {
             if ($scope.userdetail.credits) {
                 $scope.totalcart = data - $scope.userdetail.credits;
                 if ($scope.totalcart <= 0) {
-                    $scope.totalcart = 0
+                    $scope.totalcart = 0;
                 }
             } else {
                 $scope.totalcart = data;
             }
         });
-    }
+    };
 
     MyServices.getuserdetails(function(data) {
         console.log(data);

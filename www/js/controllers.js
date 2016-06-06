@@ -888,6 +888,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
 })
 
 .controller('CheckoutCtrl', function($scope, $stateParams, MyServices, $ionicLoading, $location, $interval, $cordovaInAppBrowser) {
+
     $.jStorage.set("filters", null);
     $scope.chklogin = $.jStorage.get("user");
     $scope.showlogreg = true;
@@ -913,6 +914,8 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             $scope.address_select = "Ship to different address";
         }
     };
+
+
 
     $scope.totalcart = $stateParams.totalcart;
     console.log("totalcart");
@@ -949,6 +952,21 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             $scope.checkout.billingpincode = data.billingpincode;
             $scope.checkout.billingcountry = data.billingcountry;
             $scope.checkout.billingcontact = data.phone;
+        });
+        MyServices.getDealerOrderDetails(function(data) {
+            console.log(data);
+            if(data !==false){
+              $scope.checkout.userid = data.id;
+              $scope.checkout.firstname = data.firstname;
+              $scope.checkout.lastname = data.lastname;
+              $scope.checkout.email = data.email;
+              $scope.checkout.billingaddress = data.billingaddress;
+              $scope.checkout.billingcity = data.billingcity;
+              $scope.checkout.billingstate = data.billingstate;
+              $scope.checkout.billingpincode = data.billingpincode;
+              $scope.checkout.billingcountry = data.billingcountry;
+              $scope.checkout.billingcontact = data.billingcontact;
+            }
         });
     }
     // MyServices.getcart(function(data) {
@@ -1078,6 +1096,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                     console.log("totalcart = " + data);
                     $scope.checkout.finalamount = $scope.totalcart;
                     console.log($scope.checkout);
+                    $scope.checkout.user=parseInt($.jStorage.get("user").id);
                     // allfunction.loading();
                     MyServices.placeorder($scope.checkout, function(data) {
                         console.log(data);
@@ -1086,7 +1105,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                             // $scope.checkout.orderid = data;
                             allfunction.msg("Your Order has been placed", 'Thankyou!');
                             // $scope.paymentinfo = true;
+                              myfunction();
                             $location.url("/app/brands/");
+                              myfunction();
                         } else {
                             allfunction.msg("Sorry Try Again", 'Sorry!');
                         }
@@ -1822,7 +1843,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             if ($scope.brandimages.length == 0) {
                 $scope.shownodata = true;
             }
+            $scope.brandimages=_.uniq($scope.brandimages,"id");
             $scope.brands = _.chunk($scope.brandimages, 3);
+
             lastpage = data.lastpage;
             $ionicLoading.hide();
             $scope.$broadcast('scroll.infiniteScrollComplete');

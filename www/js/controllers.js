@@ -51,6 +51,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             if (data == 'true') {
                 $.jStorage.flush();
                 $scope.showlogin = true;
+                  $state.go('app.brands');
             }
         });
     };

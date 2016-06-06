@@ -51,7 +51,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             if (data == 'true') {
                 $.jStorage.flush();
                 $scope.showlogin = true;
-                  $state.go('app.brands');
+                $state.go('app.brands');
             }
         });
     };
@@ -887,7 +887,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
 
 })
 
-.controller('CheckoutCtrl', function($scope, $stateParams, MyServices, $ionicLoading, $location, $interval, $cordovaInAppBrowser) {
+.controller('CheckoutCtrl', function($scope, $stateParams, MyServices, $ionicLoading, $location, $interval, $cordovaInAppBrowser,$state) {
 
     $.jStorage.set("filters", null);
     $scope.chklogin = $.jStorage.get("user");
@@ -955,17 +955,17 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
         });
         MyServices.getDealerOrderDetails(function(data) {
             console.log(data);
-            if(data !==false){
-              $scope.checkout.userid = data.id;
-              $scope.checkout.firstname = data.firstname;
-              $scope.checkout.lastname = data.lastname;
-              $scope.checkout.email = data.email;
-              $scope.checkout.billingaddress = data.billingaddress;
-              $scope.checkout.billingcity = data.billingcity;
-              $scope.checkout.billingstate = data.billingstate;
-              $scope.checkout.billingpincode = data.billingpincode;
-              $scope.checkout.billingcountry = data.billingcountry;
-              $scope.checkout.billingcontact = data.billingcontact;
+            if (data !== false) {
+                $scope.checkout.userid = data.id;
+                $scope.checkout.firstname = data.firstname;
+                $scope.checkout.lastname = data.lastname;
+                $scope.checkout.email = data.email;
+                $scope.checkout.billingaddress = data.billingaddress;
+                $scope.checkout.billingcity = data.billingcity;
+                $scope.checkout.billingstate = data.billingstate;
+                $scope.checkout.billingpincode = data.billingpincode;
+                $scope.checkout.billingcountry = data.billingcountry;
+                $scope.checkout.billingcontact = data.billingcontact;
             }
         });
     }
@@ -1096,7 +1096,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                     console.log("totalcart = " + data);
                     $scope.checkout.finalamount = $scope.totalcart;
                     console.log($scope.checkout);
-                    $scope.checkout.user=parseInt($.jStorage.get("user").id);
+                    $scope.checkout.user = parseInt($.jStorage.get("user").id);
                     // allfunction.loading();
                     MyServices.placeorder($scope.checkout, function(data) {
                         console.log(data);
@@ -1105,9 +1105,10 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                             // $scope.checkout.orderid = data;
                             allfunction.msg("Your Order has been placed", 'Thankyou!');
                             // $scope.paymentinfo = true;
-                              myfunction();
-                            $location.url("/app/brands/");
-                              myfunction();
+                            myfunction();
+                            $state.go('app.brands');
+                            window.location.reload();
+                            myfunction();
                         } else {
                             allfunction.msg("Sorry Try Again", 'Sorry!');
                         }
@@ -1843,7 +1844,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             if ($scope.brandimages.length == 0) {
                 $scope.shownodata = true;
             }
-            $scope.brandimages=_.uniq($scope.brandimages,"id");
+            $scope.brandimages = _.uniq($scope.brandimages, "id");
             $scope.brands = _.chunk($scope.brandimages, 3);
 
             lastpage = data.lastpage;

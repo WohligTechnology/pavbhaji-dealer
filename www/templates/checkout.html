@@ -42,15 +42,15 @@
                                     <span class="input-label">Email*</span>
                                     <input type="email" placeholder="Email*" ng-model="checkout.email" ng-class="allvalidation[2].validation" required>
                                 </label>
-                                <label class="item item-input item-floating-label">
+                                <!-- <label class="item item-input item-floating-label">
                                     <span class="input-label">Address*</span>
                                     <textarea name="" id="" rows="2" placeholder="Address*" ng-model="checkout.billingaddress" ng-class="allvalidation[3].validation" required></textarea>
                                 </label>
                                 <label class="item item-input item-floating-label">
                                     <span class="input-label">City*</span>
                                     <input type="text" placeholder="City*" ng-model="checkout.billingcity" ng-class="allvalidation[4].validation" required>
-                                </label>
-                                <label class="item item-input item-select">
+                                </label> -->
+                                <!-- <label class="item item-input item-select">
                                     <div class="input-label">
                                         Select State*
                                     </div>
@@ -92,8 +92,8 @@
                                         <option value="Uttar Pradesh">Uttar Pradesh</option>
                                         <option value="West Bengal">West Bengal</option>
                                     </select>
-                                </label>
-                                <label class="item item-input item-floating-label">
+                                </label> -->
+                                <!-- <label class="item item-input item-floating-label">
                                     <span class="input-label">Zip/Postal Code*</span>
                                     <input type="text" placeholder="Zip/Postal Code*" ng-model="checkout.billingpincode" ng-class="allvalidation[6].validation" required only-digits maxlength="6" ng-trim="false">
                                 </label>
@@ -105,7 +105,7 @@
                                         <option value="">Select Country</option>
                                         <option value="India">India</option>
                                     </select>
-                                </label>
+                                </label> -->
                                 <label class="item item-input item-select">
                                     <div class="input-label">
                                          Payment Mode*
@@ -120,9 +120,9 @@
                                     <span class="input-label">Contact Number*</span>
                                     <input type="tel" placeholder="Contact Number*" ng-model="checkout.billingcontact" ng-class="allvalidation[8].validation" only-digits ng-trim="false">
                                 </label>
-                                <button class="button button-positive checkout-button" type="submit" ng-click="toggleAddress()" ng-bind="address_select">
-                                </button>
-                                <div class="checkout-form2" ng-show="different_address">
+                                <!-- <button class="button button-positive checkout-button" type="submit" ng-click="toggleAddress()" ng-bind="address_select">
+                                </button> -->
+                                <!-- <div class="checkout-form2" ng-show="different_address">
                                     <h2>Shipping information</h2>
                                     <label class="item item-input item-floating-label">
                                         <span class="input-label">Shipping Name*</span>
@@ -198,7 +198,7 @@
                                         <span class="input-label">Contact Number*</span>
                                         <input type="tel" placeholder="Contact Number*" ng-model="checkout.shippingcontact" ng-class="allvalidation[16].validation">
                                     </label>
-                                </div>
+                                </div> -->
                                 <!--
                                 <button class="button button-positive checkout-button" type="submit" ng-click="paymentOption()">
                                     Continue123

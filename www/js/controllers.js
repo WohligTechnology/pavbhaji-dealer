@@ -1032,7 +1032,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             $scope.checkout.shippingpincode = $scope.checkout.billingpincode;
             $scope.checkout.shippingcountry = $scope.checkout.billingcountry;
             $scope.checkout.shippingcontact = $scope.checkout.billingcontact;
-        } else if ($scope.different_address == true) {
+        } else if ($scope.different_address === true) {
             $scope.allvalidation = [{
                 field: $scope.checkout.firstname,
                 validation: ""
@@ -1042,46 +1042,50 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             }, {
                 field: $scope.checkout.email,
                 validation: ""
-            }, {
-                field: $scope.checkout.billingaddress,
-                validation: ""
-            }, {
-                field: $scope.checkout.billingcity,
-                validation: ""
-            }, {
-                field: $scope.checkout.billingstate,
-                validation: ""
-            }, {
-                field: $scope.checkout.billingpincode,
-                validation: ""
-            }, {
-                field: $scope.checkout.billingcountry,
-                validation: ""
-            }, {
-                field: $scope.checkout.billingcontact,
-                validation: ""
-            }, {
-                field: $scope.checkout.shippingname,
-                validation: ""
-            }, {
-                field: $scope.checkout.shippingaddress,
-                validation: ""
-            }, {
-                field: $scope.checkout.shippingcity,
-                validation: ""
-            }, {
-                field: $scope.checkout.shippingstate,
-                validation: ""
-            }, {
-                field: $scope.checkout.shippingpincode,
-                validation: ""
-            }, {
-                field: $scope.checkout.shippingcountry,
-                validation: ""
-            }, {
-                field: $scope.checkout.shippingcontact,
-                validation: ""
-            }, {
+            },
+
+            //  {
+            //     field: $scope.checkout.billingaddress,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.billingcity,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.billingstate,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.billingpincode,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.billingcountry,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.billingcontact,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.shippingname,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.shippingaddress,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.shippingcity,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.shippingstate,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.shippingpincode,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.shippingcountry,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.shippingcontact,
+            //     validation: ""
+            // }
+
+             {
                 field: $scope.checkout.paymentstatus,
                 validation: ""
             }];

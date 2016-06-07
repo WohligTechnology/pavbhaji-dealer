@@ -217,7 +217,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 .filter('serverimage', function() {
     return function(image) {
-        if (image && image != null) {
+        if (image && image !== null) {
             return adminimage + image;
         } else {
             return "img/noimage.png";

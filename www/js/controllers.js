@@ -1006,22 +1006,25 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             }, {
                 field: $scope.checkout.email,
                 validation: ""
-            }, {
-                field: $scope.checkout.billingaddress,
-                validation: ""
-            }, {
-                field: $scope.checkout.billingcity,
-                validation: ""
-            }, {
-                field: $scope.checkout.billingstate,
-                validation: ""
-            }, {
-                field: $scope.checkout.billingpincode,
-                validation: ""
-            }, {
-                field: $scope.checkout.billingcountry,
-                validation: ""
-            }, {
+            },
+
+            // {
+            //     field: $scope.checkout.billingaddress,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.billingcity,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.billingstate,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.billingpincode,
+            //     validation: ""
+            // }, {
+            //     field: $scope.checkout.billingcountry,
+            //     validation: ""
+            // },
+             {
                 field: $scope.checkout.paymentstatus,
                 validation: ""
             }];
@@ -1100,7 +1103,16 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                     console.log("totalcart = " + data);
                     $scope.checkout.finalamount = $scope.totalcart;
                     console.log($scope.checkout);
-                    $scope.checkout.user = parseInt($.jStorage.get("user").id);
+                    if($.jStorage.get("user")){
+                        var userid=parseInt($.jStorage.get("user").id);
+                          $scope.checkout.user = parseInt($.jStorage.get("user").id);
+                    }
+
+                    else{
+                        $scope.checkout.user = 0;
+                    }
+
+
                     // allfunction.loading();
                     MyServices.placeorder($scope.checkout, function(data) {
                         console.log(data);
@@ -1825,6 +1837,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
 
 //dhaval start
 .controller('BrandsCtrl', function($scope, $stateParams, $rootScope, MyServices, $location, $ionicLoading) {
+  //   if($.jStorage.get('user') !===null){
+  // $scope.modal.show();
+  //   }
     $.jStorage.set("filters", null);
     $rootScope.nosearch = true;
     allfunction.loading();

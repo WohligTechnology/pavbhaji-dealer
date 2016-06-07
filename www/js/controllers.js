@@ -1,6 +1,7 @@
 var allfunction = {};
 var myfunction = '';
 var openModal = false;
+var showcartnotfoundmsg = false;
 angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $location, $ionicPopup, $rootScope, MyServices, $ionicLoading, $interval, $window, $templateCache, $state) {
@@ -80,12 +81,11 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
     $scope.search = function() {
         $scope.searchbar = $scope.searchbar === true ? false : true;
     };
-    $scope.showcartnotfoundmsg=false;
     $scope.cartCheck = function() {
         console.log($scope.user.cart);
         if ($scope.user.cart === 0) {
             $scope.showAlert();
-            $scope.showcartnotfoundmsg=true;
+
         } else {
             $location.path('/app/cart');
         }
@@ -678,7 +678,14 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
 })
 
 .controller('CartCtrl', function($scope, $stateParams, $location, $ionicHistory, MyServices, $ionicLoading, $state) {
-
+    $scope.showcartnotfoundmsg = false;
+    MyServices.gettotalcart(function(data) {
+        console.log("totalcart = " + data);
+        if (data == 0) {
+            $scope.showcartnotfoundmsg = true;
+        }
+        $scope.user.cart = data;
+    });
     $scope.checkout = {};
     $.jStorage.set("filters", null);
     $scope.goHome = function() {
@@ -707,7 +714,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
         console.log("In fubn");
         console.log($scope.checkout.paymentstatus);
         if ($scope.checkout.paymentstatus === "1" || $scope.checkout.paymentstatus === "2") {
-          console.log("enter");
+            console.log("enter");
             console.log($scope.checkout);
             MyServices.getcart(function(data) {
                 $scope.checkout.cart = data;
@@ -727,6 +734,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                         if (data != 'false') {
                             // $scope.checkout.orderid = data;
                             allfunction.msg("Your Order has been placed", 'Thankyou!');
+                                allfunction.msg("Your data is successfully submitted", 'Thankyou!');
                             // $scope.paymentinfo = true;
                             myfunction();
                             $state.go('app.brands');
@@ -739,7 +747,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                 });
             });
         } else {
-              console.log("no enter");
+            console.log("no enter");
             allfunction.msg("Select Payment Mode", "Error !");
         }
 
@@ -915,7 +923,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                 } else {
                     n.msg = "";
                 }
-            })
+            });
             if (data === '') {
                 $scope.nodatafound = true;
                 $scope.nodata = "Nothing to Show, Folks!.";
@@ -923,7 +931,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                 $scope.nodatafound = false;
             }
         });
-    }
+    };
 
     $scope.getcartfunction();
 
@@ -938,7 +946,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             myfunction();
             $ionicLoading.hide();
         });
-    }
+    };
 
 })
 

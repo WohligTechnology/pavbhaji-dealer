@@ -1,108 +1,75 @@
 <ion-view view-title="Cart">
+
     <ion-content>
-        <div ng-hide="nodatafound" id="snap">
-            <div class="cart">
-                <div class="row-container" ng-repeat="mycart in cart">
-                    <div class="col">
-                        <div class="product-cart">
-                            <div class="row ">
-                                <div class="col-40">
-                                    <div class="image-holder-cart">
-                                        <img class="cart-image" ng-src="{{mycart.image | serverimage}}" alt="" ng-if="mycart.image">
-                                        <img class="cart-image" ng-src="img/icon.png" alt="" ng-if="!mycart.image">
+      <div class="center" ng-if="showcartnotfoundmsg==true">
+          <p>Your Shopping Cart is empty.</p>
+      </div>
+  <div ng-if="showcartnotfoundmsg==false">
+            <div ng-hide="nodatafound" id="snap">
+                <div class="cart">
+                    <div class="row-container" ng-repeat="mycart in cart">
+                        <div class="col">
+                            <div class="product-cart">
+                                <div class="row ">
+                                    <div class="col-40">
+                                        <div class="image-holder-cart">
+                                            <img class="cart-image" ng-src="{{mycart.image | serverimage}}" alt="" ng-if="mycart.image">
+                                            <img class="cart-image" ng-src="img/icon.png" alt="" ng-if="!mycart.image">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <h4>{{mycart.options.realname}}</h4>
-                                    <h5>Ref. 2514/302</h5>
-                                    <h3 ng-if="mycart.price==mycart.options.originalprice">Unit Price : Rs. {{mycart.price | numberWithCommas}}</h3>
-                                    <h3 ng-if="mycart.price!=mycart.options.originalprice">Unit Price : Rs. {{mycart.price | numberWithCommas}} <a class="strike">{{mycart.options.originalprice | numberWithCommas}}</a></h3>
-                                    <div class="product-quantity-cart">
-                                        <button class="button button-clear button-icon button-calm" ng-click="changeqty(mycart,'-')"><i class="icon ion-minus-circled"></i></button>
-                                        <input type="text" ng-model="mycart.qty" ng-change="onchangeqty(mycart)">
-                                        <button class="button button-clear button-icon button-calm" ng-click="changeqty(mycart,'+')"><i class="icon ion-plus-circled"></i></button>
+                                    <div class="col">
+                                        <h4>{{mycart.options.realname}}</h4>
+                                        <h5>Ref. 2514/302</h5>
+                                        <h3 ng-if="mycart.price==mycart.options.originalprice">Unit Price : Rs. {{mycart.price | numberWithCommas}}</h3>
+                                        <h3 ng-if="mycart.price!=mycart.options.originalprice">Unit Price : Rs. {{mycart.price | numberWithCommas}} <a class="strike">{{mycart.options.originalprice | numberWithCommas}}</a></h3>
+                                        <div class="product-quantity-cart">
+                                            <button class="button button-clear button-icon button-calm" ng-click="changeqty(mycart,'-')"><i class="icon ion-minus-circled"></i></button>
+                                            <input type="text" ng-model="mycart.qty" ng-change="onchangeqty(mycart)">
+                                            <button class="button button-clear button-icon button-calm" ng-click="changeqty(mycart,'+')"><i class="icon ion-plus-circled"></i></button>
+                                        </div>
+                                        <h3>Total Price : Rs. {{mycart.price * mycart.qty | numberWithCommas}}</h3>
+                                        <br>
+                                        <button class="button button-clear button-assertive" ng-click="deletecart(mycart)">Remove</button>
                                     </div>
-                                    <h3>Total Price : Rs. {{mycart.price * mycart.qty | numberWithCommas}}</h3>
-                                    <br>
-                                    <button class="button button-clear button-assertive" ng-click="deletecart(mycart)">Remove</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
-                <!-- <div class="row-container">
-                <div class="col">
-                    <div class="product-cart">
-                        <div class="row ">
-                            <div class="col-40">
-                                <div class="image-holder-cart">
-                                    <img class="cart-image" src="img/products/5.png" alt="">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <h4>iPhone 6[S] 128GB 5inch</h4>
-                                <h5>Ref. 2514/302</h5>
-                                <h3>Rs. 1000</h3>
-                                <div class="product-quantity-cart">
-                                    <button class="button button-clear button-icon button-calm"><i class="icon ion-minus-circled"></i></button>
-                                    <input type="text" value="2">
-                                    <button class="button button-clear button-icon button-calm"><i class="icon ion-plus-circled"></i></button>
-                                </div>
-                                <br><button class="button button-clear button-assertive">Remove</button>
-                            </div>
+
+                <div class="row no-padding">
+                    <div class="expense-cart">
+                        <div class="item item-icon-left"><i class="icon ln-cash"></i>
+                            <h3>Sub total <span class="item-note">Rs. {{totalcart | numberWithCommas}}</span></h3>
                         </div>
-                    </div>
-                </div>
-            </div> -->
-            </div>
-            <!-- <div class="discount-cart">
-                <div class="item-input-inset">
-                    <label class="item-input-wrapper">
-                        <input type="text" placeholder="DISCOUNT COUPON" ng-model="coupon">
-                    </label>
-                    <button class="button button-calm btn-cart" ng-click="checkcoupon(coupon)">
-                        APPLY
-                    </button>
-                </div>
-            </div> -->
-            <div class="row no-padding">
-                <div class="expense-cart">
-                    <div class="item item-icon-left"><i class="icon ln-cash"></i>
-                        <h3>Sub total <span class="item-note">Rs. {{totalcart | numberWithCommas}}</span></h3>
-                    </div>
-                    <!-- <div class="item item-icon-left">
-                        <h3>
-                    <i class="icon ln-ticket"></i>
-                    Discount amount
-                    <span class="item-note" ng-if="discountamount">Rs. {{discountamount | numberWithCommas}}</span>
-                    <span class="item-note" ng-if="!discountamount">Rs. 0</span>
-                    </h3>
-                    </div> -->
-                    <div class="item item-icon-left">
-                        <h3><i class="icon ln-cash"></i>Total amount
+
+                        <div class="item item-icon-left">
+                            <h3><i class="icon ln-cash"></i>Total amount
                 <span class="item-note">Rs. {{totalcart - discountamount | numberWithCommas}}</span></h3></div>
+                    </div>
                 </div>
-            </div>
-<form>
-            <label class="item item-input item-select">
-                <div class="input-label">
-                     <h3>Payment Mode*</h3>
-                </div>
-                <select ng-model="checkout.paymentstatus" ng-class="allvalidation[0].validation" required>
-                    <option value="">Select Payment Mode</option>
-                    <option value="1">Full Payment</option>
-                    <option value="2">Advance Payment</option>
-                </select>
-            </label>
-</form>
-            <!-- <a class="button  button-positive btn-checkout login-button" ng-click="tocheckout(totalcart);">Proceed to checkout</a> -->
-            <a class="button  button-positive btn-checkout login-button" ng-click="paymentOption();">Place Order</a>
-            <!-- <button class="button button-positive order-button" type="submit" ng-click="paymentOption()">
+                <form>
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            <h3>Payment Mode*</h3>
+                        </div>
+                        <select ng-model="checkout.paymentstatus" ng-class="allvalidation[0].validation" required>
+                            <option value="">Select Payment Mode</option>
+                            <option value="1">Full Payment</option>
+                            <option value="2">Advance Payment</option>
+                        </select>
+                    </label>
+                </form>
+                <!-- <a class="button  button-positive btn-checkout login-button" ng-click="tocheckout(totalcart);">Proceed to checkout</a> -->
+                <a class="button  button-positive btn-checkout login-button" ng-click="paymentOption();">Place Order</a>
+                <!-- <button class="button button-positive order-button" type="submit" ng-click="paymentOption()">
             Place Order
             </button> -->
+            </div>
         </div>
-        <div class="center" ng-show="nodatafound">
-            <p>Your Shopping Cart is empty.</p>
-        </div>
+
+
     </ion-content>
+
 </ion-view>

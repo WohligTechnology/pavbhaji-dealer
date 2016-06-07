@@ -709,8 +709,10 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             }
         });
     };
+    $scope.hidebutton = false;
     $scope.checkout = {};
     $scope.paymentOption = function() {
+        $scope.hidebutton = true;
         console.log("In fubn");
         console.log($scope.checkout.paymentstatus);
         if ($scope.checkout.paymentstatus === "1" || $scope.checkout.paymentstatus === "2") {
@@ -741,6 +743,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                             window.location.reload();
                             myfunction();
                         } else {
+                            $scope.hidebutton = false;
                             allfunction.msg("Sorry Try Again", 'Sorry!');
                         }
                     });
@@ -1161,6 +1164,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                 }
             ];
         }
+        $scope.hidebutton = false;
         var check = formvalidation($scope.allvalidation);
         console.log(check);
         if (check) {
@@ -1185,14 +1189,16 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                         $ionicLoading.hide();
                         if (data != 'false') {
                             // $scope.checkout.orderid = data;
+
                             allfunction.msg("Your Order has been placed", 'Thankyou!');
-                            // $scope.paymentinfo = true;
+                            $scope.hidebutton = true;
                             myfunction();
                             $state.go('app.brands');
                             window.location.reload();
                             myfunction();
                         } else {
                             allfunction.msg("Sorry Try Again", 'Sorry!');
+                              $scope.hidebutton = false;
                         }
                     });
                 });

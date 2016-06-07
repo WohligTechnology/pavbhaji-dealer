@@ -668,7 +668,8 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
 
 })
 
-.controller('CartCtrl', function($scope, $stateParams, $location, $ionicHistory, MyServices, $ionicLoading) {
+.controller('CartCtrl', function($scope, $stateParams, $location, $ionicHistory, MyServices, $ionicLoading,$state) {
+  $scope.checkout={};
     $.jStorage.set("filters", null);
     $scope.goHome = function() {
         console.log($ionicHistory.viewHistory());
@@ -691,7 +692,65 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             }
         });
     };
+    $scope.paymentOption = function() {
+        console.log("In fubn");
+        $scope.allvalidation = [];
+        if ($scope.different_address === false) {
+            $scope.allvalidation = [{
+                field: $scope.checkout.paymentstatus,
+                validation: ""
+            }];
+            $scope.checkout.shippingname = $scope.checkout.firstname + " " + $scope.checkout.lastname;
+            $scope.checkout.shippingaddress = $scope.checkout.billingaddress;
+            $scope.checkout.shippingcity = $scope.checkout.billingcity;
+            $scope.checkout.shippingstate = $scope.checkout.billingstate;
+            $scope.checkout.shippingpincode = $scope.checkout.billingpincode;
+            $scope.checkout.shippingcountry = $scope.checkout.billingcountry;
+            $scope.checkout.shippingcontact = $scope.checkout.billingcontact;
+        } else if ($scope.different_address === true) {
+            $scope.allvalidation = [{
+                field: $scope.checkout.paymentstatus,
+                validation: ""
+            }];
+        }
+        var check = formvalidation($scope.allvalidation);
+        console.log(check);
+        if (check) {
+            console.log($scope.checkout);
+            MyServices.getcart(function(data) {
+                $scope.checkout.cart = data;
+                MyServices.gettotalcart(function(data) {
+                    console.log("totalcart = " + data);
+                    $scope.checkout.finalamount = $scope.totalcart;
+                    console.log($scope.checkout);
+                    if ($.jStorage.get("user")) {
+                        var userid = parseInt($.jStorage.get("user").id);
+                        $scope.checkout.user = parseInt($.jStorage.get("user").id);
+                    } else {
+                        $scope.checkout.user = 0;
+                    }
 
+
+                    // allfunction.loading();
+                    MyServices.placeorder($scope.checkout, function(data) {
+                        console.log(data);
+                        $ionicLoading.hide();
+                        if (data != 'false') {
+                            // $scope.checkout.orderid = data;
+                            allfunction.msg("Your Order has been placed", 'Thankyou!');
+                            // $scope.paymentinfo = true;
+                            myfunction();
+                            $state.go('app.brands');
+                            window.location.reload();
+                            myfunction();
+                        } else {
+                            allfunction.msg("Sorry Try Again", 'Sorry!');
+                        }
+                    });
+                });
+            });
+        }
+    };
     MyServices.getuserdetails(function(data) {
         console.log(data);
         $scope.userdetail = data;
@@ -887,7 +946,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
 
 })
 
-.controller('CheckoutCtrl', function($scope, $stateParams, MyServices, $ionicLoading, $location, $interval, $cordovaInAppBrowser,$state) {
+.controller('CheckoutCtrl', function($scope, $stateParams, MyServices, $ionicLoading, $location, $interval, $cordovaInAppBrowser, $state) {
 
     $.jStorage.set("filters", null);
     $scope.chklogin = $.jStorage.get("user");
@@ -980,7 +1039,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
     MyServices.totalcart(function(data) {
         $scope.totalcart = data;
         $scope.allamount = data;
-        if ($.jStorage.get('coupon').couponcode && $.jStorage.get('coupon').couponcode != null) {
+        if ($.jStorage.get('coupon').couponcode && $.jStorage.get('coupon').couponcode !== null) {
             $scope.couponhave = $.jStorage.get('coupon').couponcode;
         } else {
             $scope.couponhave = 0;
@@ -995,39 +1054,42 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
     });
 
     $scope.paymentOption = function() {
+        console.log("In fubn");
         $scope.allvalidation = [];
-        if ($scope.different_address == false) {
-            $scope.allvalidation = [{
-                field: $scope.checkout.firstname,
-                validation: ""
-            }, {
-                field: $scope.checkout.lastname,
-                validation: ""
-            }, {
-                field: $scope.checkout.email,
-                validation: ""
-            },
+        if ($scope.different_address === false) {
+            $scope.allvalidation = [
+                //   {
+                //     field: $scope.checkout.firstname,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.lastname,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.email,
+                //     validation: ""
+                // },
 
-            // {
-            //     field: $scope.checkout.billingaddress,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.billingcity,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.billingstate,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.billingpincode,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.billingcountry,
-            //     validation: ""
-            // },
-             {
-                field: $scope.checkout.paymentstatus,
-                validation: ""
-            }];
+                // {
+                //     field: $scope.checkout.billingaddress,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.billingcity,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.billingstate,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.billingpincode,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.billingcountry,
+                //     validation: ""
+                // },
+                {
+                    field: $scope.checkout.paymentstatus,
+                    validation: ""
+                }
+            ];
             $scope.checkout.shippingname = $scope.checkout.firstname + " " + $scope.checkout.lastname;
             $scope.checkout.shippingaddress = $scope.checkout.billingaddress;
             $scope.checkout.shippingcity = $scope.checkout.billingcity;
@@ -1036,62 +1098,64 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             $scope.checkout.shippingcountry = $scope.checkout.billingcountry;
             $scope.checkout.shippingcontact = $scope.checkout.billingcontact;
         } else if ($scope.different_address === true) {
-            $scope.allvalidation = [{
-                field: $scope.checkout.firstname,
-                validation: ""
-            }, {
-                field: $scope.checkout.lastname,
-                validation: ""
-            }, {
-                field: $scope.checkout.email,
-                validation: ""
-            },
+            $scope.allvalidation = [
+                //   {
+                //     field: $scope.checkout.firstname,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.lastname,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.email,
+                //     validation: ""
+                // },
 
-            //  {
-            //     field: $scope.checkout.billingaddress,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.billingcity,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.billingstate,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.billingpincode,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.billingcountry,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.billingcontact,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.shippingname,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.shippingaddress,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.shippingcity,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.shippingstate,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.shippingpincode,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.shippingcountry,
-            //     validation: ""
-            // }, {
-            //     field: $scope.checkout.shippingcontact,
-            //     validation: ""
-            // }
+                //  {
+                //     field: $scope.checkout.billingaddress,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.billingcity,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.billingstate,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.billingpincode,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.billingcountry,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.billingcontact,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.shippingname,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.shippingaddress,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.shippingcity,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.shippingstate,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.shippingpincode,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.shippingcountry,
+                //     validation: ""
+                // }, {
+                //     field: $scope.checkout.shippingcontact,
+                //     validation: ""
+                // }
 
-             {
-                field: $scope.checkout.paymentstatus,
-                validation: ""
-            }];
+                {
+                    field: $scope.checkout.paymentstatus,
+                    validation: ""
+                }
+            ];
         }
         var check = formvalidation($scope.allvalidation);
         console.log(check);
@@ -1103,12 +1167,10 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                     console.log("totalcart = " + data);
                     $scope.checkout.finalamount = $scope.totalcart;
                     console.log($scope.checkout);
-                    if($.jStorage.get("user")){
-                        var userid=parseInt($.jStorage.get("user").id);
-                          $scope.checkout.user = parseInt($.jStorage.get("user").id);
-                    }
-
-                    else{
+                    if ($.jStorage.get("user")) {
+                        var userid = parseInt($.jStorage.get("user").id);
+                        $scope.checkout.user = parseInt($.jStorage.get("user").id);
+                    } else {
                         $scope.checkout.user = 0;
                     }
 
@@ -1837,9 +1899,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
 
 //dhaval start
 .controller('BrandsCtrl', function($scope, $stateParams, $rootScope, MyServices, $location, $ionicLoading) {
-  //   if($.jStorage.get('user') !===null){
-  // $scope.modal.show();
-  //   }
+    //   if($.jStorage.get('user') !===null){
+    // $scope.modal.show();
+    //   }
     $.jStorage.set("filters", null);
     $rootScope.nosearch = true;
     allfunction.loading();

@@ -83,7 +83,23 @@
                 <span class="item-note">Rs. {{totalcart - discountamount | numberWithCommas}}</span></h3></div>
                 </div>
             </div>
-            <a class="button  button-positive btn-checkout login-button" ng-click="tocheckout(totalcart);">Proceed to checkout</a>
+<form>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                     <h3>Payment Mode*</h3>
+                </div>
+                <select ng-model="checkout.paymentstatus" ng-class="allvalidation[0].validation" required>
+                    <option value="">Select Payment Mode</option>
+                    <option value="1">Full Payment</option>
+                    <option value="2">Advance Payment</option>
+                </select>
+            </label>
+</form>
+            <!-- <a class="button  button-positive btn-checkout login-button" ng-click="tocheckout(totalcart);">Proceed to checkout</a> -->
+            <a class="button  button-positive btn-checkout login-button" ng-click="paymentOption();">Place Order</a>
+            <!-- <button class="button button-positive order-button" type="submit" ng-click="paymentOption()">
+            Place Order
+            </button> -->
         </div>
         <div class="center" ng-show="nodatafound">
             <p>Your Shopping Cart is empty.</p>

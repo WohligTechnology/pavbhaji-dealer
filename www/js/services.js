@@ -1,5 +1,5 @@
-// var adminbase = "http://admin.accessworld.in/";
-var adminbase = "http://192.168.1.105/accessback/";
+var adminbase = "http://admin.accessworld.in/";
+// var adminbase = "http://192.168.1.105/accessback/";
 var adminurl = adminbase + "index.php/json/";
 var adminhauth = adminbase + "index.php/hauth/";
 var adminimage = "http://admin.accessworld.in/uploads/";
@@ -37,11 +37,11 @@ angular.module('starter.services', ['httpService'])
                 data: login
             }).success(callback);
         },
-        authenticate: function(callback,errCallback) {
+        authenticate: function(callback, errCallback) {
             httpService.get(adminurl + 'authenticateDealer', {}, callback, errCallback);
             // httpService.get(adminurl + 'getbrand?maxrow=12&pageno=' + pageno, {}, callback, errCallback);
         },
-        orderhistory: function(callback,errCallback) {
+        orderhistory: function(callback, errCallback) {
             // return $http.get(adminurl + 'orderDealerHistory').success(callback);
             httpService.get(adminurl + 'orderDealerHistory', {}, callback, errCallback);
         },
@@ -92,22 +92,22 @@ angular.module('starter.services', ['httpService'])
         },
         //dhaval start
         getbrand: function(pageno, callback, errCallback) {
-          console.log(pageno);
+            console.log(pageno);
             httpService.get(adminurl + 'getbrand?maxrow=12&pageno=' + pageno, {}, callback, errCallback);
         },
-        getDealerOrderDetails: function( callback, errCallback) {
-          var user=parseInt($.jStorage.get("user").id);
-            httpService.get(adminurl + 'getDealerOrderDetails?user='+ user , {}, callback, errCallback);
+        getDealerOrderDetails: function(callback, errCallback) {
+            var user = parseInt($.jStorage.get("user").id);
+            httpService.get(adminurl + 'getDealerOrderDetails?user=' + user, {}, callback, errCallback);
         },
-        getproductbybrand: function(pageno, brand, filters, callback,errCallback) {
+        getproductbybrand: function(pageno, brand, filters, callback, errCallback) {
             return $http.get(adminurl + 'getproductbycategory?category=' + filters.category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity, {}, {
                 withCredentials: true
             }).success(callback);
 
 
-                        // httpService.get(adminurl + 'getproductbycategory?category=' + filters.category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity, {}, callback, errCallback);
+            // httpService.get(adminurl + 'getproductbycategory?category=' + filters.category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity, {}, callback, errCallback);
         },
-        getproductbycategory: function(pageno, category, filters, callback,errCallback) {
+        getproductbycategory: function(pageno, category, filters, callback, errCallback) {
             return $http.get(adminurl + 'getproductbycategory?category=' + category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + filters.brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity + '&maxrow=18', {}, {
                 withCredentials: true
             }).success(callback);
@@ -122,7 +122,7 @@ angular.module('starter.services', ['httpService'])
             //     withCredentials: true
             // }).success(callback);
 
-                httpService.get(adminurl + 'getallproducts?pageno=' + pageno, {}, callback, errCallback);
+            httpService.get(adminurl + 'getallproducts?pageno=' + pageno, {}, callback, errCallback);
         },
         getexclusiveandnewarrival: function(pageno, id, callback) {
             return $http.get(adminurl + 'getexclusiveandnewarrival?id=' + id + '&pageno=' + pageno, {}, {
@@ -130,11 +130,11 @@ angular.module('starter.services', ['httpService'])
             }).success(callback);
 
         },
-        getproductdetails: function(id, callback,errCallback) {
+        getproductdetails: function(id, callback, errCallback) {
             // return $http.get(adminurl + 'getproductdetails?id=' + id, {}, {
             //     withCredentials: true
             // }).success(callback);
-                httpService.get(adminurl + 'getproductdetails?id=' + id, {}, callback, errCallback);
+            httpService.get(adminurl + 'getproductdetails?id=' + id, {}, callback, errCallback);
         },
         addtowishlist: function(productid, callback) {
             return $http({
@@ -225,38 +225,38 @@ angular.module('starter.services', ['httpService'])
                 withCredentials: true
             }).success(callback);
         },
-        getallcategories: function(callback,errCallback) {
+        getallcategories: function(callback, errCallback) {
             // return $http.get(adminurl + 'getallcategory', {}, {
             //     withCredentials: true
             // }).success(callback);
-              httpService.get(adminurl + 'getallcategory', {}, callback, errCallback);
+            httpService.get(adminurl + 'getallcategory', {}, callback, errCallback);
         },
 
-        getsinglecategory: function(id, callback,errCallback) {
+        getsinglecategory: function(id, callback, errCallback) {
             // return $http.get(adminurl + 'getsinglecategory?categoryid=' + id, {}, {
             //     withCredentials: true
             // }).success(callback);
-              httpService.get(adminurl + 'getsinglecategory?categoryid=', {}, callback, errCallback);
+            httpService.get(adminurl + 'getsinglecategory?categoryid=', {}, callback, errCallback);
         },
-        getHomeProducts: function(callback,errCallback) {
+        getHomeProducts: function(callback, errCallback) {
             // return $http.get(adminurl + 'getHomeProducts', {}, {
             //     withCredentials: true
             // }).success(callback);
-              httpService.get(adminurl + 'getHomeProducts', {}, callback, errCallback);
+            httpService.get(adminurl + 'getHomeProducts', {}, callback, errCallback);
 
         },
-        getHomeSlider: function(callback,errCallback) {
+        getHomeSlider: function(callback, errCallback) {
             // return $http.get(adminurl + 'getHomeSlider', {}, {
             //     withCredentials: true
             // }).success(callback);
-              httpService.get(adminurl + 'getHomeSlider', {}, callback, errCallback);
+            httpService.get(adminurl + 'getHomeSlider', {}, callback, errCallback);
         },
         getFilters: function(category, brand, callback) {
             return $http.post(adminurl + 'getFilters?category=' + category + "&brand=" + brand, {}, {
                 withCredentials: true
             }).success(callback);
         },
-        getuserdetails: function(callback,errCallback) {
+        getuserdetails: function(callback, errCallback) {
             // return $http.get(adminurl + 'getDealerDetails', {}, {
             //     withCredentials: true
             // }).success(callback);

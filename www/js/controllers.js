@@ -1,8 +1,14 @@
 var allfunction = {};
 var myfunction = '';
+var openModal = false;
 angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $location, $ionicPopup, $rootScope, MyServices, $ionicLoading, $interval, $window, $templateCache, $state) {
+    if ($.jStorage.get("user") === null) {
+        $state.go("access.login");
+    } else {
+        $state.go("app.brands");
+    }
     $rootScope.transparent_header = false;
     $scope.userSignup = {};
     $scope.loginData = {};
@@ -51,7 +57,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             if (data == 'true') {
                 $.jStorage.flush();
                 $scope.showlogin = true;
-                $state.go('app.brands');
+                $state.go("access.login");
             }
         });
     };
@@ -74,10 +80,12 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
     $scope.search = function() {
         $scope.searchbar = $scope.searchbar === true ? false : true;
     };
+    $scope.showcartnotfoundmsg=false;
     $scope.cartCheck = function() {
         console.log($scope.user.cart);
         if ($scope.user.cart === 0) {
             $scope.showAlert();
+            $scope.showcartnotfoundmsg=true;
         } else {
             $location.path('/app/cart');
         }
@@ -306,6 +314,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
     //     $scope.filter();
     // };
     //    --------------------END- FILTERS
+
 })
 
 
@@ -668,8 +677,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
 
 })
 
-.controller('CartCtrl', function($scope, $stateParams, $location, $ionicHistory, MyServices, $ionicLoading,$state) {
-  $scope.checkout={};
+.controller('CartCtrl', function($scope, $stateParams, $location, $ionicHistory, MyServices, $ionicLoading, $state) {
+
+    $scope.checkout = {};
     $.jStorage.set("filters", null);
     $scope.goHome = function() {
         console.log($ionicHistory.viewHistory());
@@ -692,36 +702,18 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
             }
         });
     };
+    $scope.checkout = {};
     $scope.paymentOption = function() {
         console.log("In fubn");
-        $scope.allvalidation = [];
-        if ($scope.different_address === false) {
-            $scope.allvalidation = [{
-                field: $scope.checkout.paymentstatus,
-                validation: ""
-            }];
-            $scope.checkout.shippingname = $scope.checkout.firstname + " " + $scope.checkout.lastname;
-            $scope.checkout.shippingaddress = $scope.checkout.billingaddress;
-            $scope.checkout.shippingcity = $scope.checkout.billingcity;
-            $scope.checkout.shippingstate = $scope.checkout.billingstate;
-            $scope.checkout.shippingpincode = $scope.checkout.billingpincode;
-            $scope.checkout.shippingcountry = $scope.checkout.billingcountry;
-            $scope.checkout.shippingcontact = $scope.checkout.billingcontact;
-        } else if ($scope.different_address === true) {
-            $scope.allvalidation = [{
-                field: $scope.checkout.paymentstatus,
-                validation: ""
-            }];
-        }
-        var check = formvalidation($scope.allvalidation);
-        console.log(check);
-        if (check) {
+        console.log($scope.checkout.paymentstatus);
+        if ($scope.checkout.paymentstatus === "1" || $scope.checkout.paymentstatus === "2") {
+          console.log("enter");
             console.log($scope.checkout);
             MyServices.getcart(function(data) {
                 $scope.checkout.cart = data;
                 MyServices.gettotalcart(function(data) {
                     console.log("totalcart = " + data);
-                    $scope.checkout.finalamount = $scope.totalcart;
+                    $scope.totalcart.finalamount = $scope.totalcart;
                     console.log($scope.checkout);
                     if ($.jStorage.get("user")) {
                         var userid = parseInt($.jStorage.get("user").id);
@@ -729,9 +721,6 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                     } else {
                         $scope.checkout.user = 0;
                     }
-
-
-                    // allfunction.loading();
                     MyServices.placeorder($scope.checkout, function(data) {
                         console.log(data);
                         $ionicLoading.hide();
@@ -749,7 +738,14 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                     });
                 });
             });
+        } else {
+              console.log("no enter");
+            allfunction.msg("Select Payment Mode", "Error !");
         }
+
+
+
+
     };
     MyServices.getuserdetails(function(data) {
         console.log(data);
@@ -1996,31 +1992,36 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
 })
 
 .controller('SearchresultCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading) {
-    $.jStorage.set("filters", null);
-    $scope.searchfor = '';
-    $scope.showSearchForSomething = true;
-    $scope.shownodata = false;
+        $.jStorage.set("filters", null);
+        $scope.searchfor = '';
+        $scope.showSearchForSomething = true;
+        $scope.shownodata = false;
 
-    $scope.getSearchResults = function() {
-        if ($scope.searchfor != "" && $scope.searchfor.length >= 3) {
-            allfunction.loading();
-            MyServices.search($scope.searchfor, function(data) {
-                console.log(data);
-                if (data.length == 0) {
-                    $scope.products = [];
-                    $scope.shownodata = true;
-                } else {
-                    $scope.products = data;
-                    $scope.products = _.chunk($scope.products, 2);
-                    $scope.showSearchForSomething = false;
-                }
-                $ionicLoading.hide();
-            });
-        } else {
-            $scope.products = [];
-            $scope.showSearchForSomething = true;
-            $scope.shownodata = false;
+        $scope.getSearchResults = function() {
+            if ($scope.searchfor != "" && $scope.searchfor.length >= 3) {
+                allfunction.loading();
+                MyServices.search($scope.searchfor, function(data) {
+                    console.log(data);
+                    if (data.length == 0) {
+                        $scope.products = [];
+                        $scope.shownodata = true;
+                    } else {
+                        $scope.products = data;
+                        $scope.products = _.chunk($scope.products, 2);
+                        $scope.showSearchForSomething = false;
+                    }
+                    $ionicLoading.hide();
+                });
+            } else {
+                $scope.products = [];
+                $scope.showSearchForSomething = true;
+                $scope.shownodata = false;
+            }
         }
-    }
 
-});
+    })
+    .controller('LoginCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading) {
+        $.jStorage.set("filters", null);
+
+
+    });

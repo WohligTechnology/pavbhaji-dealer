@@ -45,6 +45,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         templateUrl: 'templates/menu.html',
         controller: 'AppCtrl'
     })
+        .state('access', {
+        url: '/access',
+        abstract: true,
+        templateUrl: 'templates/noheader.html',
+        controller: 'AppCtrl'
+    })
+
+    .state('access.login', {
+            url: '/login',
+            views: {
+                'noheader': {
+                    templateUrl: 'templates/login.html',
+                    controller: 'LoginCtrl'
+                }
+            }
+        })
 
     .state('app.home', {
             url: '/home',
@@ -212,7 +228,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             }
         });
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/brands');
+    $urlRouterProvider.otherwise('/access/login');
 })
 
 .filter('serverimage', function() {

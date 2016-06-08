@@ -7,6 +7,7 @@
   "dependencies": {
     "bower": "*",
     "install": "^1.0.4",
-    "jquery-md5": "*"
+    "jquery-md5": "*",
+    "ionic-cache-src": "^0.7.3"
   }
 }

@@ -2,7 +2,7 @@ var allfunction = {};
 var myfunction = '';
 var openModal = false;
 var showcartnotfoundmsg = false;
-angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova'])
+angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova','ionic-cache-src'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $location, $ionicPopup, $rootScope, MyServices, $ionicLoading, $interval, $window, $templateCache, $state) {
     if ($.jStorage.get("user") === null) {

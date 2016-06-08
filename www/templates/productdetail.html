@@ -8,7 +8,7 @@
             <ion-slide-box on-slide-changed="slideHasChanged($index)">
                 <ion-slide ng-repeat="images in productdetail">
                     <div class="image-holder-productimg" ng-click="openModal(images.image);">
-                        <img ng-src="{{images.image}}" class="product-img" alt="" ng-if="images.image">
+                        <img cache-src="{{images.image}}" class="product-img" alt="" ng-if="images.image">
                         <img src="img/icon.png" class="product-img" alt="" ng-if="!images.image">
                         <div class="play-btn" ng-if="images.check==0">
                           <i class="ln-circle-play"></i>

@@ -735,8 +735,8 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova']
                         $ionicLoading.hide();
                         if (data != 'false') {
                             // $scope.checkout.orderid = data;
-                            allfunction.msg("Your Order has been placed", 'Thankyou!');
-                                allfunction.msg("Your data is successfully submitted", 'Thankyou!');
+                            allfunction.msg("Your ", 'Thankyou!');
+                                allfunction.msg("Order has been placed and your data is successfully submitted", 'Thankyou!');
                             // $scope.paymentinfo = true;
                             myfunction();
                             $state.go('app.brands');

@@ -1138,6 +1138,11 @@ $dark:                            #444 !default;
   float: none;
   display: block; }
 
+.discount {
+  border: 1px solid #7ee1ea !important;
+  margin: 10px 0 !important;
+  color: #303030 !important; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/

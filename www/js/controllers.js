@@ -2,7 +2,7 @@ var allfunction = {};
 var myfunction = '';
 var openModal = false;
 var showcartnotfoundmsg = false;
-angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova','ionic-cache-src'])
+angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova', 'ionic-cache-src'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $location, $ionicPopup, $rootScope, MyServices, $ionicLoading, $interval, $window, $templateCache, $state) {
     if ($.jStorage.get("user") === null) {
@@ -679,6 +679,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
 .controller('CartCtrl', function($scope, $stateParams, $location, $ionicHistory, MyServices, $ionicLoading, $state) {
     $scope.showcartnotfoundmsg = false;
+
+    $scope.discountedPrice = [];
+
     MyServices.gettotalcart(function(data) {
         console.log("totalcart = " + data);
         if (data == 0) {
@@ -686,6 +689,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         }
         $scope.user.cart = data;
     });
+    $scope.accesslevel = JSON.parse($.jStorage.get("user").accesslevel);
     $scope.checkout = {};
     $.jStorage.set("filters", null);
     $scope.goHome = function() {
@@ -695,6 +699,10 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
     $scope.gotocheckout = function(totalcart) {
         $location.url('app/checkout/' + totalcart);
+    };
+    $scope.discount={};
+    $scope.applyDiscount=function(){
+      console.log(discount);
     };
 
     $scope.gettotalcartfunction = function() {
@@ -709,46 +717,81 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             }
         });
     };
+    $scope.totalcartfunc  = function() {
+        var sum = 0;
+        _.each($scope.cart,function(mycart) {
+          sum+=mycart.price * mycart.qty;
+        });
+        return sum;
+    };
     $scope.hidebutton = false;
     $scope.checkout = {};
     $scope.paymentOption = function() {
         $scope.hidebutton = true;
-        console.log("In fubn");
+        console.log("cart ctrl");
         console.log($scope.checkout.paymentstatus);
         if ($scope.checkout.paymentstatus === "1" || $scope.checkout.paymentstatus === "2") {
-            console.log("enter");
-            console.log($scope.checkout);
-            MyServices.getcart(function(data) {
-                $scope.checkout.cart = data;
-                MyServices.gettotalcart(function(data) {
-                    console.log("totalcart = " + data);
-                    $scope.totalcart.finalamount = $scope.totalcart;
-                    console.log($scope.checkout);
-                    if ($.jStorage.get("user")) {
-                        var userid = parseInt($.jStorage.get("user").id);
-                        $scope.checkout.user = parseInt($.jStorage.get("user").id);
-                    } else {
-                        $scope.checkout.user = 0;
-                    }
-                    MyServices.placeorder($scope.checkout, function(data) {
-                        console.log(data);
-                        $ionicLoading.hide();
-                        if (data != 'false') {
-                            // $scope.checkout.orderid = data;
-                            allfunction.msg("Your ", 'Thankyou!');
-                                allfunction.msg("Order has been placed and your data is successfully submitted", 'Thankyou!');
-                            // $scope.paymentinfo = true;
-                            myfunction();
-                            $state.go('app.brands');
-                            window.location.reload();
-                            myfunction();
-                        } else {
-                            $scope.hidebutton = false;
-                            allfunction.msg("Sorry Try Again", 'Sorry!');
-                        }
-                    });
-                });
-            });
+          console.log($scope.cart);
+            $scope.checkout.cart=$scope.cart;
+            console.log("^^^^^^^");
+            console.log($scope.checkout.cart);
+          if ($.jStorage.get("user")) {
+              var userid = parseInt($.jStorage.get("user").id);
+              $scope.checkout.user = parseInt($.jStorage.get("user").id);
+          } else {
+              $scope.checkout.user = 0;
+          }
+          $scope.totalcartfunc();
+          MyServices.placeorder($scope.checkout, function(data) {
+              console.log(data);
+              $ionicLoading.hide();
+              if (data != 'false') {
+                  // $scope.checkout.orderid = data;
+                  allfunction.msg("Your ", 'Thankyou!');
+                  allfunction.msg("Order has been placed and your data is successfully submitted", 'Thankyou!');
+                  // $scope.paymentinfo = true;
+                  myfunction();
+                  $state.go('app.brands');
+                  window.location.reload();
+                  myfunction();
+              } else {
+                  $scope.hidebutton = false;
+                  allfunction.msg("Sorry Try Again", 'Sorry!');
+              }
+          });
+            // MyServices.getcart(function(data) {
+            //   console.log("dsgf");
+            //   console.log(data);
+            //     $scope.checkout.cart = data;
+                // MyServices.gettotalcart(function(data) {
+                //     console.log("totalcart = " + data);
+                //     $scope.totalcart.finalamount = $scope.totalcart;
+                //     console.log($scope.checkout);
+                //     if ($.jStorage.get("user")) {
+                //         var userid = parseInt($.jStorage.get("user").id);
+                //         $scope.checkout.user = parseInt($.jStorage.get("user").id);
+                //     } else {
+                //         $scope.checkout.user = 0;
+                //     }
+                //     MyServices.placeorder($scope.checkout, function(data) {
+                //         console.log(data);
+                //         $ionicLoading.hide();
+                //         if (data != 'false') {
+                //             // $scope.checkout.orderid = data;
+                //             allfunction.msg("Your ", 'Thankyou!');
+                //             allfunction.msg("Order has been placed and your data is successfully submitted", 'Thankyou!');
+                //             // $scope.paymentinfo = true;
+                //             myfunction();
+                //             $state.go('app.brands');
+                //             window.location.reload();
+                //             myfunction();
+                //         } else {
+                //             $scope.hidebutton = false;
+                //             allfunction.msg("Sorry Try Again", 'Sorry!');
+                //         }
+                //     });
+                // });
+            // });
         } else {
             console.log("no enter");
             allfunction.msg("Select Payment Mode", "Error !");
@@ -758,6 +801,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
 
     };
+
     MyServices.getuserdetails(function(data) {
         console.log(data);
         $scope.userdetail = data;
@@ -873,40 +917,41 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         myfunction();
         $ionicLoading.hide();
     };
-
+$scope.mycart={};
     $scope.changeqty = function(mycart, option) {
         if (option == '+') {
-            if (mycart.qty < mycart.maxQuantity) {
+            if (parseInt(mycart.qty) < parseInt(mycart.maxQuantity)) {
                 allfunction.loading();
-                if (option == '+') {
-                    ++mycart.qty;
-                } else {
-                    if (mycart.qty > 1)
-                        --mycart.qty;
-                }
+                // if (option == '+') {
+                //     ++mycart.qty;
+                // } else {
+                //     if (mycart.qty > 1)
+                //         --mycart.qty;
+                // }
                 var selectedproduct = {};
                 selectedproduct.product = mycart.id;
                 selectedproduct.productname = mycart.options.realname;
                 selectedproduct.price = mycart.price;
-                selectedproduct.quantity = mycart.qty;
+                selectedproduct.quantity = parseInt(mycart.qty) + 1;
+                console.log(selectedproduct);
                 MyServices.addtocart(selectedproduct, cartt);
             } else {
-                allfunction.msg("Only " + mycart.maxQuantity + " quantity is available ", "Quantity Exceeds");
+                allfunction.msg("Only " + parseInt(mycart.maxQuantity) + " quantity is available ", "Quantity Exceeds");
             }
         } else if (option == '-') {
             if (mycart.qty > 1) {
                 allfunction.loading();
-                if (option == '+') {
-                    ++mycart.qty;
-                } else {
-                    if (mycart.qty > 1)
-                        --mycart.qty;
-                }
+                // if (option == '+') {
+                //     ++mycart.qty;
+                // } else {
+                //     if (mycart.qty > 1)
+                //         --mycart.qty;
+                // }
                 var selectedproduct = {};
                 selectedproduct.product = mycart.id;
                 selectedproduct.productname = mycart.options.realname;
                 selectedproduct.price = mycart.price;
-                selectedproduct.quantity = mycart.qty;
+                selectedproduct.quantity = parseInt(mycart.qty) - 1;
                 MyServices.addtocart(selectedproduct, cartt);
             } else {
                 allfunction.msg("Cannot decrease quantity ", "Error !");
@@ -1061,7 +1106,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     });
 
     $scope.paymentOption = function() {
-        console.log("In fubn");
+        console.log("In checkout ctrl");
         $scope.allvalidation = [];
         if ($scope.different_address === false) {
             $scope.allvalidation = [
@@ -1198,7 +1243,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                             myfunction();
                         } else {
                             allfunction.msg("Sorry Try Again", 'Sorry!');
-                              $scope.hidebutton = false;
+                            $scope.hidebutton = false;
                         }
                     });
                 });
@@ -1858,7 +1903,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         selectedproduct.product = product.id;
         selectedproduct.productname = product.name;
         selectedproduct.price = product.price;
-        selectedproduct.quantity = product.quantity;
+        selectedproduct.quantity = 1;
         MyServices.addtocart(selectedproduct, function(data) {
             console.log(data);
             var xyz = $ionicPopup.show({

@@ -1,5 +1,5 @@
-var adminbase = "http://admin.accessworld.in/";
-// var adminbase = "http://192.168.1.105/accessback/";
+// var adminbase = "http://admin.accessworld.in/";
+var adminbase = "http://192.168.1.101/accessback/";
 var adminurl = adminbase + "index.php/json/";
 var adminhauth = adminbase + "index.php/hauth/";
 var adminimage = "http://admin.accessworld.in/uploads/";
@@ -148,7 +148,7 @@ angular.module('starter.services', ['httpService'])
             }).success(callback);
         },
         addtocart: function(product, callback) {
-            return $http.get(adminurl + 'addtocartDealer?product=' + product.product + '&productname=' + product.productname + '&price=' + product.price + '&quantity=1', {}, {
+            return $http.get(adminurl + 'addtocartDealer?product=' + product.product + '&productname=' + product.productname + '&price=' + product.price + '&quantity=' + product.quantity, {}, {
                 withCredentials: true
             }).success(callback);
         },

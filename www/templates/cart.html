@@ -1,6 +1,84 @@
 <ion-view view-title="Cart">
 
     <ion-content>
+        <div class="center" ng-if="showcartnotfoundmsg==true">
+            <p>Your Shopping Cart is empty.</p>
+        </div>
+        <div ng-if="showcartnotfoundmsg==false">
+            <div ng-hide="nodatafound" id="snap">
+                <div class="cart">
+                    <div class="row-container" ng-repeat="mycart in cart">
+                        <div class="col">
+                            <div class="product-cart">
+                                <div class="row ">
+                                    <div class="col-40">
+                                        <div class="image-holder-cart">
+                                            <img class="cart-image" cache-src="{{mycart.image | serverimage}}" alt="" ng-if="mycart.image">
+                                            <img class="cart-image" cache-src="img/icon.png" alt="" ng-if="!mycart.image">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <h4>{{mycart.options.realname}}</h4>
+                                        <div ng-if="accesslevel==2">
+                                            <h3 ng-if="mycart.price==mycart.options.originalprice">Unit Price : Rs.  <input type="text" name="name" ng-model="mycart.price"></h3>
+                                            <h3 ng-if="mycart.price!=mycart.options.originalprice">Unit Price : Rs. <input type="text" name="name" ng-model="mycart.price"> <a class="strike">{{mycart.options.originalprice | numberWithCommas}} </a></h3>
+                                        </div>
+
+
+                                        <div class="product-quantity-cart">
+
+                                            <button class="button button-clear button-icon button-calm" ng-click="changeqty(mycart,'-')"><i class="icon ion-minus-circled"></i></button>
+                                            <input type="text" ng-model="mycart.qty" ng-change="onchangeqty(mycart)">
+                                            <button class="button button-clear button-icon button-calm" ng-click="changeqty(mycart,'+')"><i class="icon ion-plus-circled"></i></button>
+                                        </div>
+                                        <h3>Total Price : Rs. {{mycart.price * mycart.qty | numberWithCommas}}</h3>
+                                        <!-- <input type="text" name="name" value="" placeholder="Discount Unit" class="discount" ng-model="mycart.price" ng-change="recalcTotal();"> -->
+                                        <button class="button button-clear button-assertive" ng-click="deletecart(mycart)">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- //apply button -->
+
+                <div class="row no-padding">
+                    <div class="expense-cart">
+
+
+                        <div class="item item-icon-left">
+                            <h3><i class="icon ln-cash"></i>Total amount
+                <span class="item-note" ng-bind="totalcartfunc()"></span></h3></div>
+
+                    </div>
+                </div>
+                <form>
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            <h3>Payment Mode*</h3>
+                        </div>
+                        <select ng-model="checkout.paymentstatus" ng-class="allvalidation[0].validation" required>
+                            <option value="">Select Payment Mode</option>
+                            <option value="1">Full Payment</option>
+                            <option value="2">Advance Payment</option>
+                        </select>
+                    </label>
+                </form>
+                <a class="button  button-positive btn-checkout login-button" ng-hide="hidebutton" ng-click="paymentOption();">Place Order</a>
+
+            </div>
+        </div>
+
+
+    </ion-content>
+
+</ion-view>
+
+
+<!-- <ion-view view-title="Cart">
+
+    <ion-content>
       <div class="center" ng-if="showcartnotfoundmsg==true">
           <p>Your Shopping Cart is empty.</p>
       </div>
@@ -61,15 +139,12 @@
                         </select>
                     </label>
                 </form>
-                <!-- <a class="button  button-positive btn-checkout login-button" ng-click="tocheckout(totalcart);">Proceed to checkout</a> -->
                 <a class="button  button-positive btn-checkout login-button" ng-hide="hidebutton" ng-click="paymentOption();">Place Order</a>
-                <!-- <button class="button button-positive order-button" type="submit" ng-click="paymentOption()">
-            Place Order
-            </button> -->
+
             </div>
         </div>
 
 
     </ion-content>
 
-</ion-view>
+</ion-view> -->

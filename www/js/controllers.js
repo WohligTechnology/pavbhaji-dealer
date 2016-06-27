@@ -122,7 +122,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 $ionicLoading.hide();
                 MyServices.setuser(data);
                 $scope.closeLogin();
-                $window.location.reload();
+                setTimeout(function () {
+                  window.location.reload();
+                }, 500);
                 //                 $templateCache.removeAll();
                 // $location.url("/home");
             }
@@ -700,9 +702,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     $scope.gotocheckout = function(totalcart) {
         $location.url('app/checkout/' + totalcart);
     };
-    $scope.discount={};
-    $scope.applyDiscount=function(){
-      console.log(discount);
+    $scope.discount = {};
+    $scope.applyDiscount = function() {
+        console.log(discount);
     };
 
     $scope.gettotalcartfunction = function() {
@@ -717,10 +719,10 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             }
         });
     };
-    $scope.totalcartfunc  = function() {
+    $scope.totalcartfunc = function() {
         var sum = 0;
-        _.each($scope.cart,function(mycart) {
-          sum+=mycart.price * mycart.qty;
+        _.each($scope.cart, function(mycart) {
+            sum += mycart.price * mycart.qty;
         });
         return sum;
     };
@@ -731,66 +733,74 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         console.log("cart ctrl");
         console.log($scope.checkout.paymentstatus);
         if ($scope.checkout.paymentstatus === "1" || $scope.checkout.paymentstatus === "2") {
-          console.log($scope.cart);
-            $scope.checkout.cart=$scope.cart;
+            console.log($scope.cart);
+            $scope.checkout.cart = $scope.cart;
             console.log("^^^^^^^");
             console.log($scope.checkout.cart);
-          if ($.jStorage.get("user")) {
-              var userid = parseInt($.jStorage.get("user").id);
-              $scope.checkout.user = parseInt($.jStorage.get("user").id);
-          } else {
-              $scope.checkout.user = 0;
-          }
-          $scope.totalcartfunc();
-          MyServices.placeorder($scope.checkout, function(data) {
-              console.log(data);
-              $ionicLoading.hide();
-              if (data != 'false') {
-                  // $scope.checkout.orderid = data;
-                  allfunction.msg("Your ", 'Thankyou!');
-                  allfunction.msg("Order has been placed and your data is successfully submitted", 'Thankyou!');
-                  // $scope.paymentinfo = true;
-                  myfunction();
-                  $state.go('app.brands');
-                  window.location.reload();
-                  myfunction();
-              } else {
-                  $scope.hidebutton = false;
-                  allfunction.msg("Sorry Try Again", 'Sorry!');
-              }
-          });
+            if ($.jStorage.get("user")) {
+                var userid = parseInt($.jStorage.get("user").id);
+                $scope.checkout.user = parseInt($.jStorage.get("user").id);
+            } else {
+                $scope.checkout.user = 0;
+            }
+            $scope.totalcartfunc();
+            $scope.checkout.cart = $scope.cart;
+
+            if(parseInt($.jStorage.get("user").accesslevel)==2){
+                $scope.checkout.sales = $scope.checkout.user;
+            }
+            else{
+                $scope.checkout.sales = 0;
+            }
+            MyServices.placeorder($scope.checkout, function(data) {
+                console.log(data);
+                $ionicLoading.hide();
+                if (data != 'false') {
+                    // $scope.checkout.orderid = data;
+                    allfunction.msg("Your ", 'Thankyou!');
+                    allfunction.msg("Order has been placed and your data is successfully submitted", 'Thankyou!');
+                    // $scope.paymentinfo = true;
+                    myfunction();
+                    $state.go('app.brands');
+                    window.location.reload();
+                    myfunction();
+                } else {
+                    $scope.hidebutton = false;
+                    allfunction.msg("Sorry Try Again", 'Sorry!');
+                }
+            });
             // MyServices.getcart(function(data) {
             //   console.log("dsgf");
             //   console.log(data);
             //     $scope.checkout.cart = data;
-                // MyServices.gettotalcart(function(data) {
-                //     console.log("totalcart = " + data);
-                //     $scope.totalcart.finalamount = $scope.totalcart;
-                //     console.log($scope.checkout);
-                //     if ($.jStorage.get("user")) {
-                //         var userid = parseInt($.jStorage.get("user").id);
-                //         $scope.checkout.user = parseInt($.jStorage.get("user").id);
-                //     } else {
-                //         $scope.checkout.user = 0;
-                //     }
-                //     MyServices.placeorder($scope.checkout, function(data) {
-                //         console.log(data);
-                //         $ionicLoading.hide();
-                //         if (data != 'false') {
-                //             // $scope.checkout.orderid = data;
-                //             allfunction.msg("Your ", 'Thankyou!');
-                //             allfunction.msg("Order has been placed and your data is successfully submitted", 'Thankyou!');
-                //             // $scope.paymentinfo = true;
-                //             myfunction();
-                //             $state.go('app.brands');
-                //             window.location.reload();
-                //             myfunction();
-                //         } else {
-                //             $scope.hidebutton = false;
-                //             allfunction.msg("Sorry Try Again", 'Sorry!');
-                //         }
-                //     });
-                // });
+            // MyServices.gettotalcart(function(data) {
+            //     console.log("totalcart = " + data);
+            //     $scope.totalcart.finalamount = $scope.totalcart;
+            //     console.log($scope.checkout);
+            //     if ($.jStorage.get("user")) {
+            //         var userid = parseInt($.jStorage.get("user").id);
+            //         $scope.checkout.user = parseInt($.jStorage.get("user").id);
+            //     } else {
+            //         $scope.checkout.user = 0;
+            //     }
+            //     MyServices.placeorder($scope.checkout, function(data) {
+            //         console.log(data);
+            //         $ionicLoading.hide();
+            //         if (data != 'false') {
+            //             // $scope.checkout.orderid = data;
+            //             allfunction.msg("Your ", 'Thankyou!');
+            //             allfunction.msg("Order has been placed and your data is successfully submitted", 'Thankyou!');
+            //             // $scope.paymentinfo = true;
+            //             myfunction();
+            //             $state.go('app.brands');
+            //             window.location.reload();
+            //             myfunction();
+            //         } else {
+            //             $scope.hidebutton = false;
+            //             allfunction.msg("Sorry Try Again", 'Sorry!');
+            //         }
+            //     });
+            // });
             // });
         } else {
             console.log("no enter");
@@ -917,7 +927,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         myfunction();
         $ionicLoading.hide();
     };
-$scope.mycart={};
+    $scope.mycart = {};
     $scope.changeqty = function(mycart, option) {
         if (option == '+') {
             if (parseInt(mycart.qty) < parseInt(mycart.maxQuantity)) {

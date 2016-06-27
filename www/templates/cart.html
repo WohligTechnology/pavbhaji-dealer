@@ -64,6 +64,16 @@
                             <option value="2">Advance Payment</option>
                         </select>
                     </label>
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            <h3>Select Dealer*</h3>
+                        </div>
+                        <select ng-model="checkout.dealer" ng-class="allvalidation[0].validation" required>
+                            <option value="">Select Payment Mode</option>
+                            <option value="1">Full Payment</option>
+                            <option value="2">Advance Payment</option>
+                        </select>
+                    </label>
                 </form>
                 <a class="button  button-positive btn-checkout login-button" ng-hide="hidebutton" ng-click="paymentOption();">Place Order</a>
 

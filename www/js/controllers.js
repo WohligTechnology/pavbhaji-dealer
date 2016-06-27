@@ -817,6 +817,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         $scope.userdetail = data;
         $scope.gettotalcartfunction();
     });
+    MyServices.getStoreDropDown(function(data) {
+        console.log(data);
+    });
 
     //check coupons
     $scope.discountamount = 0;

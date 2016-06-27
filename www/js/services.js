@@ -1,5 +1,5 @@
-var adminbase = "http://admin.accessworld.in/";
-// var adminbase = "http://192.168.1.102/accessback/";
+// var adminbase = "http://admin.accessworld.in/";
+var adminbase = "http://192.168.1.102/accessback/";
 var adminurl = adminbase + "index.php/json/";
 var adminhauth = adminbase + "index.php/hauth/";
 var adminimage = "http://admin.accessworld.in/uploads/";
@@ -40,6 +40,9 @@ angular.module('starter.services', ['httpService'])
         authenticate: function(callback, errCallback) {
             httpService.get(adminurl + 'authenticateDealer', {}, callback, errCallback);
             // httpService.get(adminurl + 'getbrand?maxrow=12&pageno=' + pageno, {}, callback, errCallback);
+        },
+        getStoreDropDown: function(callback, errCallback) {
+            httpService.get(adminurl + 'getStoreDropDown', {}, callback, errCallback);
         },
         orderhistory: function(callback, errCallback) {
             // return $http.get(adminurl + 'orderDealerHistory').success(callback);

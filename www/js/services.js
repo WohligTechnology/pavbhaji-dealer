@@ -1,5 +1,5 @@
-// var adminbase = "http://admin.accessworld.in/";
-var adminbase = "http://192.168.1.102/accessback/";
+var adminbase = "http://admin.accessworld.in/";
+// var adminbase = "http://192.168.1.106/accessback/";
 var adminurl = adminbase + "index.php/json/";
 var adminhauth = adminbase + "index.php/hauth/";
 var adminimage = "http://admin.accessworld.in/uploads/";
@@ -29,6 +29,7 @@ angular.module('starter.services', ['httpService'])
                 method: "POST",
                 data: signup
             }).success(callback);
+              // httpService.post(adminurl + "registeruser", signup, callback, errCallback);
         },
         login: function(login, callback) {
             return $http({
@@ -36,6 +37,7 @@ angular.module('starter.services', ['httpService'])
                 method: "POST",
                 data: login
             }).success(callback);
+                // httpService.post(adminurl + "dealerLogin", login, callback, errCallback);
         },
         authenticate: function(callback, errCallback) {
             httpService.get(adminurl + 'authenticateDealer', {}, callback, errCallback);
@@ -49,26 +51,28 @@ angular.module('starter.services', ['httpService'])
             httpService.get(adminurl + 'orderDealerHistory', {}, callback, errCallback);
         },
         logout: function(callback) {
+            // httpService.post(adminurl + "logout", callback, errCallback);
             return $http.post(adminurl + 'logout', {
                 withCredentials: true
             }).success(callback);
         },
         updateuser: function(userdetails, callback) {
             return $http({
-                url: adminurl + 'updateDealer',
-                method: "POST",
-                data: {
-                    'id': $.jStorage.get("user").id,
-                    'storename': userdetails.storename,
-                    'ownername': userdetails.ownername,
-                    'email': userdetails.email,
-                    'address': userdetails.address,
-                    'city': userdetails.city,
-                    'state': userdetails.state,
-                    'phone': userdetails.phone,
-                    'pincode': userdetails.pincode
-                }
-            }).success(callback);
+            url: adminurl + 'updateDealer',
+               method: "POST",
+               data: {
+                   'id': $.jStorage.get("user").id,
+                   'storename': userdetails.storename,
+                   'ownername': userdetails.ownername,
+                   'email': userdetails.email,
+                   'address': userdetails.address,
+                   'city': userdetails.city,
+                   'state': userdetails.state,
+                   'phone': userdetails.phone,
+                   'pincode': userdetails.pincode
+               }
+           }).success(callback);
+              // httpService.post(adminurl + "updateDealer",data, callback, errCallback);
         },
         placeorder: function(checkout, callback) {
             console.log(checkout);
@@ -78,20 +82,37 @@ angular.module('starter.services', ['httpService'])
                 data: checkout
             }).success(callback);
         },
-        usercontact: function(usercontact, callback) {
-            // return $http.get(adminurl + 'userContactDealer?name=' + usercontact.name + '&phone=' + usercontact.phone + '&email=' + usercontact.email + '&comment=' + usercontact.comment, {}, {
-            //     withCredentials: true
+        usercontact: function(usercontact, callback, errCallback) {
+          return $http({
+                        url: adminurl + 'userContactDealer',
+                        method: "POST",
+                        data: {
+                            'name': usercontact.name,
+                            'phone': usercontact.phone,
+                            'email': usercontact.email,
+                            'comment': usercontact.comment
+                        }
+                    }).success(callback);
+            // return $http({
+            //     url: adminurl + 'userContactDealer',
+            //     method: "POST",
+            //     data: {
+            //         'name': usercontact.name,
+            //         'phone': usercontact.phone,
+            //         'email': usercontact.email,
+            //         'comment': usercontact.comment
+            //     }
             // }).success(callback);
-            return $http({
-                url: adminurl + 'userContactDealer',
-                method: "POST",
-                data: {
-                    'name': usercontact.name,
-                    'phone': usercontact.phone,
-                    'email': usercontact.email,
-                    'comment': usercontact.comment
-                }
-            }).success(callback);
+
+            // var data = {
+            //   'name': usercontact.name,
+            //          'phone': usercontact.phone,
+            //          'email': usercontact.email,
+            //          'comment': usercontact.comment
+            //   };
+
+            // }).success(callback);
+              // httpService.post(adminurl + "userContactDealer",data, callback, errCallback);
         },
         //dhaval start
         getbrand: function(pageno, callback, errCallback) {
@@ -103,22 +124,22 @@ angular.module('starter.services', ['httpService'])
             httpService.get(adminurl + 'getDealerOrderDetails?user=' + user, {}, callback, errCallback);
         },
         getproductbybrand: function(pageno, brand, filters, callback, errCallback) {
-            return $http.get(adminurl + 'getproductbycategory?category=' + filters.category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity, {}, {
-                withCredentials: true
-            }).success(callback);
+            // return $http.get(adminurl + 'getproductbycategory?category=' + filters.category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity, {}, {
+            //     withCredentials: true
+            // }).success(callback);
 
 
-            // httpService.get(adminurl + 'getproductbycategory?category=' + filters.category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity, {}, callback, errCallback);
+            httpService.get(adminurl + 'getproductbycategory?category=' + filters.category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity, {}, callback, errCallback);
         },
         getproductbycategory: function(pageno, category, filters, callback, errCallback) {
-            return $http.get(adminurl + 'getproductbycategory?category=' + category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + filters.brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity + '&maxrow=18', {}, {
-                withCredentials: true
-            }).success(callback);
+            // return $http.get(adminurl + 'getproductbycategory?category=' + category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + filters.brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity + '&maxrow=18', {}, {
+            //     withCredentials: true
+            // }).success(callback);
 
 
 
             //
-            // httpService.get(adminurl + 'getproductbycategory?category=' + category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + filters.brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity + '&maxrow=18', {}, callback, errCallback);
+            httpService.get(adminurl + 'getproductbycategory?category=' + category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + filters.brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity + '&maxrow=18', {}, callback, errCallback);
         },
         getallproduct: function(pageno, callback) {
             // return $http.get(adminurl + 'getallproducts?pageno=' + pageno, {}, {

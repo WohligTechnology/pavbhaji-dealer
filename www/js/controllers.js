@@ -122,8 +122,8 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 $ionicLoading.hide();
                 MyServices.setuser(data);
                 $scope.closeLogin();
-                setTimeout(function () {
-                  window.location.reload();
+                setTimeout(function() {
+                    window.location.reload();
                 }, 500);
                 //                 $templateCache.removeAll();
                 // $location.url("/home");
@@ -585,7 +585,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 if (data !== "") {
                     $ionicLoading.hide();
                     $scope.contactus = {};
-                    allfunction.msg("Query Sumbitted Successfully ", 'Thankyou!');
+                    allfunction.msg("Query Submitted Successfully ", 'Thankyou!');
 
                 } else {
                     $ionicLoading.hide();
@@ -680,6 +680,8 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 })
 
 .controller('CartCtrl', function($scope, $stateParams, $location, $ionicHistory, MyServices, $ionicLoading, $state) {
+
+
     $scope.showcartnotfoundmsg = false;
 
     $scope.discountedPrice = [];
@@ -746,12 +748,13 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             $scope.totalcartfunc();
             $scope.checkout.cart = $scope.cart;
 
-            if(parseInt($.jStorage.get("user").accesslevel)==2){
+            if (parseInt($.jStorage.get("user").accesslevel) == 2) {
                 $scope.checkout.sales = $scope.checkout.user;
-            }
-            else{
+            } else {
                 $scope.checkout.sales = 0;
             }
+            console.log("Dealer");
+            console.log($scope.checkout.dealer);
             MyServices.placeorder($scope.checkout, function(data) {
                 console.log(data);
                 $ionicLoading.hide();
@@ -817,8 +820,15 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         $scope.userdetail = data;
         $scope.gettotalcartfunction();
     });
+    // $scope.checkout.dealer="SELECT";
     MyServices.getStoreDropDown(function(data) {
         console.log(data);
+        $scope.dropdownvalue = data;
+        //   $scope.dropdownvalue.unshift({
+        //     "id": "",
+        //     "storename": "SELECT"
+        // });
+        //   console.log(  $scope.dropdownvalue );
     });
 
     //check coupons

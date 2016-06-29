@@ -1280,18 +1280,23 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
 .controller('MyOrdersCtrl', function($scope, $stateParams, $location, $ionicHistory, MyServices, $ionicLoading) {
     $.jStorage.set("filters", null);
-    MyServices.orderhistory(function(data) {
+    // MyServices.orderhistory(function(data) {
+    //     console.log(data);
+    //
+    //     $scope.orderhistory = data;
+    //     _.each($scope.orderhistory, function(n) {
+    //         n.timestamp = new Date();
+    //     });
+    //
+    //     if (data == "") {} else {
+    //
+    //     }
+    // });
+    MyServices.getDealerOrderDetails(function(data) {
         console.log(data);
-
         $scope.orderhistory = data;
-        _.each($scope.orderhistory, function(n) {
-            n.timestamp = new Date();
         });
 
-        if (data == "") {} else {
-
-        }
-    });
 
 })
 
@@ -1304,7 +1309,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         $scope.subcategories = data;
         console.log(data);
         $ionicLoading.hide();
-    })
+    });
 
 })
 

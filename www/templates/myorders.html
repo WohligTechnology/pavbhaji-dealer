@@ -6,7 +6,7 @@
 <span class="item-note">{{orderhistory.timestamp | date:'MMM d, y'}}</span>
                                 <p>Order Id: {{orderhistory.id}}</p>
             </div>
-              <div class="row-container" ng-repeat="products in orderhistory.orderproduct">
+              <div class="row-container" ng-repeat="products in orderhistory.products">
                 <div class="col">
                     <div class="product-cart">
                         <div class="row ">
@@ -16,7 +16,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <h4>{{products.productname}}</h4>
+                                <h4>{{products.name}}</h4>
                                 <h4>Rs. {{products.wholesaleprice}}</h4>
 
                             </div>

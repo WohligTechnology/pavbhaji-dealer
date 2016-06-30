@@ -1,5 +1,5 @@
-var adminbase = "http://admin.accessworld.in/";
-// var adminbase = "http://192.168.1.106/accessback/";
+// var adminbase = "http://admin.accessworld.in/";
+var adminbase = "http://192.168.1.109/accessback/";
 var adminurl = adminbase + "index.php/json/";
 var adminhauth = adminbase + "index.php/hauth/";
 var adminimage = "http://admin.accessworld.in/uploads/";
@@ -232,18 +232,18 @@ angular.module('starter.services', ['httpService'])
                 }
             }).success(callback);
         },
-        getaboutus: function(callback) {
-            return $http({
-                url: adminurl + 'getaboutus',
-                method: "POST"
-            }).success(callback);
-        },
-        getofferdetails: function(callback) {
-            return $http({
-                url: adminurl + 'getofferdetails',
-                method: "POST"
-            }).success(callback);
-        },
+        // getaboutus: function(callback) {
+        //     return $http({
+        //         url: adminurl + 'getaboutus',
+        //         method: "POST"
+        //     }).success(callback);
+        // },
+        // getofferdetails: function(callback) {
+        //     return $http({
+        //         url: adminurl + 'getofferdetails',
+        //         method: "POST"
+        //     }).success(callback);
+        // },
         search: function(search, callback) {
             return $http.get(adminurl + 'searchbyname?search=' + search, {}, {
                 withCredentials: true
@@ -256,19 +256,19 @@ angular.module('starter.services', ['httpService'])
             httpService.get(adminurl + 'getallcategory', {}, callback, errCallback);
         },
 
-        getsinglecategory: function(id, callback, errCallback) {
-            // return $http.get(adminurl + 'getsinglecategory?categoryid=' + id, {}, {
-            //     withCredentials: true
-            // }).success(callback);
-            httpService.get(adminurl + 'getsinglecategory?categoryid=', {}, callback, errCallback);
-        },
-        getHomeProducts: function(callback, errCallback) {
-            // return $http.get(adminurl + 'getHomeProducts', {}, {
-            //     withCredentials: true
-            // }).success(callback);
-            httpService.get(adminurl + 'getHomeProducts', {}, callback, errCallback);
-
-        },
+        // getsinglecategory: function(id, callback, errCallback) {
+        //     // return $http.get(adminurl + 'getsinglecategory?categoryid=' + id, {}, {
+        //     //     withCredentials: true
+        //     // }).success(callback);
+        //     httpService.get(adminurl + 'getsinglecategory?categoryid=', {}, callback, errCallback);
+        // },
+        // getHomeProducts: function(callback, errCallback) {
+        //     // return $http.get(adminurl + 'getHomeProducts', {}, {
+        //     //     withCredentials: true
+        //     // }).success(callback);
+        //     httpService.get(adminurl + 'getHomeProducts', {}, callback, errCallback);
+        //
+        // },
         getHomeSlider: function(callback, errCallback) {
             // return $http.get(adminurl + 'getHomeSlider', {}, {
             //     withCredentials: true
@@ -286,38 +286,38 @@ angular.module('starter.services', ['httpService'])
             // }).success(callback);
             httpService.get(adminurl + 'getDealerDetails', {}, callback, errCallback);
         },
-        checkoutCheck: function(callback) {
-            return $http.get(adminurl + 'checkoutCheck', {}, {
-                withCredentials: true
-            }).success(callback);
-        },
-        getsubscribe: function(email, callback) {
-            return $http.get(adminurl + 'getsubscribe?email=' + email, {}, {
-                withCredentials: true
-            }).success(callback);
-        },
+        // checkoutCheck: function(callback) {
+        //     return $http.get(adminurl + 'checkoutCheck', {}, {
+        //         withCredentials: true
+        //     }).success(callback);
+        // },
+        // getsubscribe: function(email, callback) {
+        //     return $http.get(adminurl + 'getsubscribe?email=' + email, {}, {
+        //         withCredentials: true
+        //     }).success(callback);
+        // },
         //dhaval end
-        forgotPassword: function(forgot, callback) {
-            return $http({
-                url: adminurl + 'forgotpassword',
-                method: "POST",
-                data: forgot
-            }).success(callback);
-        },
-        getorderbyorderid: function(orderid, callback) {
-            return $http.get(adminurl + 'getorderbyorderid?id=' + orderid, {}, {
-                withCredentials: true
-            }).success(callback);
-        },
-        setNotify: function(data) {
-            $.jStorage.set("notify", data);
-        },
-        getNotify: function() {
-            return $.jStorage.get("notify");
-        },
-        setuser: function(data) {
-            $.jStorage.set("user", data);
-        },
+        // forgotPassword: function(forgot, callback) {
+        //     return $http({
+        //         url: adminurl + 'forgotpassword',
+        //         method: "POST",
+        //         data: forgot
+        //     }).success(callback);
+        // },
+        // getorderbyorderid: function(orderid, callback) {
+        //     return $http.get(adminurl + 'getorderbyorderid?id=' + orderid, {}, {
+        //         withCredentials: true
+        //     }).success(callback);
+        // },
+        // setNotify: function(data) {
+        //     $.jStorage.set("notify", data);
+        // },
+        // getNotify: function() {
+        //     return $.jStorage.get("notify");
+        // },
+        // setuser: function(data) {
+        //     $.jStorage.set("user", data);
+        // },
         getuser: function() {
             return $.jStorage.get("user");
         }

@@ -27,9 +27,10 @@
 
                                         <div class="product-quantity-cart">
 
-                                            <button class="button button-clear button-icon button-calm" ng-click="changeqty(mycart,'-')"><i class="icon ion-minus-circled"></i></button>
+                                            <!-- <button class="button button-clear button-icon button-calm" ng-click="changeqty(mycart,'-')"><i class="icon ion-minus-circled"></i></button>
                                             <input type="text" ng-model="mycart.qty" ng-change="onchangeqty(mycart)">
-                                            <button class="button button-clear button-icon button-calm" ng-click="changeqty(mycart,'+')"><i class="icon ion-plus-circled"></i></button>
+                                            <button class="button button-clear button-icon button-calm" ng-click="changeqty(mycart,'+')"><i class="icon ion-plus-circled"></i></button> -->
+                                            <input type="text" placeholder="enter qty" ng-model="mycart.qty">
                                         </div>
                                         <h3>Total Price : Rs. {{mycart.price * mycart.qty | numberWithCommas}}</h3>
                                         <!-- <input type="text" name="name" value="" placeholder="Discount Unit" class="discount" ng-model="mycart.price" ng-change="recalcTotal();"> -->
@@ -60,13 +61,16 @@
                         </div>
                         <select ng-model="checkout.paymentstatus" ng-class="allvalidation[0].validation" required>
                             <option value="">Select Payment Mode</option>
-                            <option value="1">Full Payment</option>
-                            <option value="2">Advance Payment</option>
+                            <option value="1">CDC</option>
+                            <option value="2">7 days</option>
+                            <option value="3">15 days</option>
+                            <option value="4">21 days</option>
+                            <option value="5">30 days</option>
                         </select>
                     </label>
 
                     <div ng-if="accesslevel==2" class="level2">
-                  
+
                         <input list="browsers" ng-model="checkout.dealer">
                         <datalist id="browsers">
                             <!-- <option value="">SELECT</option> -->

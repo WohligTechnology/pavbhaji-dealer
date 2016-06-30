@@ -753,8 +753,6 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             } else {
                 $scope.checkout.sales = 0;
             }
-            console.log("Dealer");
-            console.log($scope.checkout.dealer);
             MyServices.placeorder($scope.checkout, function(data) {
                 console.log(data);
                 $ionicLoading.hide();
@@ -1923,7 +1921,15 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             }, 3000)
         }
     }
+if(!$.jStorage.get("cart")) {
+  $.jStorage.get("cart")=[];
+}
+$scope.cartarr=$.jStorage.get("cart");
 
+$scope.cartitems=[];
+$scope.cartobj={};
+$scope.cartobj.options={};
+$scope.cartobj.options.realname='';
     $scope.addtocart = function(product) {
         allfunction.loading();
         console.log(product);
@@ -1934,6 +1940,40 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         selectedproduct.quantity = 1;
         MyServices.addtocart(selectedproduct, function(data) {
             console.log(data);
+            console.log("*****");
+            if(data==="true"){
+              console.log("$$$");
+              console.log($scope.cartobj);
+              $scope.cartobj.id=product.id;
+              $scope.cartobj.maxQuantity=product.quantity;
+              $scope.cartobj.name=1;
+              $scope.cartobj.price=product.wholesaleprice;
+              $scope.cartobj.qty=1;
+              $scope.cartobj.options.realname=product.name;
+              // _.each($.jStorage.get("cart"), function(n) {
+              //   if(n.id!=$scope.cartobj.id){
+              //     $scope.cartarr.push(n);
+              //   }
+              //   else{
+              //     $scope.cartobj.qty++;
+              //   }
+              // });
+              for(var x=0;x<$.jStorage.get("cart");x++){
+                if($.jStorage.get("cart")[x].id==$scope.cartobj.id){
+
+                }else{
+                  
+                }
+              }
+              $scope.cartarr.push($scope.cartobj);
+                console.log("This is cart array");
+              console.log($scope.cartarr);
+
+
+                  // $.jStorage.set("cart",$scope.cartarr);
+              // $scope.cartitems=$.jStorage.set("cart",$scope.cartarr);
+                console.log(" end ");
+            }
             var xyz = $ionicPopup.show({
                 title: 'Added to cart'
             });
@@ -2078,6 +2118,47 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
 })
 
+.controller('syncCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading) {
+    $.jStorage.set("filters", null);
+
+// STORE DROP DOWN
+
+    MyServices.getStoreDropDown(function(data) {
+        $scope.dropdownvalue = data;
+    });
+
+// ORDER HISTORY
+
+    MyServices.getDealerOrderDetails(function(data) {
+        console.log(data);
+        $scope.orderhistory = data;
+        });
+
+// BRANDS
+
+        MyServices.getbrand($scope.pageno, function(data, status) {
+            console.log(data);
+            if (data.queryresult.length == 0) {
+                $scope.keepscrolling = false;
+            }
+            _.each(data.queryresult, function(n) {
+                $scope.brandimages.push(n);
+            });
+            if ($scope.brandimages.length == 0) {
+                $scope.shownodata = true;
+            }
+            $scope.brandimages = _.uniq($scope.brandimages, "id");
+            $scope.brands = _.chunk($scope.brandimages, 3);
+
+            lastpage = data.lastpage;
+            $ionicLoading.hide();
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+            // $scope.$broadcast('scroll.refreshComplete');
+        }, function(data) {
+            console.log(data);
+        });
+})
+
 .controller('SearchresultCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading) {
         $.jStorage.set("filters", null);
         $scope.searchfor = '';
@@ -2107,6 +2188,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         }
 
     })
+
     .controller('LoginCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading) {
         $.jStorage.set("filters", null);
 

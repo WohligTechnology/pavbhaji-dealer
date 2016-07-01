@@ -1,5 +1,5 @@
 // var adminbase = "http://admin.accessworld.in/";
-var adminbase = "http://192.168.1.109/accessback/";
+var adminbase = "http://192.168.1.108/accessback/";
 var adminurl = adminbase + "index.php/json/";
 var adminhauth = adminbase + "index.php/hauth/";
 var adminimage = "http://admin.accessworld.in/uploads/";
@@ -177,9 +177,22 @@ angular.module('starter.services', ['httpService'])
             }).success(callback);
         },
         gettotalcart: function(callback) {
-            return $http.post(adminurl + 'totalitemcart', {}, {
-                withCredentials: true
-            }).success(callback);
+          console.log($.jStorage.get("cart"));
+          if(!$.jStorage.get("cart")){
+            return 0;
+          }
+          else{
+            var sum=0;
+            var qty=0;
+            var jcart=$.jStorage.get("cart");
+            for(var i=0;i<jcart.length;i++){
+              sum=sum+jcart[i].qty;
+            }
+            return sum;
+          }
+            // return $http.post(adminurl + 'totalitemcart', {}, {
+            //     withCredentials: true
+            // }).success(callback);
         },
         totalcart: function(callback) {
             return $http.post(adminurl + 'totalcart', {}, {
@@ -315,9 +328,9 @@ angular.module('starter.services', ['httpService'])
         // getNotify: function() {
         //     return $.jStorage.get("notify");
         // },
-        // setuser: function(data) {
-        //     $.jStorage.set("user", data);
-        // },
+        setuser: function(data) {
+            $.jStorage.set("user", data);
+        },
         getuser: function() {
             return $.jStorage.get("user");
         }

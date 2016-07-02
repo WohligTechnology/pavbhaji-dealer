@@ -774,7 +774,8 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 console.log(data);
                 $ionicLoading.hide();
                 if (data != 'false') {
-                    // $scope.checkout.orderid = data;
+                    $.jStorage.set("cart", [])
+                        // $scope.checkout.orderid = data;
                     allfunction.msg("Your ", 'Thankyou!');
                     allfunction.msg("Order has been placed and your data is successfully submitted", 'Thankyou!');
                     // $scope.paymentinfo = true;
@@ -1285,7 +1286,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                         console.log(data);
                         $ionicLoading.hide();
                         if (data != 'false') {
-                          $.jStorage.set("cart",[]);
+                            $.jStorage.set("cart", []);
                             // $scope.checkout.orderid = data;
                             console.log($.jStorage.get("cart"));
                             allfunction.msg("Your Order has been placed", 'Thankyou!');
@@ -1667,6 +1668,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             ++$scope.pageno;
             if ($stateParams.brand != 0) {
                 MyServices.getproductbybrand($scope.pageno, $stateParams.brand, $scope.filters, getproductbybrandcallback);
+
             } else if ($stateParams.parent != 0) {
                 MyServices.getproductbycategory($scope.pageno, $stateParams.parent, $scope.filters, getproductbybrandcallback);
             } else {
@@ -2141,43 +2143,163 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
 .controller('syncCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading) {
     $.jStorage.set("filters", null);
+    $scope.brandimages = [];
+    console.log("In Sync");
+    $scope.filters = {};
+    $scope.filters.category = "";
+    $scope.filters.color = "";
+    $scope.filters.type = "";
+    $scope.filters.material = "";
+    $scope.filters.finish = "";
+    $scope.filters.compatibledevice = "";
+    $scope.filters.compatiblewith = "";
+    $scope.filters.brand = "";
+    $scope.filters.pricemin = "";
+    $scope.filters.pricemax = "";
+    $scope.filters.microphone = "";
+    $scope.filters.size = "";
+    $scope.filters.clength = "";
+    $scope.filters.voltage = "";
+    $scope.filters.capacity = "";
+    ////// STORE DROP DOWN
 
-    // STORE DROP DOWN
+    // MyServices.getStoreDropDown(function(data) {
+    //     $scope.dropdownvalue = data;
+    // });
+    //
+    // ////// ORDER HISTORY
+    //
+    // MyServices.getDealerOrderDetails(function(data) {
+    //     console.log(data);
+    //     $scope.orderhistory = data;
+    // });
 
-    MyServices.getStoreDropDown(function(data) {
-        $scope.dropdownvalue = data;
-    });
-
-    // ORDER HISTORY
-
-    MyServices.getDealerOrderDetails(function(data) {
+    /////// BRANDS
+    var getproductbybrandcallback = function(data, status) {
         console.log(data);
-        $scope.orderhistory = data;
-    });
-
-    // BRANDS
-
-    MyServices.getbrand($scope.pageno, function(data, status) {
-        console.log(data);
-        if (data.queryresult.length == 0) {
+        lastpage = data.data.lastpage;
+        currentpage = data.data.pageno;
+        $scope.keepscrolling = true;
+        if (currentpage == lastpage) {
             $scope.keepscrolling = false;
         }
-        _.each(data.queryresult, function(n) {
-            $scope.brandimages.push(n);
-        });
-        if ($scope.brandimages.length == 0) {
-            $scope.shownodata = true;
-        }
-        $scope.brandimages = _.uniq($scope.brandimages, "id");
-        $scope.brands = _.chunk($scope.brandimages, 3);
+        if (data.data.queryresult.length == 0) {
+            $scope.keepscrolling = false;
+        } else {
+            _.each(data.data.queryresult, function(n) {
+                $scope.productsarr.push(n);
+            });
 
-        lastpage = data.lastpage;
+            $scope.productsarr = _.uniq($scope.productsarr, 'id');
+            $scope.products = _.chunk($scope.productsarr, 2);
+            // console.log("keepscrolling = " + $scope.keepscrolling);
+
+
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+        }
+
         $ionicLoading.hide();
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-        // $scope.$broadcast('scroll.refreshComplete');
-    }, function(data) {
-        console.log(data);
-    });
+    }
+
+    for (var i = 1; i < 10; i++) {
+        MyServices.getbrand(i, function(data, status) {
+            if (data.queryresult) {
+                _.each(data.queryresult, function(n) {
+                    // console.log(n);
+                    var nlength = data.queryresult.length;
+                    console.log(nlength);
+
+                    // r is pageno
+                    for (var r = 1; r < data.queryresult.length; r++) {
+                        console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+                        MyServices.getproductbybrand(r, n.id, $scope.filters, getproductbybrandcallback);
+
+                    }
+                    $scope.brandimages.push(n);
+                });
+            }
+            if ($scope.brandimages.length == 0) {
+                $scope.shownodata = true;
+            }
+            $scope.brandimages = _.uniq($scope.brandimages, "id");
+            $scope.brands = _.chunk($scope.brandimages, 3);
+            $ionicLoading.hide();
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+            // $scope.$broadcast('scroll.refreshComplete');
+        }, function(data) {
+            console.log(data);
+        });
+    }
+
+
+    // ////////BRAND PRODUCTS
+
+
+    //
+    // for (var j = 6; j < 150; j++) {
+    //     for (var k = 1; k < 50; k++) {
+    //         MyServices.getproductbybrand(k, j, $scope.filters, getproductbybrandcallback);
+    //     }
+    // }
+    //
+    // //GET PRODUCT BY CATEGORY
+    // for (var l = 6; l < 150; l++) {
+    //     for (var m = 1; m < 50; m++) {
+    //         MyServices.getproductbybrand(k, j, $scope.filters, getproductbybrandcallback);
+    //     }
+    // }
+    //
+    // // GET PRODUCT DETAIL
+    // for (var m = 1; m <= 2000; m++) {
+    //     MyServices.getproductdetails(id, function(data, status, $filter) {
+    //         console.log(data);
+    //         $scope.product = data;
+    //         if ($scope.product.product.user) {
+    //             $scope.product.product.fav = "fav";
+    //         }
+    //         if (data.product.quantity >= 1) {
+    //             $scope.availability = "In Stock";
+    //         } else {
+    //             $scope.availability = "Out of Stock";
+    //         }
+    //
+    //         $scope.productdetail = [];
+    //         $scope.product.productimage = _.sortByOrder($scope.product.productimage, ['order'], ['asc']);
+    //         _.each($scope.product.productimage, function(n) {
+    //             $scope.productdetail.push({
+    //                 image: adminimage + n.image,
+    //                 check: 1
+    //             });
+    //         });
+    //
+    //
+    //         // console.log($scope.product);
+    //         $timeout(function() {
+    //             $ionicSlideBoxDelegate.slide(0);
+    //             $ionicSlideBoxDelegate.update();
+    //         }, 500);
+    //         // $scope.product.product.quantity = 1;
+    //     });
+    // }
+    // ////////get all categories
+    //
+    // MyServices.getallcategories(function(data) {
+    //     console.log(data);
+    //     $scope.cats = _.chunk(data, 2);
+    // });
+    //
+    //
+    //
+    // for (var n = 1; n <= 100; n++) {
+    //     MyServices.getsinglecategory(n, function(data) {
+    //         $scope.subcategories = data;
+    //         console.log(data);
+    //         $ionicLoading.hide();
+    //     });
+    // }
+    //
+    // console.log("Sync end");
+
 })
 
 .controller('SearchresultCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading) {

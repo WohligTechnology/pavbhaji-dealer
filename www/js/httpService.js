@@ -2,7 +2,7 @@
 var httpService = angular.module('httpService', ['angular-websql']);
 httpService.service('httpService', function($http, $webSql, $ionicPopup) {
     //SHOULD ADD LOADER AS WELL
-    var maxTableLimit = 50;
+    var maxTableLimit = 500000000;
     this.db = $webSql.openDatabase('httpService', '1.0', 'HTTP SERVICE Database', 2 * 1024 * 1024);
     var DB = this.db;
     // db = DB;

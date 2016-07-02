@@ -99,6 +99,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             }
         }
     })
+    .state('app.sync', {
+        url: '/sync',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/sync.html',
+                controller: 'syncCtrl'
+            }
+        }
+    })
 
     .state('app.productdetail', {
             url: '/productdetail/:id',

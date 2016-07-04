@@ -1,5 +1,5 @@
 // var adminbase = "http://admin.accessworld.in/";
-var adminbase = "http://192.168.1.106/accessback/";
+var adminbase = "http://192.168.1.102/accessback/";
 var adminurl = adminbase + "index.php/json/";
 var adminhauth = adminbase + "index.php/hauth/";
 var adminimage = "http://admin.accessworld.in/uploads/";
@@ -29,7 +29,7 @@ angular.module('starter.services', ['httpService'])
                 method: "POST",
                 data: signup
             }).success(callback);
-              // httpService.post(adminurl + "registeruser", signup, callback, errCallback);
+            // httpService.post(adminurl + "registeruser", signup, callback, errCallback);
         },
         login: function(login, callback) {
             return $http({
@@ -37,7 +37,7 @@ angular.module('starter.services', ['httpService'])
                 method: "POST",
                 data: login
             }).success(callback);
-                // httpService.post(adminurl + "dealerLogin", login, callback, errCallback);
+            // httpService.post(adminurl + "dealerLogin", login, callback, errCallback);
         },
         authenticate: function(callback, errCallback) {
             httpService.get(adminurl + 'authenticateDealer', {}, callback, errCallback);
@@ -58,21 +58,21 @@ angular.module('starter.services', ['httpService'])
         },
         updateuser: function(userdetails, callback) {
             return $http({
-            url: adminurl + 'updateDealer',
-               method: "POST",
-               data: {
-                   'id': $.jStorage.get("user").id,
-                   'storename': userdetails.storename,
-                   'ownername': userdetails.ownername,
-                   'email': userdetails.email,
-                   'address': userdetails.address,
-                   'city': userdetails.city,
-                   'state': userdetails.state,
-                   'phone': userdetails.phone,
-                   'pincode': userdetails.pincode
-               }
-           }).success(callback);
-              // httpService.post(adminurl + "updateDealer",data, callback, errCallback);
+                url: adminurl + 'updateDealer',
+                method: "POST",
+                data: {
+                    'id': $.jStorage.get("user").id,
+                    'storename': userdetails.storename,
+                    'ownername': userdetails.ownername,
+                    'email': userdetails.email,
+                    'address': userdetails.address,
+                    'city': userdetails.city,
+                    'state': userdetails.state,
+                    'phone': userdetails.phone,
+                    'pincode': userdetails.pincode
+                }
+            }).success(callback);
+            // httpService.post(adminurl + "updateDealer",data, callback, errCallback);
         },
         placeorder: function(checkout, callback) {
             console.log(checkout);
@@ -83,16 +83,16 @@ angular.module('starter.services', ['httpService'])
             }).success(callback);
         },
         usercontact: function(usercontact, callback, errCallback) {
-          return $http({
-                        url: adminurl + 'userContactDealer',
-                        method: "POST",
-                        data: {
-                            'name': usercontact.name,
-                            'phone': usercontact.phone,
-                            'email': usercontact.email,
-                            'comment': usercontact.comment
-                        }
-                    }).success(callback);
+            return $http({
+                url: adminurl + 'userContactDealer',
+                method: "POST",
+                data: {
+                    'name': usercontact.name,
+                    'phone': usercontact.phone,
+                    'email': usercontact.email,
+                    'comment': usercontact.comment
+                }
+            }).success(callback);
             // return $http({
             //     url: adminurl + 'userContactDealer',
             //     method: "POST",
@@ -112,12 +112,20 @@ angular.module('starter.services', ['httpService'])
             //   };
 
             // }).success(callback);
-              // httpService.post(adminurl + "userContactDealer",data, callback, errCallback);
+            // httpService.post(adminurl + "userContactDealer",data, callback, errCallback);
         },
         //dhaval start
         getbrand: function(pageno, callback, errCallback) {
-            console.log(pageno);
+
             httpService.get(adminurl + 'getbrand?maxrow=12&pageno=' + pageno, {}, callback, errCallback);
+        },
+        getAllBrands: function(callback,errCallback) {
+            httpService.get(adminurl + 'getAllBrands', {}, callback, errCallback);
+            // return $http.get(adminurl + 'getAllBrands').success(callback);
+        },
+        getAllCategories: function(callback,errCallback) {
+            httpService.get(adminurl + 'getAllCategories', {}, callback, errCallback);
+            // return $http.get(adminurl + 'getAllCategories').success(callback);
         },
         getDealerOrderDetails: function(callback, errCallback) {
             var user = parseInt($.jStorage.get("user").id);
@@ -168,19 +176,18 @@ angular.module('starter.services', ['httpService'])
             }).success(callback);
         },
         gettotalcart: function(callback) {
-          console.log($.jStorage.get("cart"));
-          if(!$.jStorage.get("cart")){
-            return 0;
-          }
-          else{
-            var sum=0;
-            var qty=0;
-            var jcart=$.jStorage.get("cart");
-            for(var i=0;i<jcart.length;i++){
-              sum=sum+jcart[i].qty;
+            console.log($.jStorage.get("cart"));
+            if (!$.jStorage.get("cart")) {
+                return 0;
+            } else {
+                var sum = 0;
+                var qty = 0;
+                var jcart = $.jStorage.get("cart");
+                for (var i = 0; i < jcart.length; i++) {
+                    sum = sum + jcart[i].qty;
+                }
+                return sum;
             }
-            return sum;
-          }
             // return $http.post(adminurl + 'totalitemcart', {}, {
             //     withCredentials: true
             // }).success(callback);
@@ -279,6 +286,12 @@ angular.module('starter.services', ['httpService'])
             // }).success(callback);
             httpService.get(adminurl + 'getHomeSlider', {}, callback, errCallback);
         },
+        getAllProductId: function(callback, errCallback) {
+            // return $http.get(adminurl + 'getHomeSlider', {}, {
+            //     withCredentials: true
+            // }).success(callback);
+            httpService.get(adminurl + 'getAllProductId', {}, callback, errCallback);
+        },
         getFilters: function(category, brand, callback) {
             return $http.post(adminurl + 'getFilters?category=' + category + "&brand=" + brand, {}, {
                 withCredentials: true
@@ -324,8 +337,8 @@ angular.module('starter.services', ['httpService'])
             //     withCredentials: true
             // }).success(callback);
 
-                console.log(adminurl + 'getproductbycategory?category=' + filters.category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity);
-            httpService.get(adminurl + 'getproductbycategory?category=' + filters.category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity, {}, callback, errCallback);
+            // console.log(adminurl + 'getproductbycategory?category=' + filters.category + '&pageno=' + pageno + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&brand=' + brand + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity);
+            httpService.get(adminurl + 'getproductbycategory?category=' + filters.category + '&pageno=' + pageno + '&brand=' + brand + '&color=' + filters.color + '&type=' + filters.type + '&material=' + filters.material + '&finish=' + filters.finish + '&compatibledevice=' + filters.compatibledevice + '&compatiblewith=' + filters.compatiblewith + '&pricemin=' + filters.pricemin + '&pricemax=' + filters.pricemax + '&microphone=' + filters.microphone + '&size=' + filters.size + '&lenght=' + filters.clength + '&voltage=' + filters.voltage + '&capacity=' + filters.capacity, {}, callback, errCallback);
         },
         setuser: function(data) {
             $.jStorage.set("user", data);

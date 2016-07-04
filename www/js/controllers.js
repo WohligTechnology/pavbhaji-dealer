@@ -2144,7 +2144,6 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 .controller('syncCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading) {
     $.jStorage.set("filters", null);
     $scope.brandimages = [];
-    console.log("In Sync");
     $scope.filters = {};
     $scope.filters.category = "";
     $scope.filters.color = "";
@@ -2163,142 +2162,49 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     $scope.filters.capacity = "";
     ////// STORE DROP DOWN
 
-    // MyServices.getStoreDropDown(function(data) {
-    //     $scope.dropdownvalue = data;
-    // });
+    MyServices.getStoreDropDown(function(data) {
+        $scope.dropdownvalue = data;
+    });
     //
     // ////// ORDER HISTORY
     //
-    // MyServices.getDealerOrderDetails(function(data) {
-    //     console.log(data);
-    //     $scope.orderhistory = data;
-    // });
+    MyServices.getDealerOrderDetails(function(data) {
+        console.log(data);
+        $scope.orderhistory = data;
+    });
 
     /////// BRANDS
-    var getproductbybrandcallback = function(data, status) {
-        console.log(data);
-        lastpage = data.data.lastpage;
-        currentpage = data.data.pageno;
-        $scope.keepscrolling = true;
-        if (currentpage == lastpage) {
-            $scope.keepscrolling = false;
-        }
-        if (data.data.queryresult.length == 0) {
-            $scope.keepscrolling = false;
-        } else {
-            _.each(data.data.queryresult, function(n) {
-                $scope.productsarr.push(n);
-            });
-
-            $scope.productsarr = _.uniq($scope.productsarr, 'id');
-            $scope.products = _.chunk($scope.productsarr, 2);
-            // console.log("keepscrolling = " + $scope.keepscrolling);
-
-
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-        }
-
-        $ionicLoading.hide();
-    }
-
-    for (var i = 1; i < 10; i++) {
-        MyServices.getbrand(i, function(data, status) {
-            if (data.queryresult) {
-                _.each(data.queryresult, function(n) {
-                    // console.log(n);
-                    var nlength = data.queryresult.length;
-                    console.log(nlength);
-
-                    // r is pageno
-                    for (var r = 1; r < data.queryresult.length; r++) {
-                        console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-                        MyServices.getproductbybrand(r, n.id, $scope.filters, getproductbybrandcallback);
-
-                    }
-                    $scope.brandimages.push(n);
-                });
+    MyServices.getAllBrands(function(data1, status) {
+        console.log("Brand");
+        _.each(data1, function(n) {
+            for (var i = 1; i <= n.pageno; i++) {
+                MyServices.getproductbybrand(i, n.id, $scope.filters, function(data) {});
             }
-            if ($scope.brandimages.length == 0) {
-                $scope.shownodata = true;
-            }
-            $scope.brandimages = _.uniq($scope.brandimages, "id");
-            $scope.brands = _.chunk($scope.brandimages, 3);
-            $ionicLoading.hide();
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-            // $scope.$broadcast('scroll.refreshComplete');
-        }, function(data) {
-            console.log(data);
         });
-    }
 
+    });
+    // /////// CATEGORIES
+    MyServices.getAllCategories(function(data2, status) {
+        console.log("Category");
+        _.each(data2, function(n) {
+            for (var j = 1; j <= n.pageno; j++) {
+                MyServices.getproductbycategory(j, n.id, $scope.filters, function(data) {});
+            }
+        });
 
-    // ////////BRAND PRODUCTS
+    });
+    /////// DETAIL PRODUCT
+    MyServices.getAllProductId(function(data3, status) {
+        _.each(data3, function(n) {
+          console.log(n.id);
+                MyServices.getproductdetails(n.id,function(data4) {
+                  console.log(data4);
+                });
 
+        });
 
-    //
-    // for (var j = 6; j < 150; j++) {
-    //     for (var k = 1; k < 50; k++) {
-    //         MyServices.getproductbybrand(k, j, $scope.filters, getproductbybrandcallback);
-    //     }
-    // }
-    //
-    // //GET PRODUCT BY CATEGORY
-    // for (var l = 6; l < 150; l++) {
-    //     for (var m = 1; m < 50; m++) {
-    //         MyServices.getproductbybrand(k, j, $scope.filters, getproductbybrandcallback);
-    //     }
-    // }
-    //
-    // // GET PRODUCT DETAIL
-    // for (var m = 1; m <= 2000; m++) {
-    //     MyServices.getproductdetails(id, function(data, status, $filter) {
-    //         console.log(data);
-    //         $scope.product = data;
-    //         if ($scope.product.product.user) {
-    //             $scope.product.product.fav = "fav";
-    //         }
-    //         if (data.product.quantity >= 1) {
-    //             $scope.availability = "In Stock";
-    //         } else {
-    //             $scope.availability = "Out of Stock";
-    //         }
-    //
-    //         $scope.productdetail = [];
-    //         $scope.product.productimage = _.sortByOrder($scope.product.productimage, ['order'], ['asc']);
-    //         _.each($scope.product.productimage, function(n) {
-    //             $scope.productdetail.push({
-    //                 image: adminimage + n.image,
-    //                 check: 1
-    //             });
-    //         });
-    //
-    //
-    //         // console.log($scope.product);
-    //         $timeout(function() {
-    //             $ionicSlideBoxDelegate.slide(0);
-    //             $ionicSlideBoxDelegate.update();
-    //         }, 500);
-    //         // $scope.product.product.quantity = 1;
-    //     });
-    // }
-    // ////////get all categories
-    //
-    // MyServices.getallcategories(function(data) {
-    //     console.log(data);
-    //     $scope.cats = _.chunk(data, 2);
-    // });
-    //
-    //
-    //
-    // for (var n = 1; n <= 100; n++) {
-    //     MyServices.getsinglecategory(n, function(data) {
-    //         $scope.subcategories = data;
-    //         console.log(data);
-    //         $ionicLoading.hide();
-    //     });
-    // }
-    //
-    // console.log("Sync end");
+    });
+
 
 })
 

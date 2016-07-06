@@ -293,10 +293,10 @@ angular.module('starter.services', ['httpService'])
             // }).success(callback);
             httpService.get(adminurl + 'getAllProductId', {}, callback, errCallback);
         },
-        getFilters: function(category, brand, callback) {
+        getFilters: function(category, brand, callback,callback2) {
             return $http.post(adminurl + 'getFilters?category=' + category + "&brand=" + brand, {}, {
                 withCredentials: true
-            }).success(callback);
+            }).success(callback).error(callback2);
         },
         getuserdetails: function(callback, errCallback) {
             // return $http.get(adminurl + 'getDealerDetails', {}, {

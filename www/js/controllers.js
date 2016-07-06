@@ -1793,6 +1793,14 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                     MyServices.getallproduct(1, getproductbybrandcallback);
                 }
             }
+        },function(err) {
+          if ($stateParams.brand != 0) {
+              MyServices.getproductbybrand(1, $stateParams.brand, {}, getproductbybrandcallback);
+          } else if ($stateParams.parent != 0) {
+              MyServices.getproductbycategory(1, $scope.parent, {}, getproductbybrandcallback);
+          } else {
+              MyServices.getallproduct(1, getproductbybrandcallback);
+          }
         });
     }
 

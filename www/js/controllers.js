@@ -1794,10 +1794,27 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 }
             }
         },function(err) {
+          $scope.filters = {};
+          $scope.filters.category = "";
+          $scope.filters.color = "";
+          $scope.filters.type = "";
+          $scope.filters.material = "";
+          $scope.filters.finish = "";
+          $scope.filters.compatibledevice = "";
+          $scope.filters.compatiblewith = "";
+          $scope.filters.brand = "";
+          $scope.filters.pricemin = "";
+          $scope.filters.pricemax = "";
+          $scope.filters.microphone = "";
+          $scope.filters.size = "";
+          $scope.filters.clength = "";
+          $scope.filters.voltage = "";
+          $scope.filters.capacity = "";
+
           if ($stateParams.brand != 0) {
-              MyServices.getproductbybrand(1, $stateParams.brand, {}, getproductbybrandcallback);
+              MyServices.getproductbybrand(1, $stateParams.brand, $scope.filters, getproductbybrandcallback);
           } else if ($stateParams.parent != 0) {
-              MyServices.getproductbycategory(1, $scope.parent, {}, getproductbybrandcallback);
+              MyServices.getproductbycategory(1, $scope.parent, $scope.filters, getproductbybrandcallback);
           } else {
               MyServices.getallproduct(1, getproductbybrandcallback);
           }

@@ -2058,10 +2058,8 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     $scope.brandimages = [];
 
     $scope.addMoreItems = function() {
-        console.log("load more brands");
         ++$scope.pageno;
         MyServices.getbrand($scope.pageno, function(data, status) {
-            console.log(data);
             if (data.queryresult.length == 0) {
                 $scope.keepscrolling = false;
             }
@@ -2141,7 +2139,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
 })
 
-.controller('syncCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading) {
+.controller('syncCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading, cacheSrcStorage) {
     $.jStorage.set("filters", null);
     $scope.brandimages = [];
     $scope.filters = {};
@@ -2177,6 +2175,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     MyServices.getAllBrands(function(data1, status) {
         console.log("Brand");
         _.each(data1, function(n) {
+          $scope.cacheimageurl=adminCloudImage+n.logo;
+          console.log($scope.cacheimageurl);
+          cacheSrcStorage.get($scope.cacheimageurl);
             for (var i = 1; i <= n.pageno; i++) {
                 MyServices.getproductbybrand(i, n.id, $scope.filters, function(data) {});
             }
@@ -2187,19 +2188,34 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     MyServices.getAllCategories(function(data2, status) {
         console.log("Category");
         _.each(data2, function(n) {
+          console.log(n.id);
+          $scope.cacheimageurl1=adminCloudImage+n.image1;
+          $scope.cacheimageurl2=adminCloudImage+n.image2;
+               cacheSrcStorage.get($scope.cacheimageurl1);
+               cacheSrcStorage.get($scope.cacheimageurl2);
+               // get single Category
+                 MyServices.getsinglecategory(n.id, function(data) {
+
+                 });
             for (var j = 1; j <= n.pageno; j++) {
                 MyServices.getproductbycategory(j, n.id, $scope.filters, function(data) {});
             }
         });
-
+    //
     });
-    /////// DETAIL PRODUCT
+    // /////// DETAIL PRODUCT
     MyServices.getAllProductId(function(data3, status) {
         _.each(data3, function(n) {
-          console.log(n.id);
-                MyServices.getproductdetails(n.id,function(data4) {
-                  console.log(data4);
+            MyServices.getproductdetails(n.id, function(data4) {
+                console.log(data4);
+                _.each(data4.productimage, function(n) {
+                    // store img in cache
+                    $scope.cacheimageurl3=adminCloudImage+n.image;
+                    console.log($scope.cacheimageurl3);
+
+
                 });
+            });
 
         });
 

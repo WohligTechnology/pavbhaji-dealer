@@ -1,8 +1,9 @@
 // var adminbase = "http://admin.accessworld.in/";
-var adminbase = "http://192.168.1.102/accessback/";
+var adminbase = "http://admin.accessworld.in/";
 var adminurl = adminbase + "index.php/json/";
 var adminhauth = adminbase + "index.php/hauth/";
-var adminimage = "http://admin.accessworld.in/uploads/";
+var adminimage = "https://storage.googleapis.com/imagesaccess/";
+var adminCloudImage = "https://storage.googleapis.com/imagesaccess/";
 // var adminimage = adminbase + "uploads/";
 // var adminimage = "http://accessworld.in/admin/uploads/";
 
@@ -271,7 +272,7 @@ angular.module('starter.services', ['httpService'])
             // return $http.get(adminurl + 'getsinglecategory?categoryid=' + id, {}, {
             //     withCredentials: true
             // }).success(callback);
-            httpService.get(adminurl + 'getsinglecategory?categoryid=', {}, callback, errCallback);
+            httpService.get(adminurl + 'getsinglecategory?categoryid='+id, {}, callback, errCallback);
         },
         // getHomeProducts: function(callback, errCallback) {
         //     // return $http.get(adminurl + 'getHomeProducts', {}, {

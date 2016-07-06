@@ -2000,10 +2000,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         selectedproduct.productname = product.name;
         selectedproduct.price = product.price;
         selectedproduct.quantity = 1;
-        MyServices.addtocart(selectedproduct, function(data) {
-            console.log(data);
+        // MyServices.addtocart(selectedproduct, function(data) {
             console.log("*****");
-            if (data === "true") {
+            if (product) {
                 console.log("$$$");
                 console.log($scope.cartobj);
                 console.log(product);
@@ -2033,7 +2032,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             }, 3000);
             myfunction();
             $ionicLoading.hide();
-        });
+        // });
     }
 
     $ionicModal.fromTemplateUrl('templates/product-modal.html', {
@@ -2239,6 +2238,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 _.each(data4.productimage, function(n) {
                     // store img in cache
                     $scope.cacheimageurl3=adminCloudImage+n.image;
+                    cacheSrcStorage.get($scope.cacheimageurl3);
                     console.log($scope.cacheimageurl3);
 
 

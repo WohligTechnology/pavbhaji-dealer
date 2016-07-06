@@ -1794,6 +1794,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 }
             }
         },function(err) {
+          console.log(err);
+          console.log("In filter err");
+
           $scope.filters = {};
           $scope.filters.category = "";
           $scope.filters.color = "";

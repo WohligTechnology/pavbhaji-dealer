@@ -9,7 +9,9 @@
     </div>
     <div class="product-details">
         <h2>{{item.name}}</h2>
-        <h3>Rs. {{item.wholesaleprice | numberWithCommas}}</h3>
+        <h3 class="prod-detail">Discount {{item.discountpercent}} % </h3>
+        <h3 class="prod-detail">DP Rs. {{item.wholesaleprice | numberWithCommas}}</h3>
+        <h3 class="prod-detail">MRP Rs. {{item.price | numberWithCommas}}</h3>
         <!-- <h3 class="cross" ng-show="item.showSalePrice">Rs. {{item.price | numberWithCommas}}</h3>
         <h3 ng-hide="item.showSalePrice">Rs. {{item.price | numberWithCommas}}</h3> -->
     </div>

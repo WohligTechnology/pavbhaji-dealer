@@ -1486,6 +1486,8 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             $scope.keepscrolling = false;
         } else {
             _.each(data.data.queryresult, function(n) {
+              $scope.sp=n.price-n.wholesaleprice;
+              n.discountpercent=(($scope.sp*100)/n.price);
                 if (n.isfavid) {
                     n.fav = "fav";
                 }
@@ -1861,7 +1863,11 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         $ionicLoading.show();
         MyServices.getproductdetails(id, function(data, status, $filter) {
             console.log(data);
+
             $scope.product = data;
+              $scope.sellingprice=parseInt($scope.product.product.price-$scope.product.product.wholesaleprice);
+              $scope.product.discountpercent=parseInt(($scope.sellingprice*100)/$scope.product.product.price);
+              console.log($scope.product.discountpercent);
             if ($scope.product.product.user) {
                 $scope.product.product.fav = "fav";
             }

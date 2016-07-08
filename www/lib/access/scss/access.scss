@@ -445,6 +445,10 @@ $font-size-list: 13px;
             display: inline-block;
             margin-right: 5px;
         }
+        .prod-detail {
+          display: block;
+          margin: 5px;
+        }
     }
     .price-separator {
         border-bottom: 0 solid #ddd;
@@ -1474,3 +1478,11 @@ border-radius: 4px;
   padding: 8px;
   }
 }
+
+// product detail
+  .price {
+    .prd-discount {
+      color: #52d7e3 !important;
+      font-weight: 700 !important;
+    }
+  }

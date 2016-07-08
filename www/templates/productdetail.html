@@ -48,8 +48,9 @@
                                 </div>
                             </div>
                             <div class="price">
-                                <span>Price :
-                                <span>Rs. {{product.product.wholesaleprice | numberWithCommas}}</span>
+                                <p>Discount :<span class="prd-discount">{{product.discountpercent}} %</span></p>
+                                <span>MRP Rs. {{product.product.price | numberWithCommas}}</span><br>
+                                <span>DP Rs. {{product.product.wholesaleprice | numberWithCommas}}</span><br>
                                 <!-- <span class="cross" ng-show="showSalePrice">Rs. {{product.product.price | numberWithCommas}}</span>
                                 <span ng-hide="showSalePrice">Rs. {{product.product.price | numberWithCommas}}</span> -->
                                 </span>

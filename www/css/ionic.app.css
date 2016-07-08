@@ -358,6 +358,9 @@ $dark:                            #444 !default;
       font-weight: 400;
       display: inline-block;
       margin-right: 5px; }
+    .product .product-details .prod-detail, .newarrivals .product-details .prod-detail, .deals .deal .product-details .prod-detail, .newarrivals .newarrivals-details .prod-detail, .deals .deal .deal-details .prod-detail {
+      display: block;
+      margin: 5px; }
   .product .price-separator, .newarrivals .price-separator, .deals .deal .price-separator {
     border-bottom: 0 solid #ddd; }
   .product .row, .newarrivals .row, .deals .deal .row {
@@ -1149,6 +1152,10 @@ $dark:                            #444 !default;
     width: 100%;
     height: 34px;
     padding: 8px; }
+
+.price .prd-discount {
+  color: #52d7e3 !important;
+  font-weight: 700 !important; }
 
 /*!
   Ionicons, v2.0.1

@@ -68,6 +68,16 @@
                             <option value="5">30 days</option>
                         </select>
                     </label>
+                    <label class="item item-input item-select" ng-if="accesslevel==2">
+                        <div class="input-label">
+                            <h3>Sales Type</h3>
+                        </div>
+                        <select ng-model="checkout.salestype" ng-class="allvalidation[0].validation" required>
+                            <option value="">Select Sales Type</option>
+                            <option value="1">On approval</option>
+                            <option value="2">Regular Sales</option>
+                        </select>
+                    </label>
 
                     <div ng-if="accesslevel==2" class="level2">
 

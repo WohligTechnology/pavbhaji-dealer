@@ -705,7 +705,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
     MyServices.gettotalcart(function(data) {
         console.log("totalcart = " + data);
-        if (data == 0) {
+        if (data === 0) {
             $scope.showcartnotfoundmsg = true;
         }
         $scope.user.cart = data;
@@ -741,7 +741,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     $scope.totalcartfunc = function() {
         var sum = 0;
         _.each($scope.cart, function(mycart) {
-            sum += mycart.price * mycart.qty;
+            sum += (mycart.price * (1 - mycart.pricePer/100 )) * mycart.qty;
         });
         return sum;
     };
@@ -972,6 +972,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 selectedproduct.productname = mycart.options.realname;
                 selectedproduct.price = mycart.price;
                 selectedproduct.quantity = parseInt(mycart.qty) + 1;
+                selectedproduct.pricePer = 0;
                 console.log(selectedproduct);
                 MyServices.addtocart(selectedproduct, cartt);
             } else {
@@ -990,6 +991,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 selectedproduct.product = mycart.id;
                 selectedproduct.productname = mycart.options.realname;
                 selectedproduct.price = mycart.price;
+                selectedproduct.pricePer = 0;
                 selectedproduct.quantity = parseInt(mycart.qty) - 1;
                 MyServices.addtocart(selectedproduct, cartt);
             } else {
@@ -2017,6 +2019,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 $scope.cartobj.name = 1;
                 $scope.cartobj.price = product.wholesaleprice;
                 $scope.cartobj.qty = 1;
+                $scope.cartobj.pricePer = 0;
                 $scope.cartobj.image = $scope.product.productimage[0].image;
                 $scope.cartobj.options.realname = product.name;
 

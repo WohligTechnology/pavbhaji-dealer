@@ -20,8 +20,8 @@
                                     <div class="col">
                                         <h4>{{mycart.options.realname}}</h4>
                                         <div ng-if="accesslevel==2">
-                                            <h3 ng-if="mycart.price==mycart.options.originalprice">Unit Price : Rs.  <input type="text" name="name" ng-model="mycart.price"></h3>
-                                            <h3 ng-if="mycart.price!=mycart.options.originalprice">Unit Price : Rs. <input type="text" name="name" ng-model="mycart.price"> <a class="strike">{{mycart.options.originalprice | numberWithCommas}} </a></h3>
+                                            <h3 ng-if="mycart.price==mycart.options.originalprice">Discount Percent (%):  <input class="cartPercent" type="text" name="name" ng-model="mycart.pricePer"></h3>
+                                            <h3 ng-if="mycart.price!=mycart.options.originalprice">Discount Percent (%): <input class="cartPercent" type="text" name="name" ng-model="mycart.pricePer"> <a class="strike">{{mycart.options.originalprice | numberWithCommas}} </a></h3>
                                         </div>
 
 
@@ -30,9 +30,9 @@
                                             <!-- <button class="button button-clear button-icon button-calm" ng-click="changeqty(mycart,'-')"><i class="icon ion-minus-circled"></i></button>
                                             <input type="text" ng-model="mycart.qty" ng-change="onchangeqty(mycart)">
                                             <button class="button button-clear button-icon button-calm" ng-click="changeqty(mycart,'+')"><i class="icon ion-plus-circled"></i></button> -->
-                                            <input type="text" placeholder="enter qty" ng-model="mycart.qty">
+                                            Quantity: <input type="text" placeholder="enter qty" ng-model="mycart.qty" class="cartPercent">
                                         </div>
-                                        <h3>Total Price : Rs. {{mycart.price * mycart.qty | numberWithCommas}}</h3>
+                                        <h3>Total Price : Rs. {{mycart.price *(1 - (mycart.pricePer/100))* mycart.qty | numberWithCommas}}</h3>
                                         <!-- <input type="text" name="name" value="" placeholder="Discount Unit" class="discount" ng-model="mycart.price" ng-change="recalcTotal();"> -->
                                         <button class="button button-clear button-assertive" ng-click="deletecart(mycart)">Remove</button>
                                     </div>

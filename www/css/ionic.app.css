@@ -1157,6 +1157,11 @@ $dark:                            #444 !default;
   color: #52d7e3 !important;
   font-weight: 700 !important; }
 
+.cartPercent {
+  display: inline;
+  margin-left: 10px;
+  margin-top: -6px; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/

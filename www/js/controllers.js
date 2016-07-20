@@ -1,10 +1,11 @@
 var allfunction = {};
 var myfunction = '';
+var getCurrentLocation = '';
 var openModal = false;
 var showcartnotfoundmsg = false;
 angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova', 'ionic-cache-src'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $location, $ionicPopup, $rootScope, MyServices, $ionicLoading, $interval, $window, $templateCache, $state) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $location, $ionicPopup, $rootScope, MyServices, $ionicLoading, $interval, $window, $templateCache, $state, $cordovaGeolocation) {
     if ($.jStorage.get("user") === null) {
         $state.go("access.login");
     } else {
@@ -147,7 +148,21 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             }
         });
     }
+    var posOptions = {
+        timeout: 10000,
+        enableHighAccuracy: true
+    };
 
+    $cordovaGeolocation
+        .getCurrentPosition(posOptions)
+        .then(function(position) {
+            var lat = position.coords.latitude;
+            var long = position.coords.longitude;
+            console.log(lat);
+            console.log(long);
+        }, function(err) {
+            // error
+        });
     $scope.doLogin = function() {
         $scope.allvalidation = [{
             field: $scope.loginData.email,
@@ -162,12 +177,13 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             allfunction.loading();
             MyServices.login($scope.loginData, function(data) {
                 console.log(data);
-                if (data != "false") {
-                    authenticateUser();
-                } else {
-                    $ionicLoading.hide();
-                    allfunction.msg("Email & Password Did Not Match", 'Error!');
-                }
+
+                // if (data != "false") {
+                //     authenticateUser();
+                // } else {
+                //     $ionicLoading.hide();
+                //     allfunction.msg("Email & Password Did Not Match", 'Error!');
+                // }
             });
         } else {
             allfunction.msg("Fill all mandatory fields", "Error !");
@@ -741,7 +757,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     $scope.totalcartfunc = function() {
         var sum = 0;
         _.each($scope.cart, function(mycart) {
-            sum += (mycart.price * (1 - mycart.pricePer/100 )) * mycart.qty;
+            sum += (mycart.price * (1 - mycart.pricePer / 100)) * mycart.qty;
         });
         return sum;
     };
@@ -1488,8 +1504,8 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             $scope.keepscrolling = false;
         } else {
             _.each(data.data.queryresult, function(n) {
-              $scope.sp=n.price-n.wholesaleprice;
-              n.discountpercent=(($scope.sp*100)/n.price);
+                $scope.sp = n.price - n.wholesaleprice;
+                n.discountpercent = (($scope.sp * 100) / n.price);
                 if (n.isfavid) {
                     n.fav = "fav";
                 }
@@ -1797,34 +1813,34 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                     MyServices.getallproduct(1, getproductbybrandcallback);
                 }
             }
-        },function(err) {
-          console.log(err);
-          console.log("In filter err");
+        }, function(err) {
+            console.log(err);
+            console.log("In filter err");
 
-          $scope.filters = {};
-          $scope.filters.category = "";
-          $scope.filters.color = "";
-          $scope.filters.type = "";
-          $scope.filters.material = "";
-          $scope.filters.finish = "";
-          $scope.filters.compatibledevice = "";
-          $scope.filters.compatiblewith = "";
-          $scope.filters.brand = "";
-          $scope.filters.pricemin = "";
-          $scope.filters.pricemax = "";
-          $scope.filters.microphone = "";
-          $scope.filters.size = "";
-          $scope.filters.clength = "";
-          $scope.filters.voltage = "";
-          $scope.filters.capacity = "";
+            $scope.filters = {};
+            $scope.filters.category = "";
+            $scope.filters.color = "";
+            $scope.filters.type = "";
+            $scope.filters.material = "";
+            $scope.filters.finish = "";
+            $scope.filters.compatibledevice = "";
+            $scope.filters.compatiblewith = "";
+            $scope.filters.brand = "";
+            $scope.filters.pricemin = "";
+            $scope.filters.pricemax = "";
+            $scope.filters.microphone = "";
+            $scope.filters.size = "";
+            $scope.filters.clength = "";
+            $scope.filters.voltage = "";
+            $scope.filters.capacity = "";
 
-          if ($stateParams.brand != 0) {
-              MyServices.getproductbybrand(1, $stateParams.brand, $scope.filters, getproductbybrandcallback);
-          } else if ($stateParams.parent != 0) {
-              MyServices.getproductbycategory(1, $scope.parent, $scope.filters, getproductbybrandcallback);
-          } else {
-              MyServices.getallproduct(1, getproductbybrandcallback);
-          }
+            if ($stateParams.brand != 0) {
+                MyServices.getproductbybrand(1, $stateParams.brand, $scope.filters, getproductbybrandcallback);
+            } else if ($stateParams.parent != 0) {
+                MyServices.getproductbycategory(1, $scope.parent, $scope.filters, getproductbybrandcallback);
+            } else {
+                MyServices.getallproduct(1, getproductbybrandcallback);
+            }
         });
     }
 
@@ -1867,9 +1883,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             console.log(data);
 
             $scope.product = data;
-              $scope.sellingprice=parseInt($scope.product.product.price-$scope.product.product.wholesaleprice);
-              $scope.product.discountpercent=parseInt(($scope.sellingprice*100)/$scope.product.product.price);
-              console.log($scope.product.discountpercent);
+            $scope.sellingprice = parseInt($scope.product.product.price - $scope.product.product.wholesaleprice);
+            $scope.product.discountpercent = parseInt(($scope.sellingprice * 100) / $scope.product.product.price);
+            console.log($scope.product.discountpercent);
             if ($scope.product.product.user) {
                 $scope.product.product.fav = "fav";
             }
@@ -2009,38 +2025,38 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         selectedproduct.price = product.price;
         selectedproduct.quantity = 1;
         // MyServices.addtocart(selectedproduct, function(data) {
-            console.log("*****");
-            if (product) {
-                console.log("$$$");
-                console.log($scope.cartobj);
-                console.log(product);
-                $scope.cartobj.id = product.id;
-                $scope.cartobj.maxQuantity = product.quantity;
-                $scope.cartobj.name = 1;
-                $scope.cartobj.price = product.wholesaleprice;
-                $scope.cartobj.qty = 1;
-                $scope.cartobj.pricePer = 0;
-                $scope.cartobj.image = $scope.product.productimage[0].image;
-                $scope.cartobj.options.realname = product.name;
+        console.log("*****");
+        if (product) {
+            console.log("$$$");
+            console.log($scope.cartobj);
+            console.log(product);
+            $scope.cartobj.id = product.id;
+            $scope.cartobj.maxQuantity = product.quantity;
+            $scope.cartobj.name = 1;
+            $scope.cartobj.price = product.wholesaleprice;
+            $scope.cartobj.qty = 1;
+            $scope.cartobj.pricePer = 0;
+            $scope.cartobj.image = $scope.product.productimage[0].image;
+            $scope.cartobj.options.realname = product.name;
 
-                $scope.indexOfid = _.findIndex($scope.cartarr, {
-                    'id': $scope.cartobj.id
-                });
-                if ($scope.indexOfid == -1) {
-                    $scope.cartarr.push($scope.cartobj);
-                } else {
-                    $scope.cartarr[$scope.indexOfid].qty++;
-                }
-                $.jStorage.set("cart", $scope.cartarr);
-            }
-            var xyz = $ionicPopup.show({
-                title: 'Added to cart'
+            $scope.indexOfid = _.findIndex($scope.cartarr, {
+                'id': $scope.cartobj.id
             });
-            $timeout(function() {
-                xyz.close();
-            }, 3000);
-            myfunction();
-            $ionicLoading.hide();
+            if ($scope.indexOfid == -1) {
+                $scope.cartarr.push($scope.cartobj);
+            } else {
+                $scope.cartarr[$scope.indexOfid].qty++;
+            }
+            $.jStorage.set("cart", $scope.cartarr);
+        }
+        var xyz = $ionicPopup.show({
+            title: 'Added to cart'
+        });
+        $timeout(function() {
+            xyz.close();
+        }, 3000);
+        myfunction();
+        $ionicLoading.hide();
         // });
     }
 
@@ -2211,9 +2227,9 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     MyServices.getAllBrands(function(data1, status) {
         console.log("Brand");
         _.each(data1, function(n) {
-          $scope.cacheimageurl=adminCloudImage+n.logo;
-          console.log($scope.cacheimageurl);
-          cacheSrcStorage.get($scope.cacheimageurl);
+            $scope.cacheimageurl = adminCloudImage + n.logo;
+            console.log($scope.cacheimageurl);
+            cacheSrcStorage.get($scope.cacheimageurl);
             for (var i = 1; i <= n.pageno; i++) {
                 MyServices.getproductbybrand(i, n.id, $scope.filters, function(data) {});
             }
@@ -2224,20 +2240,20 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     MyServices.getAllCategories(function(data2, status) {
         console.log("Category");
         _.each(data2, function(n) {
-          console.log(n.id);
-          $scope.cacheimageurl1=adminCloudImage+n.image1;
-          $scope.cacheimageurl2=adminCloudImage+n.image2;
-               cacheSrcStorage.get($scope.cacheimageurl1);
-               cacheSrcStorage.get($scope.cacheimageurl2);
-               // get single Category
-                 MyServices.getsinglecategory(n.id, function(data) {
+            console.log(n.id);
+            $scope.cacheimageurl1 = adminCloudImage + n.image1;
+            $scope.cacheimageurl2 = adminCloudImage + n.image2;
+            cacheSrcStorage.get($scope.cacheimageurl1);
+            cacheSrcStorage.get($scope.cacheimageurl2);
+            // get single Category
+            MyServices.getsinglecategory(n.id, function(data) {
 
-                 });
+            });
             for (var j = 1; j <= n.pageno; j++) {
                 MyServices.getproductbycategory(j, n.id, $scope.filters, function(data) {});
             }
         });
-    //
+        //
     });
     // /////// DETAIL PRODUCT
     MyServices.getAllProductId(function(data3, status) {
@@ -2246,7 +2262,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 console.log(data4);
                 _.each(data4.productimage, function(n) {
                     // store img in cache
-                    $scope.cacheimageurl3=adminCloudImage+n.image;
+                    $scope.cacheimageurl3 = adminCloudImage + n.image;
                     cacheSrcStorage.get($scope.cacheimageurl3);
                     console.log($scope.cacheimageurl3);
 

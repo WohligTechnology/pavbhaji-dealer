@@ -1,5 +1,5 @@
-var adminbase = "http://admin.accessworld.in/";
-// var adminbase = "http://localhost/accessback/";
+// var adminbase = "http://admin.accessworld.in/";
+var adminbase = "http://localhost/accessback/";
 var adminurl = adminbase + "index.php/json/";
 var adminhauth = adminbase + "index.php/hauth/";
 var adminimage = "https://storage.googleapis.com/imagesaccess/";
@@ -120,11 +120,11 @@ angular.module('starter.services', ['httpService'])
 
             httpService.get(adminurl + 'getbrand?maxrow=12&pageno=' + pageno, {}, callback, errCallback);
         },
-        getAllBrands: function(callback,errCallback) {
+        getAllBrands: function(callback, errCallback) {
             httpService.get(adminurl + 'getAllBrands', {}, callback, errCallback);
             // return $http.get(adminurl + 'getAllBrands').success(callback);
         },
-        getAllCategories: function(callback,errCallback) {
+        getAllCategories: function(callback, errCallback) {
             httpService.get(adminurl + 'getAllCategories', {}, callback, errCallback);
             // return $http.get(adminurl + 'getAllCategories').success(callback);
         },
@@ -272,7 +272,7 @@ angular.module('starter.services', ['httpService'])
             // return $http.get(adminurl + 'getsinglecategory?categoryid=' + id, {}, {
             //     withCredentials: true
             // }).success(callback);
-            httpService.get(adminurl + 'getsinglecategory?categoryid='+id, {}, callback, errCallback);
+            httpService.get(adminurl + 'getsinglecategory?categoryid=' + id, {}, callback, errCallback);
         },
         // getHomeProducts: function(callback, errCallback) {
         //     // return $http.get(adminurl + 'getHomeProducts', {}, {
@@ -293,7 +293,7 @@ angular.module('starter.services', ['httpService'])
             // }).success(callback);
             httpService.get(adminurl + 'getAllProductId', {}, callback, errCallback);
         },
-        getFilters: function(category, brand, callback,callback2) {
+        getFilters: function(category, brand, callback, callback2) {
             return $http.post(adminurl + 'getFilters?category=' + category + "&brand=" + brand, {}, {
                 withCredentials: true
             }).success(callback).error(callback2);

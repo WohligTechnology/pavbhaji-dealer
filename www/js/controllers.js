@@ -148,21 +148,21 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             }
         });
     }
-    var posOptions = {
-        timeout: 10000,
-        enableHighAccuracy: true
-    };
-
-    $cordovaGeolocation
-        .getCurrentPosition(posOptions)
-        .then(function(position) {
-            var lat = position.coords.latitude;
-            var long = position.coords.longitude;
-            console.log(lat);
-            console.log(long);
-        }, function(err) {
-            // error
-        });
+    // var posOptions = {
+    //     timeout: 10000,
+    //     enableHighAccuracy: true
+    // };
+    //
+    // $cordovaGeolocation
+    //     .getCurrentPosition(posOptions)
+    //     .then(function(position) {
+    //         var lat = position.coords.latitude;
+    //         var long = position.coords.longitude;
+    //         console.log(lat);
+    //         console.log(long);
+    //     }, function(err) {
+    //         // error
+    //     });
     $scope.doLogin = function() {
         $scope.allvalidation = [{
             field: $scope.loginData.email,
@@ -177,6 +177,10 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             allfunction.loading();
             MyServices.login($scope.loginData, function(data) {
                 console.log(data);
+                MyServices.getCurrentPosition(function(data1) {
+                    console.log(data1);
+                    
+                });
 
                 // if (data != "false") {
                 //     authenticateUser();

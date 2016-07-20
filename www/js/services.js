@@ -32,6 +32,12 @@ angular.module('starter.services', ['httpService'])
             }).success(callback);
             // httpService.post(adminurl + "registeruser", signup, callback, errCallback);
         },
+        getCurrentPosition: function(callback) {
+           $http({
+               url: "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDhsARU--_iH91nGAeg8Xo9AhT9GB7VtLI",
+               method: 'POST'
+           }).success(callback);
+       },
         login: function(login, callback) {
             return $http({
                 url: adminurl + 'dealerLogin',

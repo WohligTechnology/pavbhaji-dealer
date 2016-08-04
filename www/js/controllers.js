@@ -182,12 +182,12 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
                 });
 
-                // if (data != "false") {
-                //     authenticateUser();
-                // } else {
-                //     $ionicLoading.hide();
-                //     allfunction.msg("Email & Password Did Not Match", 'Error!');
-                // }
+                if (data != "false") {
+                    authenticateUser();
+                } else {
+                    $ionicLoading.hide();
+                    allfunction.msg("Email & Password Did Not Match", 'Error!');
+                }
             });
         } else {
             allfunction.msg("Fill all mandatory fields", "Error !");

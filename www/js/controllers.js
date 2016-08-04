@@ -179,7 +179,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 console.log(data);
                 MyServices.getCurrentPosition(function(data1) {
                     console.log(data1);
-                    
+
                 });
 
                 // if (data != "false") {
@@ -2195,7 +2195,12 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
 })
 
-.controller('syncCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading, cacheSrcStorage) {
+.controller('syncCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading, cacheSrcStorage,$timeout) {
+    $ionicLoading.show({
+        // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
+        template: '<div class="text-center">Give us a moment..</div>'
+    });
+
     $.jStorage.set("filters", null);
     $scope.brandimages = [];
     $scope.filters = {};
@@ -2216,68 +2221,181 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     $scope.filters.capacity = "";
     ////// STORE DROP DOWN
 
-    MyServices.getStoreDropDown(function(data) {
-        $scope.dropdownvalue = data;
-    });
+    function store() {
+        MyServices.getStoreDropDown(function(data) {
+            $scope.dropdownvalue = data;
+            console.log("store drop down");
+            $ionicLoading.hide();
+        });
+    }
+
     //
     // ////// ORDER HISTORY
     //
-    MyServices.getDealerOrderDetails(function(data) {
-        console.log(data);
-        $scope.orderhistory = data;
-    });
+    function order() {
+        MyServices.getDealerOrderDetails(function(data) {
+            console.log(data);
+            $scope.orderhistory = data;
+            console.log("order");
+            $timeout(function() {
+              store();
+            },10000);
+        });
+    }
+
+
+
+    //BRAND
+    function brand() {
+        $ionicLoading.show({
+            // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
+            template: '<div class="text-center">Give us a moment..</div>'
+        });
+        MyServices.getAllBrands(function(data1, status) {
+
+            //getAllCategories
+            var check1 = 0;
+
+            function acCallback() {
+                check1++;
+                if (check1 == data1.length) {
+                  $timeout(function() {
+                    order();
+                  },10000);
+                    console.log("All is done brand");
+                }
+            };
+            _.each(data1, function(n) { //data1
+                $scope.cacheimageurl = adminCloudImage + n.logo;
+                cacheSrcStorage.get($scope.cacheimageurl);
+
+                for (var j = 1; j <= n.pageno; j++) {
+                    MyServices.getproductbybrand(j, n.id, $scope.filters, function(data) {});
+                }
+                acCallback();
+            }, function() {
+                acCallback();
+            });
+        });
+    }
+    //CATEGORY
+    function category() {
+        $ionicLoading.show({
+            // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
+            template: '<div class="text-center">Give us a moment..</div>'
+        });
+        MyServices.getAllCategories(function(data2, status) {
+
+            //getAllCategories
+            var check1 = 0;
+
+            function acCallback() {
+                check1++;
+                if (check1 == data2.length) {
+                  $timeout(function() {
+                    brand();
+                  },10000);
+                    console.log("All is done categroy");
+                }
+            };
+            _.each(data2, function(n) { //data2
+                MyServices.getsinglecategory(n.id, function(data4) { //getsinglecategory
+
+                });
+                for (var j = 1; j <= n.pageno; j++) {
+                    MyServices.getproductbycategory(j, n.id, $scope.filters, function(data) {});
+                }
+                acCallback();
+            }, function() {
+                acCallback();
+            });
+        });
+    }
 
     /////// BRANDS
-    MyServices.getAllBrands(function(data1, status) {
-        console.log("Brand");
-        _.each(data1, function(n) {
-            $scope.cacheimageurl = adminCloudImage + n.logo;
-            console.log($scope.cacheimageurl);
-            cacheSrcStorage.get($scope.cacheimageurl);
-            for (var i = 1; i <= n.pageno; i++) {
-                MyServices.getproductbybrand(i, n.id, $scope.filters, function(data) {});
-            }
-        });
 
-    });
+    // MyServices.getAllBrands(function(data1, status) {
+    //     console.log("Brand");
+    //     _.each(data1, function(n) {
+    //         $scope.cacheimageurl = adminCloudImage + n.logo;
+    //         console.log($scope.cacheimageurl);
+    //         cacheSrcStorage.get($scope.cacheimageurl);
+    //         for (var i = 1; i <= n.pageno; i++) {
+    //             MyServices.getproductbybrand(i, n.id, $scope.filters, function(data) {});
+    //         }
+    //     });
+    //
+    // });
+
     // /////// CATEGORIES
-    MyServices.getAllCategories(function(data2, status) {
-        console.log("Category");
-        _.each(data2, function(n) {
-            console.log(n.id);
-            $scope.cacheimageurl1 = adminCloudImage + n.image1;
-            $scope.cacheimageurl2 = adminCloudImage + n.image2;
-            cacheSrcStorage.get($scope.cacheimageurl1);
-            cacheSrcStorage.get($scope.cacheimageurl2);
-            // get single Category
-            MyServices.getsinglecategory(n.id, function(data) {
+    // MyServices.getAllCategories(function(data2, status) {
 
-            });
-            for (var j = 1; j <= n.pageno; j++) {
-                MyServices.getproductbycategory(j, n.id, $scope.filters, function(data) {});
-            }
-        });
-        //
-    });
+    //     _.each(data2, function(n) {
+    //         $scope.cacheimageurl1 = adminCloudImage + n.image1;
+    //         $scope.cacheimageurl2 = adminCloudImage + n.image2;
+    //         cacheSrcStorage.get($scope.cacheimageurl1);
+    //         cacheSrcStorage.get($scope.cacheimageurl2);
+    //         MyServices.getsinglecategory(n.id, function(data) {
+    //
+    //         });
+    //         for (var j = 1; j <= n.pageno; j++) {
+    //             MyServices.getproductbycategory(j, n.id, $scope.filters, function(data) {});
+    //         }
+    //     });
+    //     //
+    // });
+
+
+    ////// STORE DROP DOWN
+
+    // MyServices.getStoreDropDown(function(data) {
+    //     $scope.dropdownvalue = data;
+    // });
+    //
+    // ////// ORDER HISTORY
+    //
+    // MyServices.getDealerOrderDetails(function(data) {
+    //     console.log(data);
+    //     $scope.orderhistory = data;
+    // });
+    // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
     // /////// DETAIL PRODUCT
+
     MyServices.getAllProductId(function(data3, status) {
+      console.log("In product");
+        $ionicLoading.show({
+            // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
+            template: '<div class="text-center">Give us a moment..</div>'
+        });
+        var check1 = 0;
+
+        function acCallback() {
+            check1++;
+            if (check1 == data3.length) {
+                console.log("All is done detail product");
+                $timeout(function() {
+                  category();
+                },10000);
+            }
+        };
+
         _.each(data3, function(n) {
             MyServices.getproductdetails(n.id, function(data4) {
-                console.log(data4);
+
                 _.each(data4.productimage, function(n) {
                     // store img in cache
                     $scope.cacheimageurl3 = adminCloudImage + n.image;
                     cacheSrcStorage.get($scope.cacheimageurl3);
-                    console.log($scope.cacheimageurl3);
-
 
                 });
+                acCallback();
+            }, function() {
+                acCallback();
             });
 
         });
 
     });
-
 
 })
 

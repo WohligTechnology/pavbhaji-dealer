@@ -1,5 +1,5 @@
-// var adminbase = "http://admin.accessworld.in/";
-var adminbase = "http://localhost/accessback/";
+var adminbase = "http://admin.accessworld.in/";
+// var adminbase = "http://localhost/accessback/";
 var adminurl = adminbase + "index.php/json/";
 var adminhauth = adminbase + "index.php/hauth/";
 var adminimage = "https://storage.googleapis.com/imagesaccess/";
@@ -157,7 +157,7 @@ angular.module('starter.services', ['httpService'])
         // getexclusiveandnewarrival: function(pageno, id, callback) {
         //     return $http.get(adminurl + 'getexclusiveandnewarrival?id=' + id + '&pageno=' + pageno, {}, {
         //         withCredentials: true
-        //     }).success(callback);
+            // }).success(callback);
         //
         // },
         getproductdetails: function(id, callback, errCallback) {

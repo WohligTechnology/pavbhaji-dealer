@@ -2,7 +2,7 @@
     <div class="bar bar-subheader bar-positive" ng-hide="transparent_header">
         <h1 class="title">{{product.product.name}}</h1>
     </div>
-       <ion-content ng-class="{'no-header':transparent_header}" on-scroll="pageScrolled()">
+       <ion-content on-scroll="pageScrolled()">
     <!-- <ion-content ng-class="has-header" on-scroll="pageScrolled()"> -->
         <div class="product-detail">
             <ion-slide-box on-slide-changed="slideHasChanged($index)">

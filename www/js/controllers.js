@@ -2299,6 +2299,10 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 }
             };
             _.each(data2, function(n) { //data2
+                      $scope.cacheimageurl1 = adminCloudImage + n.image1;
+                      $scope.cacheimageurl2 = adminCloudImage + n.image2;
+                      cacheSrcStorage.get($scope.cacheimageurl1);
+                      cacheSrcStorage.get($scope.cacheimageurl2);
                 MyServices.getsinglecategory(n.id, function(data4) { //getsinglecategory
 
                 });

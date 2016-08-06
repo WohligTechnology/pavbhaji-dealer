@@ -2195,7 +2195,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
 })
 
-.controller('syncCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading, cacheSrcStorage,$timeout) {
+.controller('syncCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading, cacheSrcStorage, $timeout) {
     $ionicLoading.show({
         // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
         template: '<div class="text-center">Give us a moment..</div>'
@@ -2221,31 +2221,31 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     $scope.filters.capacity = "";
     ////// STORE DROP DOWN
 
-    function store() {
-        MyServices.getStoreDropDown(function(data) {
-            $scope.dropdownvalue = data;
-            console.log("store drop down");
-            $ionicLoading.hide();
-        });
-    }
+    // function store() {
+    //     MyServices.getStoreDropDown(function(data) {
+    //         $scope.dropdownvalue = data;
+    //         console.log("store drop down");
+    //         $ionicLoading.hide();
+    //     });
+    // }
 
     //
     // ////// ORDER HISTORY
     //
-    function order() {
-        MyServices.getDealerOrderDetails(function(data) {
-            console.log(data);
-            $scope.orderhistory = data;
-            console.log("order");
-            $timeout(function() {
-              store();
-            },10000);
-        });
-    }
+    // function order() {
+    //     MyServices.getDealerOrderDetails(function(data) {
+    //         console.log(data);
+    //         $scope.orderhistory = data;
+    //         console.log("order");
+    //         $timeout(function() {
+    //             store();
+    //         }, 10000);
+    //     });
+    // }
 
 
 
-    //BRAND
+    // BRAND
     function brand() {
         $ionicLoading.show({
             // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
@@ -2259,9 +2259,10 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             function acCallback() {
                 check1++;
                 if (check1 == data1.length) {
-                  $timeout(function() {
-                    order();
-                  },10000);
+                    // $timeout(function() {
+                    //     order();
+                    // }, 10000);
+                      $ionicLoading.hide();
                     console.log("All is done brand");
                 }
             };
@@ -2270,7 +2271,19 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 cacheSrcStorage.get($scope.cacheimageurl);
 
                 for (var j = 1; j <= n.pageno; j++) {
-                    MyServices.getproductbybrand(j, n.id, $scope.filters, function(data) {});
+                    MyServices.getproductbybrand(j, n.id, $scope.filters, function(data10) {
+                      _.each(data10, function(r) {
+                          console.log(r.queryresult);
+                          _.each(r.queryresult,
+                              function(s) {
+                                  console.log(s);
+                                  $scope.cacheimageurl7 = adminCloudImage + s.image1;
+                                  $scope.cacheimageurl8 = adminCloudImage + s.image2;
+                                  cacheSrcStorage.get($scope.cacheimageurl7);
+                                  cacheSrcStorage.get($scope.cacheimageurl8);
+                              });
+                      });
+                    });
                 }
                 acCallback();
             }, function() {
@@ -2279,42 +2292,53 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         });
     }
     //CATEGORY
-    function category() {
-        $ionicLoading.show({
-            // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
-            template: '<div class="text-center">Give us a moment..</div>'
-        });
-        MyServices.getAllCategories(function(data2, status) {
-
-            //getAllCategories
-            var check1 = 0;
-
-            function acCallback() {
-                check1++;
-                if (check1 == data2.length) {
-                  $timeout(function() {
-                    brand();
-                  },10000);
-                    console.log("All is done categroy");
-                }
-            };
-            _.each(data2, function(n) { //data2
-                      $scope.cacheimageurl1 = adminCloudImage + n.image1;
-                      $scope.cacheimageurl2 = adminCloudImage + n.image2;
-                      cacheSrcStorage.get($scope.cacheimageurl1);
-                      cacheSrcStorage.get($scope.cacheimageurl2);
-                MyServices.getsinglecategory(n.id, function(data4) { //getsinglecategory
-
-                });
-                for (var j = 1; j <= n.pageno; j++) {
-                    MyServices.getproductbycategory(j, n.id, $scope.filters, function(data) {});
-                }
-                acCallback();
-            }, function() {
-                acCallback();
-            });
-        });
-    }
+    // function category() {
+    //     $ionicLoading.show({
+    //         // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
+    //         template: '<div class="text-center">Give us a moment..</div>'
+    //     });
+    //     MyServices.getAllCategories(function(data2, status) {
+    //         //getAllCategories
+    //         var check1 = 0;
+    //
+    //         function acCallback() {
+    //             check1++;
+    //             if (check1 == data2.length) {
+    //                 $timeout(function() {
+    //                     brand();
+    //                 }, 10000);
+    //                 console.log("All is done categroy");
+    //             }
+    //         };
+    //         _.each(data2, function(n) { //data2
+    //             $scope.cacheimageurl1 = adminCloudImage + n.image1;
+    //             $scope.cacheimageurl2 = adminCloudImage + n.image2;
+    //             cacheSrcStorage.get($scope.cacheimageurl1);
+    //             cacheSrcStorage.get($scope.cacheimageurl2);
+    //             //                 MyServices.getsinglecategory(n.id, function(data4) { //getsinglecategory
+    //             // console.log(data4);
+    //             //                 });
+    //             for (var j = 1; j <= n.pageno; j++) {
+    //                 MyServices.getproductbycategory(j, n.id, $scope.filters, function(data8) {
+    //                     _.each(data8, function(a) {
+    //                         console.log(a.queryresult);
+    //                         _.each(a.queryresult,
+    //                             function(b) {
+    //                                 console.log(b);
+    //                                 $scope.cacheimageurl5 = adminCloudImage + b.image1;
+    //                                 $scope.cacheimageurl6 = adminCloudImage + b.image2;
+    //                                 cacheSrcStorage.get($scope.cacheimageurl5);
+    //                                 cacheSrcStorage.get($scope.cacheimageurl6);
+    //                             });
+    //                     });
+    //                 });
+    //             }
+    //             acCallback();
+    //         }, function() {
+    //             acCallback();
+    //         });
+    //     });
+    // }
 
     /////// BRANDS
 
@@ -2366,7 +2390,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     // /////// DETAIL PRODUCT
 
     MyServices.getAllProductId(function(data3, status) {
-      console.log("In product");
+        console.log("In product");
         $ionicLoading.show({
             // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
             template: '<div class="text-center">Give us a moment..</div>'
@@ -2377,9 +2401,13 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             check1++;
             if (check1 == data3.length) {
                 console.log("All is done detail product");
+
                 $timeout(function() {
-                  category();
-                },10000);
+                    brand();
+                }, 10000);
+                // $timeout(function() {
+                //     category();
+                // }, 10000);
             }
         };
 
@@ -2389,6 +2417,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 _.each(data4.productimage, function(n) {
                     // store img in cache
                     $scope.cacheimageurl3 = adminCloudImage + n.image;
+                    console.log($scope.cacheimageurl3);
                     cacheSrcStorage.get($scope.cacheimageurl3);
 
                 });

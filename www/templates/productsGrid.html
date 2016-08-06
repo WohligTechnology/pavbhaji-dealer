@@ -1,7 +1,7 @@
 <a href="#/app/productdetail/{{item.id}}" style="text-decoration: none">
     <span class="discper" ng-show="item.showSalePrice">{{item.discountinper}}%</span>
     <div class="image-holder-product">
-        <img class="brand-image" ng-src="{{item.image1 | serverimage}}" alt="" ng-if="item.image1">
+        <img class="brand-image" cache-src="{{item.image1 | serverimage}}" alt="" ng-if="item.image1">
         <img class="brand-image" ng-src="img/icon.png" alt="" ng-if="!item.image1">
         <div class="stock" ng-if="item.quantity<=0">
             <p class="text-capitalize">Sorry Mate, Sold Out</p>

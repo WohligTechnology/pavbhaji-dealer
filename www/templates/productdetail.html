@@ -18,7 +18,7 @@
             </ion-slide-box>
             <div class="row price" ng-repeat="same in product.samecolor">
                 <div class="col-25" ng-repeat="products in same">
-                    <div class="image-hold" ng-style="{'background-image':'url({{products.samecolorimages[0][0].image | serverimage}})'}" ng-click="goToSameColorProduct(products);">
+                    <div class="image-hold" ng-style="{'background-image':'url({{products.samecolorimages[0][0].image | serverimage}})'}" ng-click="goToSameColorProduct(products);">{'background-image':'url({{products.samecolorimages[0][0].image | serverimage}})'}
                     </div>
                 </div>
                 <!-- <div class="col-25">

@@ -2221,27 +2221,29 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     $scope.filters.capacity = "";
     ////// STORE DROP DOWN
 
-    // function store() {
-    //     MyServices.getStoreDropDown(function(data) {
-    //         $scope.dropdownvalue = data;
-    //         console.log("store drop down");
-    //         $ionicLoading.hide();
-    //     });
-    // }
+    function store() {
+        MyServices.getStoreDropDown(function(data) {
+            $scope.dropdownvalue = data;
+            console.log("store drop down");
+            $ionicLoading.hide();
+          $scope.message = "Sync Completed!";
+          console.log($scope.message);
+        });
+    }
 
     //
     // ////// ORDER HISTORY
     //
-    // function order() {
-    //     MyServices.getDealerOrderDetails(function(data) {
-    //         console.log(data);
-    //         $scope.orderhistory = data;
-    //         console.log("order");
-    //         $timeout(function() {
-    //             store();
-    //         }, 10000);
-    //     });
-    // }
+    function order() {
+        MyServices.getDealerOrderDetails(function(data) {
+            console.log(data);
+            $scope.orderhistory = data;
+            console.log("order");
+            $timeout(function() {
+                store();
+            }, 10000);
+        });
+    }
 
 
 
@@ -2259,10 +2261,10 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
             function acCallback() {
                 check1++;
                 if (check1 == data1.length) {
-                    // $timeout(function() {
-                    //     order();
-                    // }, 10000);
-                      $ionicLoading.hide();
+
+                    $timeout(function() {
+                        order();
+                    }, 10000);
                     console.log("All is done brand");
                 }
             };
@@ -2292,53 +2294,53 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
         });
     }
     //CATEGORY
-    // function category() {
-    //     $ionicLoading.show({
-    //         // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
-    //         template: '<div class="text-center">Give us a moment..</div>'
-    //     });
-    //     MyServices.getAllCategories(function(data2, status) {
-    //         //getAllCategories
-    //         var check1 = 0;
-    //
-    //         function acCallback() {
-    //             check1++;
-    //             if (check1 == data2.length) {
-    //                 $timeout(function() {
-    //                     brand();
-    //                 }, 10000);
-    //                 console.log("All is done categroy");
-    //             }
-    //         };
-    //         _.each(data2, function(n) { //data2
-    //             $scope.cacheimageurl1 = adminCloudImage + n.image1;
-    //             $scope.cacheimageurl2 = adminCloudImage + n.image2;
-    //             cacheSrcStorage.get($scope.cacheimageurl1);
-    //             cacheSrcStorage.get($scope.cacheimageurl2);
-    //             //                 MyServices.getsinglecategory(n.id, function(data4) { //getsinglecategory
-    //             // console.log(data4);
-    //             //                 });
-    //             for (var j = 1; j <= n.pageno; j++) {
-    //                 MyServices.getproductbycategory(j, n.id, $scope.filters, function(data8) {
-    //                     _.each(data8, function(a) {
-    //                         console.log(a.queryresult);
-    //                         _.each(a.queryresult,
-    //                             function(b) {
-    //                                 console.log(b);
-    //                                 $scope.cacheimageurl5 = adminCloudImage + b.image1;
-    //                                 $scope.cacheimageurl6 = adminCloudImage + b.image2;
-    //                                 cacheSrcStorage.get($scope.cacheimageurl5);
-    //                                 cacheSrcStorage.get($scope.cacheimageurl6);
-    //                             });
-    //                     });
-    //                 });
-    //             }
-    //             acCallback();
-    //         }, function() {
-    //             acCallback();
-    //         });
-    //     });
-    // }
+    function category() {
+        $ionicLoading.show({
+            // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
+            template: '<div class="text-center">Give us a moment..</div>'
+        });
+        MyServices.getAllCategories(function(data2, status) {
+            //getAllCategories
+            var check1 = 0;
+
+            function acCallback() {
+                check1++;
+                if (check1 == data2.length) {
+                    $timeout(function() {
+                        brand();
+                    }, 10000);
+                    console.log("All is done categroy");
+                }
+            };
+            _.each(data2, function(n) { //data2
+                $scope.cacheimageurl1 = adminCloudImage + n.image1;
+                $scope.cacheimageurl2 = adminCloudImage + n.image2;
+                cacheSrcStorage.get($scope.cacheimageurl1);
+                cacheSrcStorage.get($scope.cacheimageurl2);
+                //                 MyServices.getsinglecategory(n.id, function(data4) { //getsinglecategory
+                // console.log(data4);
+                //                 });
+                for (var j = 1; j <= n.pageno; j++) {
+                    MyServices.getproductbycategory(j, n.id, $scope.filters, function(data8) {
+                        _.each(data8, function(a) {
+                            console.log(a.queryresult);
+                            _.each(a.queryresult,
+                                function(b) {
+                                    console.log(b);
+                                    $scope.cacheimageurl5 = adminCloudImage + b.image1;
+                                    $scope.cacheimageurl6 = adminCloudImage + b.image2;
+                                    cacheSrcStorage.get($scope.cacheimageurl5);
+                                    cacheSrcStorage.get($scope.cacheimageurl6);
+                                });
+                        });
+                    });
+                }
+                acCallback();
+            }, function() {
+                acCallback();
+            });
+        });
+    }
 
     /////// BRANDS
 
@@ -2403,11 +2405,8 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 console.log("All is done detail product");
 
                 $timeout(function() {
-                    brand();
+                    category();
                 }, 10000);
-                // $timeout(function() {
-                //     category();
-                // }, 10000);
             }
         };
 
@@ -2419,7 +2418,6 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                     $scope.cacheimageurl3 = adminCloudImage + n.image;
                     console.log($scope.cacheimageurl3);
                     cacheSrcStorage.get($scope.cacheimageurl3);
-
                 });
                 acCallback();
             }, function() {

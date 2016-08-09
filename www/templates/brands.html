@@ -4,7 +4,7 @@
             <div class="row" ng-repeat="brand in brands">
                 <div class="col-33" ng-repeat="brnd in brand">
                     <div class="image-holder" ng-click="getproductbybrand(brnd.id);">
-                        <img  class="brand-image" cache-src="{{brnd.logo | serverimage}}" alt="">
+                        <img class="brand-image" cache-src="{{brnd.logo | serverimage}}" alt="">
                     </div>
                 </div>
             </div>

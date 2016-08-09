@@ -3,7 +3,7 @@ var myfunction = '';
 var getCurrentLocation = '';
 var openModal = false;
 var showcartnotfoundmsg = false;
-angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova', 'ionic-cache-src'])
+angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova', 'ionic-cache-src', 'ionic.ion.imageCacheFactory'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $location, $ionicPopup, $rootScope, MyServices, $ionicLoading, $interval, $window, $templateCache, $state, $cordovaGeolocation) {
     if ($.jStorage.get("user") === null) {
@@ -2195,7 +2195,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
 })
 
-.controller('syncCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading, cacheSrcStorage, $timeout) {
+.controller('syncCtrl', function($scope, $ionicScrollDelegate, $stateParams, MyServices, $ionicLoading, cacheSrcStorage, $timeout, $ImageCacheFactory) {
     $ionicLoading.show({
         // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
         template: '<div class="text-center">Give us a moment..</div>'
@@ -2269,8 +2269,13 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 }
             };
             _.each(data1, function(n) { //data1
-                $scope.cacheimageurl = adminCloudImage + n.logo;
-                cacheSrcStorage.get($scope.cacheimageurl);
+                // $scope.cacheimageurl = adminCloudImage + n.logo;
+                // cacheSrcStorage.get($scope.cacheimageurl);
+                $scope.cacheimageurl3 = [];
+                $scope.cacheimageurl3.push(adminCloudImage + n.logo);
+                $ImageCacheFactory.Cache($scope.cacheimageurl3).then(function(){
+                  console.log($scope.cacheimageurl3);
+                });
 
                 for (var j = 1; j <= n.pageno; j++) {
                     MyServices.getproductbybrand(j, n.id, $scope.filters, function(data10) {
@@ -2279,10 +2284,17 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                           _.each(r.queryresult,
                               function(s) {
                                   console.log(s);
-                                  $scope.cacheimageurl7 = adminCloudImage + s.image1;
-                                  $scope.cacheimageurl8 = adminCloudImage + s.image2;
-                                  cacheSrcStorage.get($scope.cacheimageurl7);
-                                  cacheSrcStorage.get($scope.cacheimageurl8);
+                                  // $scope.cacheimageurl7 = adminCloudImage + s.image1;
+                                  // $scope.cacheimageurl8 = adminCloudImage + s.image2;
+                                  // cacheSrcStorage.get($scope.cacheimageurl7);
+                                  // cacheSrcStorage.get($scope.cacheimageurl8);
+
+                                  $scope.cacheimageurl3 = [];
+                                  $scope.cacheimageurl3.push(adminCloudImage + s.image1);
+                                  $scope.cacheimageurl3.push(adminCloudImage + s.image2);
+                                  $ImageCacheFactory.Cache($scope.cacheimageurl3).then(function(){
+                                    console.log($scope.cacheimageurl3);
+                                  });
                               });
                       });
                     });
@@ -2313,10 +2325,17 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                 }
             };
             _.each(data2, function(n) { //data2
-                $scope.cacheimageurl1 = adminCloudImage + n.image1;
-                $scope.cacheimageurl2 = adminCloudImage + n.image2;
-                cacheSrcStorage.get($scope.cacheimageurl1);
-                cacheSrcStorage.get($scope.cacheimageurl2);
+                // $scope.cacheimageurl1 = adminCloudImage + n.image1;
+                // $scope.cacheimageurl2 = adminCloudImage + n.image2;
+                // cacheSrcStorage.get($scope.cacheimageurl1);
+                // cacheSrcStorage.get($scope.cacheimageurl2);
+
+                $scope.cacheimageurl3 = [];
+                $scope.cacheimageurl3.push(adminCloudImage + n.image1);
+                $scope.cacheimageurl3.push(adminCloudImage + n.image2);
+                $ImageCacheFactory.Cache($scope.cacheimageurl3).then(function(){
+                  console.log($scope.cacheimageurl3);
+                });
                 //                 MyServices.getsinglecategory(n.id, function(data4) { //getsinglecategory
                 // console.log(data4);
                 //                 });
@@ -2327,10 +2346,18 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
                             _.each(a.queryresult,
                                 function(b) {
                                     console.log(b);
-                                    $scope.cacheimageurl5 = adminCloudImage + b.image1;
-                                    $scope.cacheimageurl6 = adminCloudImage + b.image2;
-                                    cacheSrcStorage.get($scope.cacheimageurl5);
-                                    cacheSrcStorage.get($scope.cacheimageurl6);
+                                    // $scope.cacheimageurl5 = adminCloudImage + b.image1;
+                                    // $scope.cacheimageurl6 = adminCloudImage + b.image2;
+
+                                    $scope.cacheimageurl3 = [];
+                                    $scope.cacheimageurl3.push(adminCloudImage + b.image1);
+                                    $scope.cacheimageurl3.push(adminCloudImage + b.image2);
+                                    $ImageCacheFactory.Cache($scope.cacheimageurl3).then(function(){
+                                      console.log($scope.cacheimageurl3);
+                                    });
+
+                                    // cacheSrcStorage.get($scope.cacheimageurl5);
+                                    // cacheSrcStorage.get($scope.cacheimageurl6);
                                 });
                         });
                     });
@@ -2415,9 +2442,14 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
 
                 _.each(data4.productimage, function(n) {
                     // store img in cache
-                    $scope.cacheimageurl3 = adminCloudImage + n.image;
-                    console.log($scope.cacheimageurl3);
-                    cacheSrcStorage.get($scope.cacheimageurl3);
+                    $scope.cacheimageurl3 = [];
+                    $scope.cacheimageurl3.push(adminCloudImage + n.image);
+                    $ImageCacheFactory.Cache($scope.cacheimageurl3).then(function(){
+                      console.log($scope.cacheimageurl3);
+                    });
+
+                      // console.log($scope.cacheimageurl3);
+                      // cacheSrcStorage.get($scope.cacheimageurl3);
                 });
                 acCallback();
             }, function() {

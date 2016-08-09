@@ -1,5 +1,5 @@
 var adminbase = "http://admin.accessworld.in/";
-// var adminbase = "http://localhost/accessback/";
+// var adminbase = "http://192.168.0.101/accessback/";
 var adminurl = adminbase + "index.php/json/";
 var adminhauth = adminbase + "index.php/hauth/";
 var adminimage = "https://storage.googleapis.com/imagesaccess/";

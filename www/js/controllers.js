@@ -2251,7 +2251,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     function brand() {
         $ionicLoading.show({
             // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
-            template: '<div class="text-center">Give us a moment..</div>'
+            template: '<div class="text-center">Brands Loading...</div>'
         });
         MyServices.getAllBrands(function(data1, status) {
 
@@ -2309,7 +2309,7 @@ angular.module('starter.controllers', ['ui.bootstrap', 'ui.slider', 'ngCordova',
     function category() {
         $ionicLoading.show({
             // template: '<ion-spinner class="spinner-positive">Give us a moment</ion-spinner>'
-            template: '<div class="text-center">Give us a moment..</div>'
+            template: '<div class="text-center">Categories Loading..</div>'
         });
         MyServices.getAllCategories(function(data2, status) {
             //getAllCategories
